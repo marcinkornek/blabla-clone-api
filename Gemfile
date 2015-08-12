@@ -1,28 +1,22 @@
 source 'https://rubygems.org'
-
+ruby '2.2.2'
 
 gem 'rails', '4.2.3'
-
-gem 'rails-api'
-
 gem 'spring', :group => :development
+gem 'bullet', :group => :development
 
+gem 'rails-api'       # Rails for API only applications
+gem 'pg'              # database for Active Record
+gem 'grape'           # REST-like API micro-framework for Ruby
+gem 'devise'          # authentication
+gem 'roar'            # Ruby representer
+gem 'counter_culture' # turbo-charged counter caches
+gem 'kaminari'        # pagination
+gem 'api-pagination'
+gem 'http_accept_language' # extracts Accept-Language header into an array
+gem 'rack-cors', :require => 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
 
-gem 'pg'
-
-
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano', :group => :development
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+end
