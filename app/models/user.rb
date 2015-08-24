@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :tokens, dependent: :destroy
 
+  enum role: { user: 0, admin: 1 }
+
   validates :first_name, presence: true
   validates :last_name,  presence: true
   validates :email,      presence: true,

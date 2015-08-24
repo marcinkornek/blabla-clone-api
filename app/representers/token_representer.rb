@@ -6,6 +6,7 @@ module TokenRepresenter
   property :id
   property :access_token
   property :email
+  property :role
 
   def email
     user.email
@@ -13,5 +14,9 @@ module TokenRepresenter
 
   def id
     user.id
+  end
+
+  def role
+    user.role
   end
 end
