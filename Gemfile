@@ -15,6 +15,7 @@ gem 'kaminari'        # pagination
 gem 'api-pagination'
 gem 'http_accept_language' # extracts Accept-Language header into an array
 gem 'rack-cors', :require => 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
+gem 'pry-rails'
 
 group :development, :test do
   gem 'rspec-rails'
