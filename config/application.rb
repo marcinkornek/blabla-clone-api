@@ -25,7 +25,7 @@ module BlablaCloneApi
 
     config.middleware.use Rack::Cors do
       allow do
-        origins '*' # change later to front end url
+        origins 'http://localhost:8080' # change later to front end url
         # location of your API
         resource '/api/*',
           :headers => :any,

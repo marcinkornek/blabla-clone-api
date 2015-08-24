@@ -16,10 +16,10 @@ module API
         end
 
         def token
-          @token ||= user.tokens.find_by(access_token: headers['X-User-Token']) if user
+          @token ||= find_user.tokens.find_by(access_token: headers['X-User-Token']) if find_user
         end
 
-        def user
+        def find_user
           @user ||= User.find_by(email: headers['X-User-Email'])
         end
 
@@ -29,6 +29,7 @@ module API
       end
 
       mount API::V1::Sessions
+      mount API::V1::Users
     end
   end
 end

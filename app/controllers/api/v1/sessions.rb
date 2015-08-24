@@ -21,8 +21,6 @@ module API
           user = User.find_for_oauth(auth)
           if user
             user.tokens.create.extend(TokenRepresenter)
-          else
-            'there is no such user'
           end
         end
 
@@ -36,11 +34,11 @@ module API
           password = params[:password]
 
           user = User.where(email: email.downcase).first
-          error!({error: 'Invalid Email and/or Password'},401) if user.nil?
+          error!({error: 'Invalid Email and/or Password'}, 401) if user.nil?
           if user.valid_password?(password)
             user.tokens.create.extend(TokenRepresenter)
           else
-            'there is no such user'
+            error!({error: 'Invalid Email and/or Password.'}, 401)
           end
         end
 
