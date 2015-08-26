@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :tokens, dependent: :destroy
+  has_many :cars,   dependent: :destroy
 
   enum role: { user: 0, admin: 1 }
 
@@ -16,6 +17,10 @@ class User < ActiveRecord::Base
   def self.find_for_oauth(auth)
     user = User.find_by(provider: auth[:provider], uid: auth[:uid])
     user || create_user_with_aouth(auth)
+  end
+
+  def age
+    self.birth_year ? Time.now.year - self.birth_year.to_i : nil
   end
 
   private
