@@ -15,7 +15,14 @@ gem 'kaminari'        # pagination
 gem 'api-pagination'
 gem 'http_accept_language' # extracts Accept-Language header into an array
 gem 'rack-cors', :require => 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
-gem 'pry-rails'
+gem 'figaro'      # app configuration using ENV and a single YAML file
+gem 'carrierwave' # file upload library for Ruby
+gem 'fog'         # Ruby cloud services library (used in carrierwave to send images to AWS S3)
+gem 'mini_magick' # handle picture resizing
+
+group :development do
+  gem 'pry-rails' # changes rails console to 'pry'
+end
 
 group :development, :test do
   gem 'rspec-rails'

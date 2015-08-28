@@ -60,6 +60,7 @@ module API
           requires :places,   type: String, desc: "car places"
           requires :color,    type: String, desc: "car color"
           requires :category, type: String, desc: "car category"
+          requires :production_year, type: String, desc: "car production year"
         end
         route_param :id do
           put do
@@ -72,12 +73,13 @@ module API
                   places:   params[:places],
                   color:    params[:color],
                   category: params[:category],
+                  production_year: params[:production_year]
                 )
                 status 200
-                cars.extend(CarsRepresenter)
+                car.extend(CarRepresenter)
               else
                 status 406
-                cars.errors.messages
+                car.errors.messages
               end
             else
               error!({error: I18n.t('cars.edit.error')}, 406)

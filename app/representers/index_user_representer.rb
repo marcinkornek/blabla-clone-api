@@ -1,27 +1,14 @@
 require 'roar/json'
 
-module UserRepresenter
+module IndexUserRepresenter
   include Roar::JSON
 
   property :id
-  property :first_name
-  property :last_name
-  property :full_name
   property :email
+  property :full_name
   property :created_at
-  property :updated_at
   property :age
   property :avatar
-  property :role
-  property :cars, extend: SimpleCarsRepresenter
-
-  def first_name
-    super.capitalize
-  end
-
-  def last_name
-    super.capitalize
-  end
 
   def full_name
     first_name.capitalize + ' ' + last_name.capitalize

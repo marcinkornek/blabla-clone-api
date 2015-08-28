@@ -4,7 +4,7 @@ module API
     	resource :users do
 	      desc "Return list of users"
 	      get do
-	        User.all.extend(UsersRepresenter)
+	        User.all.extend(IndexUsersRepresenter)
 	      end
 
 	      desc "Return a user"
@@ -57,6 +57,10 @@ module API
           requires :first_name, type: String, desc: "user first_name"
           requires :last_name,  type: String, desc: "user last_name"
           requires :email,      type: String, desc: "user email"
+          optional :avatar,     type: Hash do
+            optional :image, type: String
+            optional :path_name, type: String
+          end
         end
         route_param :id do
           put do
@@ -65,8 +69,13 @@ module API
               if user.update(
                   first_name: params[:first_name],
                   last_name:  params[:last_name],
-                  email:      params[:email]
+                  email:      params[:email],
                 )
+                if params[:avatar].present?
+                  string = params[:avatar][:image].sub(/data:image.*base64,/, '')
+                  user.avatar = AppSpecificStringIO.new(params[:avatar][:path_name], Base64.decode64(string))
+                  user.save
+                end
                 status 200
                 user.extend(UserRepresenter)
               else

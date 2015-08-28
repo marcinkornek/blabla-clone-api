@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   validates :email,      presence: true,
                          uniqueness: { case_sensitive: false }
 
+  mount_uploader :avatar, AvatarUploader
+
   def self.find_for_oauth(auth)
     user = User.find_by(provider: auth[:provider], uid: auth[:uid])
     user || create_user_with_aouth(auth)
