@@ -32,15 +32,19 @@ module API
           requires :first_name, type: String, desc: "user first_name"
           requires :last_name,  type: String, desc: "user last_name"
           requires :email,      type: String, desc: "user email"
+          optional :tel_num,    type: String, desc: "user telephone number"
+          optional :birth_year, type: String, desc: "user birth year"
           requires :password,   type: String, desc: "user password"
           requires :password_confirmation, type: String, desc: "user password confirmation"
         end
         post do
           user = User.new(
             first_name: params[:first_name],
-            last_name: params[:last_name],
-            email: params[:email],
-            password: params[:password],
+            last_name:  params[:last_name],
+            email:      params[:email],
+            password:   params[:password],
+            tel_num:    params[:tel_num].presence,
+            birth_year: params[:birth_year].presence,
             password_confirmation: params[:password_confirmation]
           )
           if user.save
@@ -57,6 +61,8 @@ module API
           requires :first_name, type: String, desc: "user first_name"
           requires :last_name,  type: String, desc: "user last_name"
           requires :email,      type: String, desc: "user email"
+          optional :tel_num,    type: String, desc: "user telephone number"
+          optional :birth_year, type: String, desc: "user birth year"
           optional :avatar,     type: Hash do
             optional :image, type: String
             optional :path_name, type: String
@@ -70,6 +76,8 @@ module API
                   first_name: params[:first_name],
                   last_name:  params[:last_name],
                   email:      params[:email],
+                  tel_num:    tel_num,
+                  birth_year: birth_year
                 )
                 if params[:avatar].present?
                   string = params[:avatar][:image].sub(/data:image.*base64,/, '')

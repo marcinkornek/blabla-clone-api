@@ -8,6 +8,8 @@ module UserRepresenter
   property :last_name
   property :full_name
   property :email
+  property :tel_num
+  property :birth_year
   property :created_at
   property :updated_at
   property :age
