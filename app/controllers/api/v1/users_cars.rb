@@ -30,6 +30,10 @@ module API
           requires :color,    type: String, desc: "car color"
           requires :category, type: String, desc: "car category"
           requires :production_year, type: String, desc: "car production year"
+          optional :car_photo, type: Hash do
+            optional :image, type: String
+            optional :path_name, type: String
+          end
         end
         post do
           authenticate!
@@ -43,6 +47,10 @@ module API
             production_year: params[:production_year],
             user:     current_user
           )
+          if params[:car_photo].present?
+            string = params[:car_photo][:image].sub(/data:image.*base64,/, '')
+            car.car_photo = AppSpecificStringIO.new(params[:car_photo][:path_name], Base64.decode64(string))
+          end
           if car.save
             car.extend(CarRepresenter)
           else
@@ -61,6 +69,10 @@ module API
           requires :color,    type: String, desc: "car color"
           requires :category, type: String, desc: "car category"
           requires :production_year, type: String, desc: "car production year"
+          optional :car_photo, type: Hash do
+            optional :image, type: String
+            optional :path_name, type: String
+          end
         end
         route_param :id do
           put do
@@ -75,6 +87,11 @@ module API
                   category: params[:category],
                   production_year: params[:production_year]
                 )
+                if params[:car_photo].present?
+                  string = params[:car_photo][:image].sub(/data:image.*base64,/, '')
+                  car.car_photo = AppSpecificStringIO.new(params[:car_photo][:path_name], Base64.decode64(string))
+                  car.save
+                end
                 status 200
                 car.extend(CarRepresenter)
               else

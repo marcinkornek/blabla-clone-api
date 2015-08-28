@@ -13,4 +13,6 @@ class Car < ActiveRecord::Base
   validates :brand,  presence: true
   validates :model,  presence: true
   validates :places, presence: true, numericality: { greater_than: 0, less_than: 60 }
+
+  mount_uploader :car_photo, CarPhotoUploader
 end

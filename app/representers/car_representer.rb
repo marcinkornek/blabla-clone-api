@@ -17,6 +17,7 @@ module CarRepresenter
   property :category
   property :created_at
   property :owner_id
+  property :car_photo
 
   def brand
     super.upcase
@@ -40,5 +41,9 @@ module CarRepresenter
 
   def owner_id
     user_id
+  end
+
+  def car_photo
+    super.mini.url || 'https://s3-eu-west-1.amazonaws.com/blabla-clone-app/uploads/car/car_photo/placeholder/car_placeholder_thumb.jpg'
   end
 end
