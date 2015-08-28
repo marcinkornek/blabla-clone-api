@@ -4,7 +4,7 @@ module API
     	resource :rides do
 	      desc "Return list of rides"
 	      get do
-	        Ride.all
+	        Ride.all.includes(:driver).includes(:car).extend(RidesRepresenter)
 	      end
 
 	      desc "Return a ride"
@@ -13,7 +13,7 @@ module API
 	      end
 	      route_param :id do
 	        get do
-	          ride
+	          ride.extend(RideRepresenter)
 	        end
 	      end
       end
