@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
     self.birth_year ? Time.now.year - self.birth_year.to_i : nil
   end
 
+  def full_name
+    self.first_name + ' ' + self.last_name[0]
+  end
+
   private
 
   def self.create_user_with_aouth(auth)

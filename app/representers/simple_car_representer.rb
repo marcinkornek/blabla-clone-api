@@ -12,15 +12,11 @@ module SimpleCarRepresenter
   property :car_photo
 
   def full_name
-    brand.upcase + ' ' + model.upcase
+    super.upcase
   end
 
   def places_full
     places.to_s + ' ' + 'place'.pluralize(places)
-  end
-
-  def comfort_stars
-    read_attribute('comfort') + 1 if comfort.present?
   end
 
   def owner_id

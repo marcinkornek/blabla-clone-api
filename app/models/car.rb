@@ -15,4 +15,13 @@ class Car < ActiveRecord::Base
   validates :places, presence: true, numericality: { greater_than: 0, less_than: 60 }
 
   mount_uploader :car_photo, CarPhotoUploader
+
+  def full_name
+    self.brand + ' ' + self.model
+  end
+
+
+  def comfort_stars
+    read_attribute('comfort') + 1 if comfort.present?
+  end
 end
