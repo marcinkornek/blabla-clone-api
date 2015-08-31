@@ -13,6 +13,7 @@ module RideRepresenter
   property :seats
   property :start_date
   property :price
+  property :currency
   property :created_at
   property :updated_at
   property :driver, extend: IndexUserRepresenter
