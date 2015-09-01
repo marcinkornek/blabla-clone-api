@@ -5,4 +5,8 @@ class Ride < ActiveRecord::Base
   has_many :ride_requests, dependent: :destroy
 
   enum currency:  { pln: 0, usd: 1, eur: 2 }
+
+  def self.other_users_rides(user)
+    user.present? ? where.not(driver_id: user) : all
+  end
 end

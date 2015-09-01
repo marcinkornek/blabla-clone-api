@@ -13,7 +13,7 @@ module API
 
 	      desc "Return list of rides"
 	      get do
-	        Ride.all.includes(:driver).includes(:car).extend(RidesRepresenter)
+	        rides = Ride.other_users_rides(current_user).includes(:driver).includes(:car).extend(RidesRepresenter)
 	      end
 
 	      desc "Return a ride"
