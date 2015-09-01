@@ -27,6 +27,16 @@ module API
           end
         end
 
+        desc "Return user rides as driver"
+        params do
+          requires :id, type: Integer, desc: "user id"
+        end
+        route_param :id do
+          get :rides_as_driver do
+            user.rides_as_driver.extend(RidesRepresenter)
+          end
+        end
+
         desc "Create a user"
         params do
           requires :first_name, type: String, desc: "user first_name"
