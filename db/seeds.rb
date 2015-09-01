@@ -8,7 +8,6 @@ cities = [
   {name: 'Poznań', lat: '52.406374', lng: '16.925168100000064'},
   {name: 'Warszawa', lat: '52.2296756', lng: '21.012228700000037'}
 ]
-currencies= %w(pln usd eur)
 
 5.times.collect do |i|
   u = User.create(
@@ -42,7 +41,7 @@ currencies= %w(pln usd eur)
         seats: rand(1..6),
         start_date: rand(50..100).days.from_now,
         price: rand(1..50),
-        currency: currencies.sample,
+        currency: Ride.currencies.keys.sample,
         car: c
       )
     end
@@ -59,7 +58,7 @@ currencies= %w(pln usd eur)
         seats: rand(1..6),
         start_date: rand(1..50).days.ago,
         price: rand(1..50),
-        currency: currencies.sample,
+        currency: Ride.currencies.keys.sample,
         car: c
       )
     end
