@@ -16,6 +16,7 @@ module UserRepresenter
   property :avatar
   property :role
   property :cars, extend: SimpleCarsRepresenter
+  property :rides_as_driver, extend: RidesRepresenter
 
   def first_name
     super.capitalize
