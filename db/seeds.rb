@@ -28,9 +28,11 @@ cities = [
       category: Car.categories.keys.sample,
       user: u
     )
+
+    # future rides
     1.times.collect do |i|
       start, destination = cities.sample(2)
-      r = Ride.create(
+      fr = Ride.create(
         start_city: start[:name],
         start_city_lat: start[:lat],
         start_city_lng: start[:lng],
@@ -44,10 +46,22 @@ cities = [
         currency: Ride.currencies.keys.sample,
         car: c
       )
+
+      # future ride requests
+      1.times.collect do |i|
+        rr = RideRequest.create(
+          passenger: User.all.sample,
+          ride: fr,
+          status: rand(-1..1)
+        )
+      end
     end
+
+
+    # past rides
     1.times.collect do |i|
       start, destination = cities.sample(2)
-      r = Ride.create(
+      pr = Ride.create(
         start_city: start[:name],
         start_city_lat: start[:lat],
         start_city_lng: start[:lng],
@@ -61,6 +75,16 @@ cities = [
         currency: Ride.currencies.keys.sample,
         car: c
       )
+
+      # past ride requests
+      1.times.collect do |i|
+        rr = RideRequest.create(
+          passenger: User.all.sample,
+          ride: pr,
+          status: rand(-1..1)
+        )
+      end
     end
+
   end
 end
