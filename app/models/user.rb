@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   has_many :rides_as_driver,    class_name: 'Ride', foreign_key: 'driver_id'
   has_many :ride_requests,      foreign_key: 'passenger_id'
 
-
   enum role: { user: 0, admin: 1 }
 
   validates :first_name, presence: true

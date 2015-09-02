@@ -33,7 +33,7 @@ module API
         end
         route_param :id do
           get :rides_as_driver do
-            user.rides_as_driver.extend(RidesRepresenter)
+            user.rides_as_driver.includes(:car).extend(RidesAsDriverRepresenter)
           end
         end
 
@@ -44,7 +44,7 @@ module API
         route_param :id do
           get :rides_as_passenger do
             authenticate!
-            user.rides_as_passenger.extend(RidesRepresenter)
+            user.rides_as_passenger.includes(:car).includes(:driver).extend(RidesAsPassengerRepresenter)
           end
         end
 
