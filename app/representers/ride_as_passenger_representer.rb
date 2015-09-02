@@ -6,16 +6,52 @@ module RideAsPassengerRepresenter
   property :id
   property :start_city
   property :destination_city
-  property :seats
-  property :seats_full
+  property :places
+  property :places_full
   property :start_date
   property :price
   property :currency
-  property :driver, extend: IndexUserRepresenter
-  property :car, extend: SimpleCarRepresenter
-  # property :status
+  property :car
+  property :driver
+  property :status
 
-  # def status
-  #   request_status(current_user) if current_user.present?
-  # end
+  def id
+    ride.id
+  end
+
+  def start_city
+    ride.start_city
+  end
+
+  def destination_city
+    ride.destination_city
+  end
+
+  def places
+    ride.places
+  end
+
+  def places_full
+    ride.places_full
+  end
+
+  def start_date
+    ride.start_date
+  end
+
+  def price
+    ride.price
+  end
+
+  def currency
+    ride.currency
+  end
+
+  def driver
+    ride.driver.extend(IndexUserRepresenter).to_hash
+  end
+
+  def car
+    ride.car.extend(SimpleCarRepresenter).to_hash
+  end
 end

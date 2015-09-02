@@ -44,7 +44,7 @@ module API
         route_param :id do
           get :rides_as_passenger do
             authenticate!
-            user.rides_as_passenger.includes(:car).includes(:driver).extend(RidesAsPassengerRepresenter)
+            user.ride_requests.includes(ride: [:driver, :car]).extend(RidesAsPassengerRepresenter)
           end
         end
 
