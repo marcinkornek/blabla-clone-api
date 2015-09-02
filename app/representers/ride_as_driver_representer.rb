@@ -6,8 +6,8 @@ module RideAsDriverRepresenter
   property :id
   property :start_city
   property :destination_city
-  property :seats
-  property :seats_full
+  property :places
+  property :places_full
   property :start_date
   property :price
   property :currency

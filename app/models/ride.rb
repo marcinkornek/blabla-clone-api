@@ -10,7 +10,7 @@ class Ride < ActiveRecord::Base
     user.present? ? where.not(driver_id: user) : all
   end
 
-  def seats_full
-    seats.to_s + ' ' + ('place').pluralize(seats)
+  def places_full
+    places.to_s + ' ' + ('place').pluralize(places)
   end
 end

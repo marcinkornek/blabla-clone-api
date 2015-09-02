@@ -34,7 +34,7 @@ module API
           requires :destination_city,     type: String, desc: "user destination_city"
           requires :destination_city_lat, type: String, desc: "user destination_city_lat"
           requires :destination_city_lng, type: String, desc: "user destination_city_lng"
-          requires :seats,                type: Integer, desc: "user seats"
+          requires :places,               type: Integer, desc: "user places"
           requires :start_date,           type: DateTime, desc: "user start_date"
           requires :price,                type: String, desc: "user price"
           requires :currency,             type: String, desc: "user currency"
@@ -49,7 +49,7 @@ module API
             destination_city:     params[:destination_city],
             destination_city_lat: params[:destination_city_lat],
             destination_city_lng: params[:destination_city_lng],
-            seats:                params[:seats],
+            places:               params[:places],
             start_date:           params[:start_date],
             price:                params[:price],
             car_id:               params[:car_id],
@@ -73,7 +73,7 @@ module API
           requires :destination_city,     type: String, desc: "user destination_city"
           requires :destination_city_lat, type: String, desc: "user destination_city_lat"
           requires :destination_city_lng, type: String, desc: "user destination_city_lng"
-          requires :seats,                type: Integer, desc: "user seats"
+          requires :places,               type: Integer, desc: "user places"
           requires :start_date,           type: DateTime, desc: "user start_date"
           requires :price,                type: String, desc: "user price"
           requires :currency,             type: String, desc: "user currency"
@@ -90,7 +90,7 @@ module API
                   destination_city:     params[:destination_city],
                   destination_city_lat: params[:destination_city_lat],
                   destination_city_lng: params[:destination_city_lng],
-                  seats:                params[:seats],
+                  places:               params[:places],
                   start_date:           params[:start_date],
                   price:                params[:price],
                   car_id:               params[:car_id],

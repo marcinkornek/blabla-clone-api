@@ -10,8 +10,8 @@ module RideRepresenter
   property :destination_city
   property :destination_city_lat
   property :destination_city_lng
-  property :seats
-  property :seats_full
+  property :places
+  property :places_full
   property :start_date
   property :price
   property :currency
