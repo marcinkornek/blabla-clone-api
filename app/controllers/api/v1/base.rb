@@ -32,6 +32,7 @@ module API
       mount API::V1::Users
       mount API::V1::UsersCars
       mount API::V1::Rides
+      mount API::V1::RideRequests
     end
   end
 end
