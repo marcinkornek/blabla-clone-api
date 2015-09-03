@@ -42,6 +42,16 @@ module API
           end
         end
 
+        desc "Return a user from access_token and email"
+        get :get_user do
+          authenticate!
+          if token
+            token.extend(TokenRepresenter)
+          else
+            error!({error: 'Invalid email and/or access_token'}, 401)
+          end
+        end
+
         desc "Destroy the access token"
         delete do
           authenticate!
