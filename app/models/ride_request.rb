@@ -3,4 +3,6 @@ class RideRequest < ActiveRecord::Base
   belongs_to :ride
 
   enum status:  { rejected: -1, pending: 0, accepted: 1 }
+
+  counter_culture :ride, column_name: Proc.new {|model| model.accepted? ? 'taken_places' : nil }, delta_column: 'places'
 end

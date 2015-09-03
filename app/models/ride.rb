@@ -11,7 +11,7 @@ class Ride < ActiveRecord::Base
   end
 
   def free_places_count
-    places - ride_requests.where(status: RideRequest.statuses[:accepted]).sum(:places)
+    places - taken_places
   end
 
   def places_full
