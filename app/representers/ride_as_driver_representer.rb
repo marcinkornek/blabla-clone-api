@@ -6,6 +6,7 @@ module RideAsDriverRepresenter
   property :id
   property :start_city
   property :destination_city
+  property :free_places_count
   property :places
   property :places_full
   property :start_date

@@ -6,6 +6,7 @@ module RideAsPassengerRepresenter
   property :id
   property :start_city
   property :destination_city
+  property :free_places_count
   property :places
   property :places_full
   property :start_date
@@ -25,6 +26,10 @@ module RideAsPassengerRepresenter
 
   def destination_city
     ride.destination_city
+  end
+
+  def free_places_count
+    ride.free_places_count
   end
 
   def places

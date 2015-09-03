@@ -10,7 +10,11 @@ class Ride < ActiveRecord::Base
     user.present? ? where.not(driver_id: user) : all
   end
 
+  def free_places_count
+    places - ride_requests.where(status: RideRequest.statuses[:accepted]).sum(:places)
+  end
+
   def places_full
-    places.to_s + ' ' + ('place').pluralize(places)
+    free_places_count.to_s + ' ' + ('place').pluralize(free_places_count)
   end
 end

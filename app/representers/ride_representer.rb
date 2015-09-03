@@ -10,6 +10,7 @@ module RideRepresenter
   property :destination_city
   property :destination_city_lat
   property :destination_city_lng
+  property :free_places_count
   property :places
   property :places_full
   property :start_date

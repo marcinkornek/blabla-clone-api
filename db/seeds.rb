@@ -52,7 +52,8 @@ cities = [
         rr = RideRequest.create(
           passenger: User.all.sample,
           ride: fr,
-          status: rand(-1..1)
+          status: rand(-1..1),
+          places: rand(1..fr.places)
         )
       end
     end
@@ -81,7 +82,8 @@ cities = [
         rr = RideRequest.create(
           passenger: User.all.sample,
           ride: pr,
-          status: rand(-1..1)
+          status: rand(-1..1),
+          places: rand(1..pr.places)
         )
       end
     end
