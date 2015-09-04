@@ -24,8 +24,9 @@ module BlablaCloneApi
     config.active_record.raise_in_transactional_callbacks = true
 
     config.middleware.use Rack::Cors do
+      Rails.env.development? ? origins = 'http://localhost:8080' : origins = 'https://blabla-clone-react.herokuapp.com'
       allow do
-        origins 'http://localhost:8080' # change later to front end url
+        origins origins
         # location of your API
         resource '/api/*',
           :headers => :any,
