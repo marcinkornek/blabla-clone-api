@@ -97,8 +97,8 @@ module API
                   first_name: params[:first_name],
                   last_name:  params[:last_name],
                   email:      params[:email],
-                  tel_num:    tel_num,
-                  birth_year: birth_year
+                  tel_num:    params[:tel_num].presence,
+                  birth_year: params[:birth_year].presence
                 )
                 if params[:avatar].present?
                   string = params[:avatar][:image].sub(/data:image.*base64,/, '')
