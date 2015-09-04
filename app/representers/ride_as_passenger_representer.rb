@@ -53,10 +53,10 @@ module RideAsPassengerRepresenter
   end
 
   def driver
-    ride.driver.extend(IndexUserRepresenter).to_hash
+    ride.driver.extend(UserIndexRepresenter).to_hash
   end
 
   def car
-    ride.car.extend(SimpleCarRepresenter).to_hash
+    ride.car.extend(CarSimpleRepresenter).to_hash
   end
 end

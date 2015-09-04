@@ -1,6 +1,6 @@
 require 'roar/json'
 
-module RideAsDriverRepresenter
+module RideIndexRepresenter
   include Roar::JSON
 
   property :id
@@ -12,5 +12,6 @@ module RideAsDriverRepresenter
   property :start_date
   property :price
   property :currency
-  property :car, extend: CarSimpleRepresenter
+  property :driver, extend: UserSimpleRepresenter
+  property :car,    extend: CarSimpleRepresenter
 end

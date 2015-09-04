@@ -13,7 +13,7 @@ module API
 
 	      desc "Return list of rides"
 	      get do
-	        Ride.other_users_rides(current_user).includes(:driver).includes(:car).extend(RidesRepresenter)
+	        Ride.other_users_rides(current_user).includes(:driver).includes(:car).extend(RidesIndexRepresenter)
 	      end
 
 	      desc "Return a ride"
@@ -22,7 +22,11 @@ module API
 	      end
 	      route_param :id do
 	        get do
-	          ride.extend(RideRepresenter)
+            if ride_owner?
+              ride.extend(RideShowOwnerRepresenter)
+            else
+              ride.extend(RideShowRepresenter)
+            end
 	        end
 	      end
 
@@ -116,7 +120,7 @@ module API
         end
 
         def ride_owner?
-          ride.driver.id == current_user.id
+          ride.driver.id == current_user.id if current_user.present?
         end
       end
     end

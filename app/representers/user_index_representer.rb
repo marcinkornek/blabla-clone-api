@@ -1,6 +1,6 @@
 require 'roar/json'
 
-module IndexUserRepresenter
+module UserIndexRepresenter
   include Roar::JSON
 
   property :id

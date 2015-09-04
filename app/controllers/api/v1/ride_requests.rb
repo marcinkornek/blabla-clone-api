@@ -15,7 +15,7 @@ module API
             passenger: current_user
           )
           if ride_request.save
-            ride_request.extend(RideRequestRepresenter)
+            ride_request.extend(RideRequestShowRepresenter)
           else
             status 406
             ride_request.errors.messages

@@ -4,7 +4,7 @@ module API
     	resource :users do
 	      desc "Return list of users"
 	      get do
-	        User.all.extend(IndexUsersRepresenter)
+	        User.all.extend(UsersIndexRepresenter)
 	      end
 
 	      desc "Return a user"
@@ -13,7 +13,7 @@ module API
 	      end
 	      route_param :id do
 	        get do
-	          user.extend(UserRepresenter)
+	          user.extend(UserShowRepresenter)
 	        end
 	      end
 
@@ -23,7 +23,7 @@ module API
         end
         route_param :id do
           get :cars do
-            user.cars.extend(CarsRepresenter)
+            user.cars.extend(CarsIndexRepresenter)
           end
         end
 

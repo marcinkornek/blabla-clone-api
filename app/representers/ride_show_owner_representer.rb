@@ -1,6 +1,6 @@
 require 'roar/json'
 
-module RideRepresenter
+module RideShowOwnerRepresenter
   include Roar::JSON
 
   property :id
@@ -10,6 +10,7 @@ module RideRepresenter
   property :destination_city
   property :destination_city_lat
   property :destination_city_lng
+  property :requested_places_count
   property :free_places_count
   property :places
   property :places_full
@@ -18,6 +19,11 @@ module RideRepresenter
   property :currency
   property :created_at
   property :updated_at
-  property :driver, extend: IndexUserRepresenter
-  property :car, extend: SimpleCarRepresenter
+  property :ride_requests, extend: RideRequestsIndexRepresenter
+  property :driver,        extend: UserIndexRepresenter
+  property :car,           extend: CarSimpleRepresenter
+
+  def requested_places_count
+    requested_places
+  end
 end

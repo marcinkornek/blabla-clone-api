@@ -1,15 +1,31 @@
 require 'roar/json'
 
-module SimpleCarRepresenter
+module CarIndexRepresenter
   include Roar::JSON
 
   property :id
+  property :brand
+  property :model
   property :full_name
+  property :production_year
   property :comfort
   property :comfort_stars
+  property :places
   property :places_full
+  property :color
+  property :comfort
+  property :category
+  property :created_at
   property :owner_id
   property :car_photo
+
+  def brand
+    super.upcase
+  end
+
+  def model
+    super.upcase
+  end
 
   def full_name
     super.upcase

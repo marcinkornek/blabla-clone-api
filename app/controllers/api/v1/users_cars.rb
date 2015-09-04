@@ -17,7 +17,7 @@ module API
         end
         route_param :id do
           get do
-            car.extend(CarRepresenter)
+            car.extend(CarIndexRepresenter)
           end
         end
 
@@ -52,7 +52,7 @@ module API
             car.car_photo = AppSpecificStringIO.new(params[:car_photo][:path_name], Base64.decode64(string))
           end
           if car.save
-            car.extend(CarRepresenter)
+            car.extend(CarIndexRepresenter)
           else
             status 406
             car.errors.messages
@@ -93,7 +93,7 @@ module API
                   car.save
                 end
                 status 200
-                car.extend(CarRepresenter)
+                car.extend(CarIndexRepresenter)
               else
                 status 406
                 car.errors.messages

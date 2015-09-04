@@ -1,6 +1,6 @@
 require 'roar/json'
 
-module UserRepresenter
+module UserShowRepresenter
   include Roar::JSON
 
   property :id
@@ -15,8 +15,6 @@ module UserRepresenter
   property :age
   property :avatar
   property :role
-  property :cars, extend: SimpleCarsRepresenter
-  property :rides_as_driver, extend: RidesRepresenter
 
   def first_name
     super.capitalize

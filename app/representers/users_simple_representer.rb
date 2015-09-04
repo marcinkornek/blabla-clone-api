@@ -1,8 +1,8 @@
 require 'roar/json'
 require 'representable/json/collection'
 
-module RideRequestsRepresenter
+module UsersSimpleRepresenter
   include Representable::JSON::Collection
 
-  items extend: RideRequestRepresenter
+  items extend: UserSimpleRepresenter
 end
