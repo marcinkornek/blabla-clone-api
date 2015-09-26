@@ -15,7 +15,9 @@ module API
             passenger: current_user
           )
           if ride_request.save
-            ride_request.extend(RideRequestShowRepresenter)
+            requested = ride_request.ride.user_requested?(current_user)
+            ride_request = ride_request.ride.user_ride_request(current_user) if requested
+            ride_request.ride.extend(RideShowRepresenter).to_hash.merge({ride_request: ride_request, requested: requested})
           else
             status 406
             ride_request.errors.messages

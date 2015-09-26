@@ -17,4 +17,12 @@ class Ride < ActiveRecord::Base
   def places_full
     free_places_count.to_s + ' ' + ('place').pluralize(free_places_count)
   end
+
+  def user_requested?(user)
+    ride_requests.where(passenger_id: user.id).present?
+  end
+
+  def user_ride_request(user)
+    ride_requests.find_by(passenger_id: user.id)
+  end
 end

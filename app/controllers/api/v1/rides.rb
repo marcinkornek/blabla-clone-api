@@ -25,7 +25,13 @@ module API
             if ride_owner?
               ride.extend(RideShowOwnerRepresenter)
             else
-              ride.extend(RideShowRepresenter)
+              if current_user.present?
+                requested = ride.user_requested?(current_user)
+                ride_request = ride.user_ride_request(current_user) if requested
+                ride.extend(RideShowRepresenter).to_hash.merge({ride_request: ride_request, requested: requested})
+              else
+                ride.extend(RideShowRepresenter)
+              end
             end
 	        end
 	      end
