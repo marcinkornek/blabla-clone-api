@@ -28,7 +28,7 @@ module API
               if current_user.present?
                 requested = ride.user_requested?(current_user)
                 ride_request = ride.user_ride_request(current_user) if requested
-                ride.extend(RideShowRepresenter).to_hash.merge({ride_request: ride_request, requested: requested})
+                ride.extend(RideShowRepresenter).to_hash.merge({user_ride_request: ride_request, requested: requested})
               else
                 ride.extend(RideShowRepresenter)
               end
@@ -67,7 +67,7 @@ module API
             driver:               current_user
           )
           if ride.save
-            ride.extend(RideRepresenter)
+            ride.extend(RideIndexRepresenter)
           else
             status 406
             ride.errors.messages
@@ -108,7 +108,7 @@ module API
                   driver:               current_user
                 )
                 status 200
-                ride.extend(RideRepresenter)
+                ride.extend(RideIndexRepresenter)
               else
                 status 406
                 ride.errors.messages
