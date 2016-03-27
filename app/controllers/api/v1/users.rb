@@ -69,7 +69,7 @@ module API
             password_confirmation: params[:password_confirmation]
           )
           if user.save
-            user.extend(UserRepresenter)
+            user.extend(UserShowRepresenter)
           else
             status 406
             user.errors.messages
@@ -106,7 +106,7 @@ module API
                   user.save
                 end
                 status 200
-                user.extend(UserRepresenter)
+                user.extend(UserShowRepresenter)
               else
                 status 406
                 user.errors.messages
