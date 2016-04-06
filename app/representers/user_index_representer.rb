@@ -9,6 +9,7 @@ module UserIndexRepresenter
   property :created_at
   property :age
   property :avatar
+  property :last_seen_at
 
   def full_name
     super.capitalize

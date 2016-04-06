@@ -28,6 +28,12 @@ module API
         end
       end
 
+      before do
+        if current_user
+         current_user.touch :last_seen_at
+        end
+      end
+
       mount API::V1::Sessions
       mount API::V1::Users
       mount API::V1::UsersCars

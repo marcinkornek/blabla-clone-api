@@ -15,6 +15,7 @@ module UserShowRepresenter
   property :age
   property :avatar
   property :role
+  property :last_seen_at
   property :cars, extend: CarsSimpleRepresenter
   property :rides_as_driver, extend: RidesAsDriverRepresenter
 
