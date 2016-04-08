@@ -26,6 +26,26 @@ module API
         def current_user
           @current_user ||= User.find(token.user_id) if token && !token.expired?
         end
+
+        def kaminari_params(collection)
+          {
+            current_page: collection.current_page,
+            next_page: collection.next_page,
+            prev_page: collection.prev_page,
+            total_pages: collection.total_pages,
+            total_count: collection.total_count
+          }
+        end
+
+        def paginated_results(results, page)
+          return { collection: results, meta: {} } if page.nil?
+
+          collection = results.page(page)
+          {
+            collection: collection,
+            meta: kaminari_params(collection)
+          }
+        end
       end
 
       before do
