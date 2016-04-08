@@ -10,6 +10,7 @@ gem 'pg'              # database for Active Record
 gem 'grape'           # REST-like API micro-framework for Ruby
 gem 'devise'          # authentication
 gem 'roar'            # Ruby representer
+gem 'grape-entity'    # Grape representer
 gem 'counter_culture' # turbo-charged counter caches
 gem 'kaminari'        # pagination
 gem 'api-pagination'
