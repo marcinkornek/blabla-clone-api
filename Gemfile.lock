@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rollbar/rollbar-gem.git
+  revision: a0a6d36306c26e379276d592dc9891d3b4407798
+  specs:
+    rollbar (2.9.1)
+      multi_json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -232,6 +239,7 @@ GEM
     multi_xml (0.5.5)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    oj (2.12.14)
     orm_adapter (0.5.0)
     pg (0.18.4)
     pry (0.10.3)
@@ -345,12 +353,14 @@ DEPENDENCIES
   http_accept_language
   kaminari
   mini_magick
+  oj (~> 2.12.14)
   pg
   pry-rails
   rack-cors
   rails (= 4.2.6)
   rails-api
   roar
+  rollbar!
   rspec-rails
   spring
 

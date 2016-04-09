@@ -29,3 +29,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'database_cleaner'
 end
+
+group :production do
+  gem 'rollbar', git: 'git://github.com/rollbar/rollbar-gem.git'
+  gem 'oj', '~> 2.12.14'
+end
