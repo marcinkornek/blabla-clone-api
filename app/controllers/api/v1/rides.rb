@@ -12,8 +12,16 @@ module API
         end
 
 	      desc "Return list of rides"
+        params do
+          optional :page, type: Integer, desc: "page"
+        end
 	      get do
-	        Ride.other_users_rides(current_user).includes(:driver).includes(:car).extend(RidesIndexRepresenter)
+          page = params[:page] || 1
+	        rides = Ride.other_users_rides(current_user).includes(:driver).includes(:car)
+          results = paginated_results(rides, page)
+          present results[:collection],
+                  with: Entities::RidesIndex,
+                  pagination: results[:meta]
 	      end
 
 	      desc "Return a ride"
