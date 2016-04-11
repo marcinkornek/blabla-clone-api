@@ -12,7 +12,7 @@ gem 'devise'          # authentication
 gem 'roar'            # Ruby representer
 gem 'grape-entity'    # Grape representer
 gem 'counter_culture' # turbo-charged counter caches
-gem 'kaminari'        # pagination
+gem 'kaminari', :require => 'kaminari/grape' # pagination
 gem 'api-pagination'
 gem 'http_accept_language' # extracts Accept-Language header into an array
 gem 'rack-cors', :require => 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
