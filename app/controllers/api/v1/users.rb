@@ -5,11 +5,13 @@ module API
 	      desc "Return list of users"
         params do
           optional :page, type: Integer, desc: "page"
+          optional :per, type: Integer, desc: "per"
         end
         get do
           page = params[:page] || 1
+          per  = params[:per] || 25
           users = User.all
-          results = paginated_results(users, page, 10)
+          results = paginated_results(users, page, per)
           present results[:collection],
                   with: Entities::UsersIndex,
                   pagination: results[:meta]
