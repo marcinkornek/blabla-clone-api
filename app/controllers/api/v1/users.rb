@@ -30,31 +30,55 @@ module API
         desc "Return user cars"
         params do
           requires :id, type: Integer, desc: "user id"
+          optional :page, type: Integer, desc: "page"
+          optional :per, type: Integer, desc: "per"
         end
         route_param :id do
           get :cars do
-            user.cars.extend(CarsIndexRepresenter)
+            page = params[:page] || 1
+            per  = params[:per] || 25
+            cars = user.cars
+            results = paginated_results(cars, page, per)
+            present results[:collection],
+                    with: Entities::CarsIndex,
+                    pagination: results[:meta]
           end
         end
 
         desc "Return user rides as driver"
         params do
           requires :id, type: Integer, desc: "user id"
+          optional :page, type: Integer, desc: "page"
+          optional :per, type: Integer, desc: "per"
         end
         route_param :id do
           get :rides_as_driver do
-            user.rides_as_driver.includes(:car).extend(RidesAsDriverRepresenter)
+            page = params[:page] || 1
+            per  = params[:per] || 25
+            rides = user.rides_as_driver.includes(:car)
+            results = paginated_results(rides, page, per)
+            present results[:collection],
+                    with: Entities::RidesAsDriver,
+                    pagination: results[:meta]
           end
         end
 
         desc "Return user rides as passenger"
         params do
           requires :id, type: Integer, desc: "user id"
+          optional :page, type: Integer, desc: "page"
+          optional :per, type: Integer, desc: "per"
         end
         route_param :id do
           get :rides_as_passenger do
             authenticate!
-            user.ride_requests.includes(ride: [:driver, :car]).extend(RidesAsPassengerRepresenter)
+            page = params[:page] || 1
+            per  = params[:per] || 25
+            rides = user.ride_requests.includes(ride: [:driver, :car])
+            results = paginated_results(rides, page, per)
+            present results[:collection],
+                    with: Entities::RidesAsPassenger,
+                    pagination: results[:meta]
           end
         end
 
