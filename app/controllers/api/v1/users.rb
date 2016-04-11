@@ -3,9 +3,17 @@ module API
     class Users < Grape::API
     	resource :users do
 	      desc "Return list of users"
-	      get do
-	        User.all.extend(UsersIndexRepresenter)
-	      end
+        params do
+          optional :page, type: Integer, desc: "page"
+        end
+        get do
+          page = params[:page] || 1
+          users = User.all
+          results = paginated_results(users, page, 10)
+          present results[:collection],
+                  with: Entities::UsersIndex,
+                  pagination: results[:meta]
+        end
 
 	      desc "Return a user"
 	      params do

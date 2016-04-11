@@ -37,10 +37,10 @@ module API
           }
         end
 
-        def paginated_results(results, page)
+      def paginated_results(results, page, per = 25)
           return { collection: results, meta: {} } if page.nil?
 
-          collection = results.page(page)
+          collection = results.page(page).per(per)
           {
             collection: collection,
             meta: kaminari_params(collection)
