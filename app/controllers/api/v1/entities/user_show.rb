@@ -2,21 +2,21 @@ module API
   module V1
     module Entities
       class UserShow < Grape::Entity
-        espose :id
-        espose :first_name
-        espose :last_name
-        espose :full_name
-        espose :email
-        espose :tel_num
-        espose :birth_year
-        espose :created_at
-        espose :updated_at
-        espose :age
-        espose :avatar
-        espose :role
-        espose :last_seen_at
-        espose :cars, using: Entities::CarsSimple
-        espose :rides_as_driver, using: Entities::RidesAsDriver
+        expose :id
+        expose :first_name
+        expose :last_name
+        expose :full_name
+        expose :email
+        expose :tel_num
+        expose :birth_year
+        expose :created_at
+        expose :updated_at
+        expose :age
+        expose :avatar
+        expose :role
+        expose :last_seen_at
+        expose :cars, using: Entities::CarsSimple
+        expose :rides_as_driver, using: Entities::RidesAsDriver
 
         def first_name
           object.first_name.capitalize
