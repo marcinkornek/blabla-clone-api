@@ -3,7 +3,7 @@ module API
     module Entities
       class RideRequestsIndex < Grape::Entity
         present_collection true
-        expose :items, as: 'user', using: Entities::RideRequestIndex
+        expose :items, as: 'ride_requests', using: Entities::RideRequestIndex
 
         expose :meta
 

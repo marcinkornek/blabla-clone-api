@@ -3,7 +3,7 @@ module API
     module Entities
       class CarsIndex < Grape::Entity
         present_collection true
-        expose :items, as: 'user', using: Entities::CarIndex
+        expose :items, as: 'cars', using: Entities::CarIndex
 
         expose :meta
 
