@@ -17,15 +17,25 @@ module API
                   pagination: results[:meta]
         end
 
-	      desc "Return a user"
+	      desc "Return a user show"
 	      params do
 	        requires :id, type: Integer, desc: "user id"
 	      end
 	      route_param :id do
 	        get do
-	          user.extend(UserShowRepresenter)
+	          present user, with: Entities::UserShow
 	        end
 	      end
+
+        desc "Return a user profile"
+        params do
+          requires :id, type: Integer, desc: "user id"
+        end
+        route_param :id do
+          get :profile do
+            present user, with: Entities::UserProfile
+          end
+        end
 
         desc "Return user cars"
         params do
@@ -103,7 +113,7 @@ module API
             password_confirmation: params[:password_confirmation]
           )
           if user.save
-            user.extend(UserShowRepresenter)
+            present user, with: Entities::UserProfile
           else
             status 406
             user.errors.messages
@@ -140,7 +150,7 @@ module API
                   user.save
                 end
                 status 200
-                user.extend(UserShowRepresenter)
+                present user, with: Entities::UserProfile
               else
                 status 406
                 user.errors.messages
