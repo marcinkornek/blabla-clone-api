@@ -129,8 +129,11 @@ module API
           optional :tel_num,    type: String, desc: "user telephone number"
           optional :birth_year, type: String, desc: "user birth year"
           optional :avatar,     type: Hash do
-            optional :image, type: String
-            optional :path_name, type: String
+            optional :filename, type: String
+            optional :type, type: String
+            optional :name, type: String
+            optional :tempfile
+            optional :head, type: String
           end
         end
         route_param :id do
@@ -145,8 +148,7 @@ module API
                   birth_year: params[:birth_year].presence
                 )
                 if params[:avatar].present?
-                  string = params[:avatar][:image].sub(/data:image.*base64,/, '')
-                  user.avatar = AppSpecificStringIO.new(params[:avatar][:path_name], Base64.decode64(string))
+                  user.avatar = params[:avatar][:tempfile]
                   user.save
                 end
                 status 200
