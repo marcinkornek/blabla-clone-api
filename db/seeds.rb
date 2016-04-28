@@ -1,17 +1,17 @@
 car_brands = %w(ford fiat kia honda mercedes bmw)
 car_models = %w(focus 500 ceed civic slr 7)
 cities = [
-  {name: 'Wrocław', lat: '51.1078852', lng: '17.03853760000004'},
-  {name: 'Kraków', lat: '50.06465009999999', lng: '19.94497990000002'},
-  {name: 'Opole', lat: '50.6751067', lng: '17.921297600000003'},
-  {name: 'Zakopane', lat: '49.299181', lng: '19.94956209999998'},
-  {name: 'Poznań', lat: '52.406374', lng: '16.925168100000064'},
-  {name: 'Warszawa', lat: '52.2296756', lng: '21.012228700000037'}
+  {name: 'Wrocław, Polska', lat: '51.1078852', lng: '17.03853760000004'},
+  {name: 'Kraków, Polska', lat: '50.06465009999999', lng: '19.94497990000002'},
+  {name: 'Opole, Polska', lat: '50.6751067', lng: '17.921297600000003'},
+  {name: 'Zakopane, Polska', lat: '49.299181', lng: '19.94956209999998'},
+  {name: 'Poznań, Polska', lat: '52.406374', lng: '16.925168100000064'},
+  {name: 'Warszawa, Polska', lat: '52.2296756', lng: '21.012228700000037'}
 ]
 
 5.times.collect do |i|
   u = User.create(
-    email: "test#{i}@o2.pl",
+    email: "test#{i}@a.com",
     first_name: "first_name#{i}",
     last_name: "last_name#{i}",
     birth_year: rand(1950..1995),
