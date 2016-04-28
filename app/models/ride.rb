@@ -6,6 +6,10 @@ class Ride < ActiveRecord::Base
 
   enum currency:  { pln: 0, usd: 1, eur: 2 }
 
+  scope :from_city, ->(city) { where(start_city: city) }
+  scope :to_city, ->(city) { where(destination_city: city) }
+  scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
+
   def self.other_users_rides(user)
     user.present? ? where.not(driver_id: user) : all
   end
