@@ -9,6 +9,8 @@ class Ride < ActiveRecord::Base
   scope :from_city, ->(city) { where(start_city: city) }
   scope :to_city, ->(city) { where(destination_city: city) }
   scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
+  scope :without_full, -> { where('rides.places > rides.taken_places') }
+  scope :full_rides, -> { where('rides.places = rides.taken_places') }
 
   def self.other_users_rides(user)
     user.present? ? where.not(driver_id: user) : all
