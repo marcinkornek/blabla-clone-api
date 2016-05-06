@@ -30,9 +30,12 @@ module API
           requires :color,    type: String, desc: "car color"
           requires :category, type: String, desc: "car category"
           requires :production_year, type: String, desc: "car production year"
-          optional :car_photo, type: Hash do
-            optional :image, type: String
-            optional :path_name, type: String
+          optional :car_photo,  type: Hash do
+            optional :filename, type: String
+            optional :type,     type: String
+            optional :name,     type: String
+            optional :tempfile
+            optional :head,     type: String
           end
         end
         post do
@@ -48,8 +51,8 @@ module API
             user:     current_user
           )
           if params[:car_photo].present?
-            string = params[:car_photo][:image].sub(/data:image.*base64,/, '')
-            car.car_photo = AppSpecificStringIO.new(params[:car_photo][:path_name], Base64.decode64(string))
+            car.car_photo = params[:car_photo][:tempfile]
+            car.save
           end
           if car.save
             car.extend(CarIndexRepresenter)
