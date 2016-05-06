@@ -6,11 +6,16 @@ module API
         expose :items, as: 'rides', using: Entities::RideIndex
 
         expose :meta
+        expose :filters
 
         private
 
         def meta
           options[:pagination]
+        end
+
+        def filters
+          options[:filters]
         end
       end
     end

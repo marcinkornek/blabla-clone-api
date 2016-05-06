@@ -15,22 +15,25 @@ module API
         params do
           optional :page, type: Integer, desc: "page"
           optional :per, type: Integer, desc: "per"
-          optional :start_city, type: String, desc: "filter start_city"
-          optional :destination_city, type: String, desc: "filter destination_city"
-          optional :date, type: String, desc: "findilter date"
+          optional :start_city, type: String, desc: "filter by start_city"
+          optional :destination_city, type: String, desc: "filter by destination_city"
+          optional :date, type: String, desc: "filter by date"
+          optional :hide_full, type: Boolean, desc: "hide full rides filter"
         end
 	      get do
           page = params[:page] || 1
           per  = params[:per] || 25
           date = params[:date].to_datetime if params[:date].present?
 	        rides = Ride.other_users_rides(current_user).includes(:driver).includes(:car)
+          rides = rides.without_full if params[:hide_full] == 'true'
           rides = rides.from_city(params[:start_city]) if params[:start_city].present?
           rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
           rides = rides.in_day(date) if params[:date].present?
-          results = paginated_results(rides, page, per)
+          results = paginated_results_with_filters(rides, page, per)
           present results[:collection],
                   with: Entities::RidesIndex,
-                  pagination: results[:meta]
+                  pagination: results[:meta],
+                  filters: results[:filters]
 	      end
 
 	      desc "Return a ride"
@@ -144,6 +147,24 @@ module API
 
         def ride_owner?
           ride.driver.id == current_user.id if current_user.present?
+        end
+
+        def paginated_results_with_filters(results, page, per = 25)
+          return { collection: results, meta: {} } if page.nil?
+
+          collection = results.page(page).per(per)
+          filters = rides_filters(results)
+          {
+            collection: collection,
+            meta: kaminari_params(collection),
+            filters: filters
+          }
+        end
+
+        def rides_filters(results)
+          {
+            full_rides: results.full_rides.count
+          }
         end
       end
     end
