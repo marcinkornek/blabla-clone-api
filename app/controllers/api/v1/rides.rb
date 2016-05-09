@@ -65,13 +65,14 @@ module API
           optional :destination_city_lat, type: String, desc: "user destination_city_lat"
           optional :destination_city_lng, type: String, desc: "user destination_city_lng"
           requires :places,               type: Integer, desc: "user places"
-          requires :start_date,           type: DateTime, desc: "user start_date"
+          requires :start_date,           type: String, desc: "user start_date"
           requires :price,                type: String, desc: "user price"
           requires :currency,             type: String, desc: "user currency"
           requires :car_id,               type: Integer, desc: "user car_id"
         end
         post do
           authenticate!
+          start_date = params[:start_date].to_datetime if params[:start_date].present?
           ride = Ride.new(
             start_city:           params[:start_city],
             start_city_lat:       params[:start_city_lat],
@@ -80,7 +81,7 @@ module API
             destination_city_lat: params[:destination_city_lat],
             destination_city_lng: params[:destination_city_lng],
             places:               params[:places],
-            start_date:           params[:start_date],
+            start_date:           start_date,
             price:                params[:price],
             car_id:               params[:car_id],
             currency:             params[:currency],
