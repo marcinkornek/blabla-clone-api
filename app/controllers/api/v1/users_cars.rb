@@ -91,8 +91,7 @@ module API
                   production_year: params[:production_year]
                 )
                 if params[:car_photo].present?
-                  string = params[:car_photo][:image].sub(/data:image.*base64,/, '')
-                  car.car_photo = AppSpecificStringIO.new(params[:car_photo][:path_name], Base64.decode64(string))
+                  car.car_photo = params[:car_photo][:tempfile]
                   car.save
                 end
                 status 200
