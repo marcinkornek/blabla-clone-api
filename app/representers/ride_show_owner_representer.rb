@@ -17,6 +17,7 @@ module RideShowOwnerRepresenter
   property :start_date
   property :price
   property :currency
+  property :car_id
   property :created_at
   property :updated_at
   property :ride_requests, extend: RideRequestsIndexRepresenter
