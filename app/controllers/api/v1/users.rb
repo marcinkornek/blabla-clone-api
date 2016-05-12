@@ -97,10 +97,17 @@ module API
           requires :first_name, type: String, desc: "user first_name"
           requires :last_name,  type: String, desc: "user last_name"
           requires :email,      type: String, desc: "user email"
-          optional :tel_num,    type: String, desc: "user telephone number"
-          optional :birth_year, type: String, desc: "user birth year"
           requires :password,   type: String, desc: "user password"
           requires :password_confirmation, type: String, desc: "user password confirmation"
+          optional :tel_num,    type: String, desc: "user telephone number"
+          optional :birth_year, type: String, desc: "user birth year"
+          optional :avatar,     type: Hash do
+            optional :filename, type: String
+            optional :type, type: String
+            optional :name, type: String
+            optional :tempfile
+            optional :head, type: String
+          end
         end
         post do
           user = User.new(
@@ -112,6 +119,10 @@ module API
             birth_year: params[:birth_year].presence,
             password_confirmation: params[:password_confirmation]
           )
+          if params[:avatar].present?
+            user.avatar = params[:avatar][:tempfile]
+            user.save
+          end
           if user.save
             present user, with: Entities::UserProfile
           else
