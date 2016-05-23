@@ -17,18 +17,18 @@ module API
           optional :per, type: Integer, desc: "per"
           optional :start_city, type: String, desc: "filter by start_city"
           optional :destination_city, type: String, desc: "filter by destination_city"
-          optional :date, type: String, desc: "filter by date"
+          optional :start_date, type: String, desc: "filter by start date"
           optional :hide_full, type: Boolean, desc: "hide full rides filter"
         end
 	      get do
           page = params[:page] || 1
           per  = params[:per] || 25
-          date = params[:date].to_datetime if params[:date].present?
+          start_date = params[:start_date].to_datetime if params[:start_date].present?
 	        rides = Ride.other_users_rides(current_user).includes(:driver).includes(:car)
           rides = rides.without_full if params[:hide_full] == 'true'
           rides = rides.from_city(params[:start_city]) if params[:start_city].present?
           rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
-          rides = rides.in_day(date) if params[:date].present?
+          rides = rides.in_day(start_date) if params[:start_date].present?
           results = paginated_results_with_filters(rides, page, per)
           present results[:collection],
                   with: Entities::RidesIndex,
