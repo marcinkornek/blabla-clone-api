@@ -99,11 +99,11 @@ module API
         params do
           requires :id,       type: Integer, desc: "ride id"
           requires :start_city,           type: String, desc: "user start_city"
-          requires :start_city_lat,       type: String, desc: "user start_city_lat"
-          requires :start_city_lng,       type: String, desc: "user start_city_lng"
+          optional :start_city_lat,       type: String, desc: "user start_city_lat"
+          optional :start_city_lng,       type: String, desc: "user start_city_lng"
           requires :destination_city,     type: String, desc: "user destination_city"
-          requires :destination_city_lat, type: String, desc: "user destination_city_lat"
-          requires :destination_city_lng, type: String, desc: "user destination_city_lng"
+          optional :destination_city_lat, type: String, desc: "user destination_city_lat"
+          optional :destination_city_lng, type: String, desc: "user destination_city_lng"
           requires :places,               type: Integer, desc: "user places"
           requires :start_date,           type: DateTime, desc: "user start_date"
           requires :price,                type: String, desc: "user price"
@@ -114,19 +114,22 @@ module API
           put do
             authenticate!
             if ride && ride_owner?
-              if ride.update(
+              if params[:start_city_lat].present? && params[:destination_city_lat].present?
+                ride.update(
                   start_city:           params[:start_city],
                   start_city_lat:       params[:start_city_lat],
                   start_city_lng:       params[:start_city_lng],
                   destination_city:     params[:destination_city],
                   destination_city_lat: params[:destination_city_lat],
-                  destination_city_lng: params[:destination_city_lng],
+                  destination_city_lng: params[:destination_city_lng]
+                )
+              end
+              if ride.update(
                   places:               params[:places],
                   start_date:           params[:start_date],
                   price:                params[:price],
                   car_id:               params[:car_id],
                   currency:             params[:currency],
-                  driver:               current_user
                 )
                 status 200
                 ride.extend(RideIndexRepresenter)
