@@ -1,7 +1,7 @@
-## API for Blablacar clone application using [*React + Redux*](github.com/marcinkornek/blabla-clone-react) + Rails API
+## API for Blablacar clone application using [*React + Redux*](https://github.com/marcinkornek/blabla-clone-react) + Rails API
 
 #### Description
-Application which uses [*React + Redux*](github.com/marcinkornek/blabla-clone-react) + Rails API
+Application which uses [*React + Redux*](https://github.com/marcinkornek/blabla-clone-react) + Rails API
 
 ## Setup
 Follow these steps to setup the application:
