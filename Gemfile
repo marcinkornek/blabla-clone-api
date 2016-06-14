@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 ruby '2.3.0'
 
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0.rc1'
 gem 'spring', :group => :development
 gem 'bullet', :group => :development
 
-gem 'rails-api'       # Rails for API only applications
 gem 'pg'              # database for Active Record
 gem 'grape'           # REST-like API micro-framework for Ruby
 gem 'devise'          # authentication
