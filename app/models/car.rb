@@ -22,6 +22,6 @@ class Car < ActiveRecord::Base
 
 
   def comfort_stars
-    read_attribute('comfort') + 1 if comfort.present?
+    comfort.to_i + 1 if comfort.present?
   end
 end
