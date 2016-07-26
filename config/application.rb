@@ -22,7 +22,6 @@ module BlablaCloneApi
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.api_only = true
-    config.active_record.raise_in_transactional_callbacks = true
 
     config.middleware.use Rack::Cors do
       Rails.env.development? ? origins = 'http://localhost:8080' : origins = 'https://blabla-clone-react.herokuapp.com'
