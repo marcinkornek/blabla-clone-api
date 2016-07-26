@@ -7,7 +7,7 @@ FactoryGirl.define do
     destination_city_lat Faker::Address.latitude
     destination_city_lng Faker::Address.longitude
     places 4
-    places_taken 0
+    taken_places 0
     start_date 10.days.from_now
     price 11.99
     currency 0
