@@ -19,7 +19,13 @@ class User < ActiveRecord::Base
 
   def self.find_for_oauth(auth)
     user = User.find_by(provider: auth[:provider], uid: auth[:uid])
-    user || create_user_with_aouth(auth)
+    if user
+      return user
+    elsif user_registered_with_email(auth).present?
+      return user_registered_with_email(auth)
+    else
+      create_user_with_aouth(auth)
+    end
   end
 
   def age
@@ -41,6 +47,10 @@ class User < ActiveRecord::Base
       email: auth[:email],
       password: friendly_token
     )
+  end
+
+  def self.user_registered_with_email(auth)
+    User.find_by(email: auth[:email])
   end
 
   def self.friendly_token
