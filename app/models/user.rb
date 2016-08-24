@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :ride_requests,      foreign_key: 'passenger_id'
 
   enum role: { user: 0, admin: 1 }
+  enum gender:  { male: 0, female: 1 }
 
   validates :first_name, presence: true
   validates :last_name,  presence: true

@@ -112,6 +112,7 @@ module API
           requires :email,      type: String, desc: "user email"
           requires :password,   type: String, desc: "user password"
           requires :password_confirmation, type: String, desc: "user password confirmation"
+          optional :gender,     type: String, desc: "user gender"
           optional :tel_num,    type: String, desc: "user telephone number"
           optional :birth_year, type: String, desc: "user birth year"
           optional :avatar,     type: Hash do
@@ -128,6 +129,7 @@ module API
             last_name:  params[:last_name],
             email:      params[:email],
             password:   params[:password],
+            gender:     params[:gender].presence,
             tel_num:    params[:tel_num].presence,
             birth_year: params[:birth_year].presence,
             password_confirmation: params[:password_confirmation]
