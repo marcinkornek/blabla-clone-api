@@ -1,8 +1,8 @@
 module API
   module V1
     class Users < Grape::API
-    	resource :users do
-	      desc "Return list of users"
+      resource :users do
+        desc "Return list of users"
         params do
           optional :page, type: Integer, desc: "page"
           optional :per, type: Integer, desc: "per"
@@ -17,15 +17,28 @@ module API
                   pagination: results[:meta]
         end
 
-	      desc "Return a user show"
-	      params do
-	        requires :id, type: Integer, desc: "user id"
-	      end
-	      route_param :id do
-	        get do
-	          present user, with: Entities::UserShow
-	        end
-	      end
+        desc "Checks if user email is unique"
+        params do
+          requires :email, type: String, desc: "user email"
+        end
+        get :check_if_unique do
+          user_id = current_user&.id
+          if User.where(email: params['email']).where.not(id: user_id).exists?
+            { errors: ['Email already exists']}
+          else
+            { errors: [] }
+          end
+        end
+
+        desc "Return a user show"
+        params do
+          requires :id, type: Integer, desc: "user id"
+        end
+        route_param :id do
+          get do
+            present user, with: Entities::UserShow
+          end
+        end
 
         desc "Return a user profile"
         params do
