@@ -23,7 +23,7 @@ module API
         end
         get :check_if_unique do
           user_id = current_user&.id
-          if User.where(email: params['email']).where.not(id: user_id).exists?
+          if User.where(email: params['email'].downcase).where.not(id: user_id).exists?
             { errors: ['Email already exists']}
           else
             { errors: [] }
