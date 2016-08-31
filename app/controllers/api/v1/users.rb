@@ -114,7 +114,7 @@ module API
           requires :password_confirmation, type: String, desc: "user password confirmation"
           optional :gender,     type: String, desc: "user gender"
           optional :tel_num,    type: String, desc: "user telephone number"
-          optional :birth_year, type: String, desc: "user birth year"
+          optional :date_of_birth, type: Date, desc: "user birth year"
           optional :avatar,     type: Hash do
             optional :filename, type: String
             optional :type, type: String
@@ -131,7 +131,7 @@ module API
             password:   params[:password],
             gender:     params[:gender].presence,
             tel_num:    params[:tel_num].presence,
-            birth_year: params[:birth_year].presence,
+            date_of_birth: params[:date_of_birth].presence,
             password_confirmation: params[:password_confirmation]
           )
           if params[:avatar].present?
@@ -153,14 +153,7 @@ module API
           requires :last_name,  type: String, desc: "user last_name"
           requires :email,      type: String, desc: "user email"
           optional :tel_num,    type: String, desc: "user telephone number"
-          optional :birth_year, type: String, desc: "user birth year"
-          optional :avatar,     type: Hash do
-            optional :filename, type: String
-            optional :type, type: String
-            optional :name, type: String
-            optional :tempfile
-            optional :head, type: String
-          end
+          optional :date_of_birth, type: Date, desc: "user birth year"
         end
         route_param :id do
           put do
@@ -171,7 +164,7 @@ module API
                   last_name:  params[:last_name],
                   email:      params[:email],
                   tel_num:    params[:tel_num].presence,
-                  birth_year: params[:birth_year].presence
+                  date_of_birth: params[:date_of_birth].presence
                 )
                 if params[:avatar].present?
                   user.avatar = params[:avatar][:tempfile]

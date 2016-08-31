@@ -8,7 +8,7 @@ FactoryGirl.define do
     uid Faker::Crypto.md5
     provider 'facebook'
     tel_num 888777111
-    birth_year 1990
+    date_of_birth 20.years.ago
     role 0
   end
 end

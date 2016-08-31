@@ -9,7 +9,7 @@ module UserShowRepresenter
   property :full_name
   property :email
   property :tel_num
-  property :birth_year
+  property :date_of_birth
   property :created_at
   property :updated_at
   property :age

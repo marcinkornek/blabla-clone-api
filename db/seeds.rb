@@ -14,7 +14,7 @@ cities = [
     email: "test#{i}@a.com",
     first_name: "first_name#{i}",
     last_name: "last_name#{i}",
-    birth_year: rand(1950..1995),
+    date_of_birth: rand(18..70).years.ago,
     password: 'asdasdasd',
     password_confirmation: 'asdasdasd'
   )

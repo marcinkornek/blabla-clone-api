@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
       first_name: "James",
       last_name: "Bond",
       email: "james.bond@a.com",
-      birth_year: 20.years.ago,
+      date_of_birth: 20.years.ago,
       uid: "11111111",
       provider: "facebook"
     )
@@ -63,14 +63,14 @@ RSpec.describe User, type: :model do
   end
 
   describe "#age" do
-    context "birth_year present" do
+    context "date_of_birth present" do
       it "returns age" do
         expect(user.age).to eq(20)
       end
     end
 
-    context "birth_year is nil" do
-      before { user.update(birth_year: nil) }
+    context "date_of_birth is nil" do
+      before { user.update(date_of_birth: nil) }
 
       it "returns nil" do
         expect(user.age).to be_nil

@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def age
-    self.birth_year ? Time.now.year - self.birth_year.to_i : nil
+    self.date_of_birth ? Time.now.year - self.date_of_birth.year : nil
   end
 
   def full_name

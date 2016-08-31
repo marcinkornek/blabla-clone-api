@@ -8,7 +8,7 @@ module API
         expose :full_name
         expose :email
         expose :tel_num
-        expose :birth_year
+        expose :date_of_birth
         expose :created_at
         expose :updated_at
         expose :age
