@@ -7,6 +7,7 @@ module UserSimpleRepresenter
   property :full_name
   property :age
   property :avatar
+  property :gender
 
   def full_name
     super.capitalize

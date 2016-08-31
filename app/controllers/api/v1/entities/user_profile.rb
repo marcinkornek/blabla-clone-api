@@ -13,6 +13,7 @@ module API
         expose :updated_at
         expose :age
         expose :avatar
+        expose :gender
         expose :role
         expose :last_seen_at
 
