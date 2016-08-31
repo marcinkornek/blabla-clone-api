@@ -124,18 +124,19 @@ module API
           end
         end
         post do
+          data = declared(params)
           user = User.new(
-            first_name: params[:first_name],
-            last_name:  params[:last_name],
-            email:      params[:email],
-            password:   params[:password],
-            gender:     params[:gender].presence,
-            tel_num:    params[:tel_num].presence,
-            date_of_birth: params[:date_of_birth].presence,
-            password_confirmation: params[:password_confirmation]
+            first_name: data[:first_name],
+            last_name:  data[:last_name],
+            email:      data[:email],
+            password:   data[:password],
+            gender:     data[:gender].presence,
+            tel_num:    data[:tel_num].presence,
+            date_of_birth: data[:date_of_birth].presence,
+            password_confirmation: data[:password_confirmation]
           )
-          if params[:avatar].present?
-            user.avatar = params[:avatar][:tempfile]
+          if data[:avatar].present?
+            user.avatar = data[:avatar][:tempfile]
             user.save
           end
           if user.save
@@ -152,22 +153,32 @@ module API
           requires :first_name, type: String, desc: "user first_name"
           requires :last_name,  type: String, desc: "user last_name"
           requires :email,      type: String, desc: "user email"
+          optional :gender,     type: String, desc: "user gender"
           optional :tel_num,    type: String, desc: "user telephone number"
           optional :date_of_birth, type: Date, desc: "user birth year"
+          optional :avatar,     type: Hash do
+            optional :filename, type: String
+            optional :type, type: String
+            optional :name, type: String
+            optional :tempfile
+            optional :head, type: String
+          end
         end
         route_param :id do
           put do
             authenticate!
+            data = declared(params)
             if user && user_account?
               if user.update(
-                  first_name: params[:first_name],
-                  last_name:  params[:last_name],
-                  email:      params[:email],
-                  tel_num:    params[:tel_num].presence,
-                  date_of_birth: params[:date_of_birth].presence
+                  first_name: data[:first_name],
+                  last_name:  data[:last_name],
+                  email:      data[:email],
+                  gender:     data[:gender].presence,
+                  tel_num:    data[:tel_num].presence,
+                  date_of_birth: data[:date_of_birth].presence
                 )
-                if params[:avatar].present?
-                  user.avatar = params[:avatar][:tempfile]
+                if data[:avatar].present?
+                  user.avatar = data[:avatar][:tempfile]
                   user.save
                 end
                 status 200
