@@ -3,7 +3,7 @@ module API
     module Entities
       class RidesIndex < Grape::Entity
         present_collection true
-        expose :items, as: 'rides', using: Entities::RideIndex
+        expose :items, as: 'items', using: Entities::RideIndex
 
         expose :meta
         expose :filters

@@ -3,7 +3,7 @@ module API
     module Entities
       class RidesAsPassenger < Grape::Entity
         present_collection true
-        expose :items, as: 'rides', using: Entities::RideAsPassenger
+        expose :items, as: 'items', using: Entities::RideAsPassenger
 
         expose :meta
 

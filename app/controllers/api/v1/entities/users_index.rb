@@ -3,7 +3,7 @@ module API
     module Entities
       class UsersIndex < Grape::Entity
         present_collection true
-        expose :items, as: 'users', using: Entities::UserIndex
+        expose :items, as: 'items', using: Entities::UserIndex
 
         expose :meta
 

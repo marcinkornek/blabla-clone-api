@@ -3,7 +3,7 @@ module API
     module Entities
       class RidesAsDriver < Grape::Entity
         present_collection true
-        expose :items, as: 'rides', using: Entities::RideAsDriver
+        expose :items, as: 'items', using: Entities::RideAsDriver
 
         expose :meta
 
