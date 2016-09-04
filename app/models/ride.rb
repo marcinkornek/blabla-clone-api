@@ -11,6 +11,7 @@ class Ride < ActiveRecord::Base
   scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
   scope :without_full, -> { where('rides.places > rides.taken_places') }
   scope :full_rides, -> { where('rides.places = rides.taken_places') }
+  scope :future, -> { where('rides.start_date > ?', Time.now) }
 
   def self.other_users_rides(user)
     user.present? ? where.not(driver_id: user) : all

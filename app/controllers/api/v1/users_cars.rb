@@ -72,26 +72,31 @@ module API
           requires :color,    type: String, desc: "car color"
           requires :category, type: String, desc: "car category"
           requires :production_year, type: String, desc: "car production year"
-          optional :car_photo, type: Hash do
-            optional :image, type: String
-            optional :path_name, type: String
+          optional :car_photo,  type: Hash do
+            optional :filename, type: String
+            optional :type,     type: String
+            optional :name,     type: String
+            optional :tempfile
+            optional :head,     type: String
           end
         end
         route_param :id do
           put do
             authenticate!
+            binding.pry
+            data = declared(params)
             if car && car_owner?
               if car.update(
-                  brand:    params[:brand],
-                  model:    params[:model],
-                  comfort:  params[:comfort],
-                  places:   params[:places],
-                  color:    params[:color],
-                  category: params[:category],
-                  production_year: params[:production_year]
+                  brand:    data[:brand],
+                  model:    data[:model],
+                  comfort:  data[:comfort],
+                  places:   data[:places],
+                  color:    data[:color],
+                  category: data[:category],
+                  production_year: data[:production_year]
                 )
-                if params[:car_photo].present?
-                  car.car_photo = params[:car_photo][:tempfile]
+                if data[:car_photo].present?
+                  car.car_photo = data[:car_photo][:tempfile]
                   car.save
                 end
                 status 200
