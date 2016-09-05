@@ -10,7 +10,7 @@ module API
         get do
           page = params[:page] || 1
           per  = params[:per] || 25
-          users = User.all
+          users = User.all.order(:created_at)
           results = paginated_results(users, page, per)
           present results[:collection],
                   with: Entities::UsersIndex,
