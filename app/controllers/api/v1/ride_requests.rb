@@ -17,7 +17,8 @@ module API
           if ride_request.save
             requested = ride_request.ride.user_requested?(current_user)
             ride_request = ride_request.ride.user_ride_request(current_user) if requested
-            ride_request.ride.extend(RideShowRepresenter).to_hash.merge({user_ride_request: ride_request, requested: requested})
+            ride = ride_request.ride
+            present ride, with: Entities::RideShow, current_user: current_user
           else
             status 406
             ride_request.errors.messages
@@ -34,7 +35,8 @@ module API
             authenticate!
             if ride_request
               ride_request.update(status: params[:status])
-              ride_request.ride.extend(RideShowOwnerRepresenter)
+              ride = ride_request.ride
+              present ride, with: Entities::RideShowOwner
             else
               status 406
               ride_request.errors.messages
