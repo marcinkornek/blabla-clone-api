@@ -1,4 +1,4 @@
-class RideRequest < ActiveRecord::Base
+class RideRequest < ApplicationRecord
   belongs_to :passenger, class_name: "User"
   belongs_to :ride
   has_many :notifications

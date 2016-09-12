@@ -1,4 +1,4 @@
-class Ride < ActiveRecord::Base
+class Ride < ApplicationRecord
   belongs_to :driver, class_name: 'User'
   belongs_to :car
   has_many :passengers,    dependent: :destroy, class_name: 'User', through: :ride_requests

@@ -1,4 +1,4 @@
-class Car < ActiveRecord::Base
+class Car < ApplicationRecord
   belongs_to :user
 
   enum comfort:  { basic: 0, normal: 1, comfort: 2, luxury: 3 }

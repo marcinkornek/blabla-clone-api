@@ -1,4 +1,4 @@
-class Token < ActiveRecord::Base
+class Token < ApplicationRecord
   before_create :generate_access_token
   before_create :set_expiration
   belongs_to :user
