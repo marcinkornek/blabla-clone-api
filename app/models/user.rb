@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :rides_as_passenger, class_name: 'Ride', through: :ride_requests, source: 'ride'
   has_many :rides_as_driver,    class_name: 'Ride', foreign_key: 'driver_id'
   has_many :ride_requests,      foreign_key: 'passenger_id'
+  has_many :notifications,      foreign_key: 'receiver_id', dependent: :destroy
 
   enum role: { user: 0, admin: 1 }
   enum gender:  { male: 0, female: 1 }
