@@ -54,11 +54,12 @@ module API
         end
       end
 
+      mount API::V1::Notifications
       mount API::V1::Sessions
-      mount API::V1::Users
-      mount API::V1::UsersCars
       mount API::V1::Rides
       mount API::V1::RideRequests
+      mount API::V1::Users
+      mount API::V1::UsersCars
     end
   end
 end

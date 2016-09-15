@@ -30,22 +30,6 @@ module API
           end
         end
 
-        desc "Return user notifications"
-        params do
-          optional :page, type: Integer, desc: "page"
-          optional :per, type: Integer, desc: "per"
-        end
-        get :notifications do
-          authenticate!
-          page = params[:page] || 1
-          per  = params[:per] || 25
-          notifications = current_user.notifications
-          results = paginated_results(notifications, page, per)
-          present results[:collection],
-                  with: Entities::Notifications,
-                  pagination: results[:meta]
-        end
-
         desc "Return a user show"
         params do
           requires :id, type: Integer, desc: "user id"
