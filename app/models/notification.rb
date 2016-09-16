@@ -11,4 +11,8 @@ class Notification < ApplicationRecord
   validates :sender_id,  presence: true
   validates :receiver_id,  presence: true
   validates :ride_id,  presence: true
+
+  def mark_as_seen!
+    self.update(seen_at: Time.now)
+  end
 end

@@ -11,11 +11,28 @@ module API
           authenticate!
           page = params[:page] || 1
           per  = params[:per] || 25
-          notifications = current_user.notifications
+          notifications = current_user.notifications.order(created_at: :desc)
           results = paginated_results(notifications, page, per)
           present results[:collection],
                   with: Entities::Notifications,
                   pagination: results[:meta]
+        end
+
+        params do
+          requires :id, type: Integer, desc: "notification id"
+        end
+        route_param :id do
+          desc "Mark notification as seen"
+          put :mark_as_seen do
+            notification.mark_as_seen!
+            present notification, with: Entities::Notification
+          end
+        end
+      end
+
+      helpers do
+        def notification
+          @notification ||= current_user.notifications.find(params[:id])
         end
       end
     end
