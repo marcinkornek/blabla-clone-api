@@ -5,6 +5,8 @@ gem 'rails'
 gem 'spring', :group => :development
 gem 'bullet', :group => :development
 
+gem 'redis'           # in-memory data structure store
+gem 'puma'            # Action Cable needs a threaded server
 gem 'pg'              # database for Active Record
 gem 'grape'           # REST-like API micro-framework for Ruby
 gem 'devise'          # authentication
