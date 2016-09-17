@@ -15,7 +15,7 @@ module API
           results = paginated_results(notifications, page, per)
           present results[:collection],
                   with: Entities::Notifications,
-                  pagination: results[:meta]
+                  pagination: results[:meta].merge(unread_count: notifications.unread.count)
         end
 
         params do
@@ -25,7 +25,7 @@ module API
           desc "Mark notification as seen"
           put :mark_as_seen do
             notification.mark_as_seen!
-            present notification, with: Entities::Notification
+            present notification, with: Entities::NotificationWithUnreadCount, current_user: current_user
           end
         end
       end

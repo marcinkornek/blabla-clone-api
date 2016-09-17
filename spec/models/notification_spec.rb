@@ -9,4 +9,15 @@ RSpec.describe Notification, type: :model do
         .to change{ notification.reload.seen_at }
     end
   end
+
+  describe "scopes" do
+    describe "unread" do
+      let(:seen_notification) { FactoryGirl.create(:notification, seen_at: 2.days.ago) }
+
+      it "returns only not seen notifications" do
+        expect(described_class.unread).to include(notification)
+        expect(described_class.unread).not_to include(seen_notification)
+      end
+    end
+  end
 end
