@@ -155,27 +155,12 @@ module API
           put do
             authenticate!
             data = declared(params)
-            if user && user_account?
-              if user.update(
-                  first_name: data[:first_name],
-                  last_name:  data[:last_name],
-                  email:      data[:email],
-                  gender:     data[:gender].presence,
-                  tel_num:    data[:tel_num].presence,
-                  date_of_birth: data[:date_of_birth].presence
-                )
-                if data[:avatar].present?
-                  user.avatar = data[:avatar][:tempfile]
-                  user.save
-                end
-                status 200
-                present user, with: Entities::UserProfile
-              else
-                status 406
-                user.errors.messages
-              end
+            user = UserUpdater.new(data, current_user).call
+            if user.valid?
+              present user, with: Entities::UserProfile
             else
-              error!({error: I18n.t('user.edit.error')}, 406)
+              status 406
+              user.errors.messages
             end
           end
         end
@@ -184,10 +169,6 @@ module API
       helpers do
         def user
           @user ||= User.find(params[:id])
-        end
-
-        def user_account?
-          user.id == current_user.id
         end
       end
     end
