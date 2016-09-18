@@ -4,6 +4,18 @@ class Ride < ApplicationRecord
   has_many :passengers,    dependent: :destroy, class_name: 'User', through: :ride_requests
   has_many :ride_requests, dependent: :destroy
 
+  validates :car, presence: true
+  validates :currency, presence: true
+  validates :destination_city, presence: true
+  validates :destination_city_lat, presence: true
+  validates :destination_city_lng, presence: true
+  validates :driver, presence: true
+  validates :places, presence: true, numericality: { greater_than: 0, less_than: 60 }
+  validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :start_city, presence: true
+  validates :start_city_lat, presence: true
+  validates :start_city_lng, presence: true
+
   enum currency:  { pln: 0, usd: 1, eur: 2 }
 
   scope :from_city, ->(city) { where(start_city: city) }
