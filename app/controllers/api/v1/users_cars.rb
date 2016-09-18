@@ -35,21 +35,9 @@ module API
         end
         post do
           authenticate!
-          car = Car.new(
-            brand:    params[:brand],
-            model:    params[:model],
-            comfort:  params[:comfort],
-            places:   params[:places],
-            color:    params[:color],
-            category: params[:category],
-            production_year: params[:production_year],
-            user:     current_user
-          )
-          if params[:car_photo].present?
-            car.car_photo = params[:car_photo][:tempfile]
-            car.save
-          end
-          if car.save
+          data = declared(params)
+          car = CarCreator.new(data, current_user).call
+          if car.valid?
             car.extend(CarIndexRepresenter)
           else
             status 406
