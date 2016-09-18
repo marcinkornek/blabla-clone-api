@@ -50,12 +50,8 @@ module API
           optional :hide_full, type: Boolean, desc: "hide full rides filter"
         end
 	      get do
-          start_date = params[:start_date].to_datetime if params[:start_date].present?
-	        rides = Ride.other_users_rides(current_user).future.includes(:driver).includes(:car)
-          rides = rides.without_full if params[:hide_full] == true
-          rides = rides.from_city(params[:start_city]) if params[:start_city].present?
-          rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
-          rides = rides.in_day(start_date) if params[:start_date].present?
+          data = declared(params)
+          rides = RidesFinder.new(data, current_user).call
           results = paginated_results_with_filters(rides, params[:page], params[:per])
           present results[:collection],
                   with: Entities::RidesIndex,
