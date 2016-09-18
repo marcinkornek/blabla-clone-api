@@ -41,5 +41,19 @@ module API
         optional :head, type: String
       end
     end
+
+    params :ride_params do |options = {}|
+      requires :start_city, type: String, desc: "user start_city"
+      optional :start_city_lat, type: String, desc: "user start_city_lat"
+      optional :start_city_lng, type: String, desc: "user start_city_lng"
+      requires :destination_city, type: String, desc: "user destination_city"
+      optional :destination_city_lat, type: String, desc: "user destination_city_lat"
+      optional :destination_city_lng, type: String, desc: "user destination_city_lng"
+      requires :places, type: Integer, desc: "user places"
+      requires :start_date, type: String, desc: "user start_date"
+      requires :price, type: String, desc: "user price"
+      requires :currency, type: String, desc: "user currency"
+      requires :car_id, type: Integer, desc: "user car_id"
+    end
   end
 end

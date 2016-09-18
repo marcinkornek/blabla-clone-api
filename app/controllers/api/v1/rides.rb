@@ -1,7 +1,37 @@
 module API
   module V1
     class Rides < Grape::API
-    	resource :rides do
+      helpers API::ParamsHelper
+
+      helpers do
+        def ride
+          @ride ||= Ride.find(params[:id])
+        end
+
+        def ride_owner?
+          ride.driver.id == current_user.id if current_user.present?
+        end
+
+        def paginated_results_with_filters(results, page, per = 25)
+          return { collection: results, meta: {} } if page.nil?
+
+          collection = results.page(page).per(per)
+          filters = rides_filters(results)
+          {
+            collection: collection,
+            meta: kaminari_params(collection),
+            filters: filters
+          }
+        end
+
+        def rides_filters(results)
+          {
+            full_rides: results.full_rides.count
+          }
+        end
+      end
+
+      resource :rides do
         desc "Return a ride options"
         get :options do
           cars = current_user.cars.collect{|car| {id: car.id, name: car.full_name}}
@@ -13,23 +43,20 @@ module API
 
 	      desc "Return list of rides"
         params do
-          optional :page, type: Integer, desc: "page"
-          optional :per, type: Integer, desc: "per"
+          use :pagination_params
           optional :start_city, type: String, desc: "filter by start_city"
           optional :destination_city, type: String, desc: "filter by destination_city"
           optional :start_date, type: String, desc: "filter by start date"
           optional :hide_full, type: Boolean, desc: "hide full rides filter"
         end
 	      get do
-          page = params[:page] || 1
-          per  = params[:per] || 25
           start_date = params[:start_date].to_datetime if params[:start_date].present?
 	        rides = Ride.other_users_rides(current_user).future.includes(:driver).includes(:car)
           rides = rides.without_full if params[:hide_full] == true
           rides = rides.from_city(params[:start_city]) if params[:start_city].present?
           rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
           rides = rides.in_day(start_date) if params[:start_date].present?
-          results = paginated_results_with_filters(rides, page, per)
+          results = paginated_results_with_filters(rides, params[:page], params[:per])
           present results[:collection],
                   with: Entities::RidesIndex,
                   pagination: results[:meta],
@@ -52,17 +79,7 @@ module API
 
         desc "Create a ride"
         params do
-          requires :start_city,           type: String, desc: "user start_city"
-          optional :start_city_lat,       type: String, desc: "user start_city_lat"
-          optional :start_city_lng,       type: String, desc: "user start_city_lng"
-          requires :destination_city,     type: String, desc: "user destination_city"
-          optional :destination_city_lat, type: String, desc: "user destination_city_lat"
-          optional :destination_city_lng, type: String, desc: "user destination_city_lng"
-          requires :places,               type: Integer, desc: "user places"
-          requires :start_date,           type: String, desc: "user start_date"
-          requires :price,                type: String, desc: "user price"
-          requires :currency,             type: String, desc: "user currency"
-          requires :car_id,               type: Integer, desc: "user car_id"
+          use :ride_params
         end
         post do
           authenticate!
@@ -89,22 +106,14 @@ module API
           end
         end
 
-        desc "Update a ride"
         params do
-          requires :id,       type: Integer, desc: "ride id"
-          requires :start_city,           type: String, desc: "user start_city"
-          optional :start_city_lat,       type: String, desc: "user start_city_lat"
-          optional :start_city_lng,       type: String, desc: "user start_city_lng"
-          requires :destination_city,     type: String, desc: "user destination_city"
-          optional :destination_city_lat, type: String, desc: "user destination_city_lat"
-          optional :destination_city_lng, type: String, desc: "user destination_city_lng"
-          requires :places,               type: Integer, desc: "user places"
-          requires :start_date,           type: DateTime, desc: "user start_date"
-          requires :price,                type: String, desc: "user price"
-          requires :currency,             type: String, desc: "user currency"
-          requires :car_id,               type: Integer, desc: "user car_id"
+          requires :id, type: Integer, desc: "ride id"
         end
         route_param :id do
+          desc "Update a ride"
+          params do
+            use :ride_params
+          end
           put do
             authenticate!
             if ride && ride_owner?
@@ -135,34 +144,6 @@ module API
               error!({error: I18n.t('rides.edit.error')}, 406)
             end
           end
-        end
-      end
-
-      helpers do
-        def ride
-          @ride ||= Ride.find(params[:id])
-        end
-
-        def ride_owner?
-          ride.driver.id == current_user.id if current_user.present?
-        end
-
-        def paginated_results_with_filters(results, page, per = 25)
-          return { collection: results, meta: {} } if page.nil?
-
-          collection = results.page(page).per(per)
-          filters = rides_filters(results)
-          {
-            collection: collection,
-            meta: kaminari_params(collection),
-            filters: filters
-          }
-        end
-
-        def rides_filters(results)
-          {
-            full_rides: results.full_rides.count
-          }
         end
       end
     end
