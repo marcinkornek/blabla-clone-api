@@ -79,22 +79,8 @@ module API
         end
         post do
           authenticate!
-          start_date = params[:start_date].to_datetime if params[:start_date].present?
-          ride = Ride.new(
-            start_city:           params[:start_city],
-            start_city_lat:       params[:start_city_lat],
-            start_city_lng:       params[:start_city_lng],
-            destination_city:     params[:destination_city],
-            destination_city_lat: params[:destination_city_lat],
-            destination_city_lng: params[:destination_city_lng],
-            places:               params[:places],
-            start_date:           start_date,
-            price:                params[:price],
-            car_id:               params[:car_id],
-            currency:             params[:currency],
-            driver:               current_user
-          )
-          if ride.save
+          ride = RideCreator.new(params, current_user).call
+          if ride.valid?
             ride.extend(RideIndexRepresenter)
           else
             status 406
