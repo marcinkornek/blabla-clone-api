@@ -7,6 +7,10 @@ module API
         def car
           @car ||= Car.find(params[:id])
         end
+
+        def user_car
+          @user_car ||= current_user.cars.find(params[:id])
+        end
       end
 
       resource :cars do
@@ -45,36 +49,23 @@ module API
           end
         end
 
-        desc "Update a car"
         params do
-          use :car_params
+          requires :id, type: Integer, desc: "car id"
         end
         route_param :id do
+          desc "Update a car"
+          params do
+            use :car_params
+          end
           put do
             authenticate!
             data = declared(params)
-            if car && car_owner?
-              if car.update(
-                  brand:    data[:brand],
-                  model:    data[:model],
-                  comfort:  data[:comfort],
-                  places:   data[:places],
-                  color:    data[:color],
-                  category: data[:category],
-                  production_year: data[:production_year]
-                )
-                if data[:car_photo].present?
-                  car.car_photo = data[:car_photo][:tempfile]
-                  car.save
-                end
-                status 200
-                car.extend(CarIndexRepresenter)
-              else
-                status 406
-                car.errors.messages
-              end
+            car = CarUpdater.new(data, current_user, user_car).call
+            if car.valid?
+              car.extend(CarIndexRepresenter)
             else
-              error!({error: I18n.t('cars.edit.error')}, 406)
+              status 406
+              car.errors.messages
             end
           end
         end
