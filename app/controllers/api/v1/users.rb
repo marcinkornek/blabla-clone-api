@@ -27,12 +27,9 @@ module API
           requires :email, type: String, desc: "user email"
         end
         get :check_if_unique do
-          user_id = current_user&.id
-          if User.where(email: params['email'].downcase).where.not(id: user_id).exists?
-            { errors: ['Email already exists']}
-          else
-            { errors: [] }
-          end
+          data = declared(params)
+          errors = EmailUniquenessChecker.new(data, current_user).call
+          errors
         end
 
         desc "Return a user show"
