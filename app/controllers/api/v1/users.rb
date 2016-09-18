@@ -125,21 +125,8 @@ module API
         end
         post do
           data = declared(params)
-          user = User.new(
-            first_name: data[:first_name],
-            last_name:  data[:last_name],
-            email:      data[:email],
-            password:   data[:password],
-            gender:     data[:gender].presence,
-            tel_num:    data[:tel_num].presence,
-            date_of_birth: data[:date_of_birth].presence,
-            password_confirmation: data[:password_confirmation]
-          )
-          if data[:avatar].present?
-            user.avatar = data[:avatar][:tempfile]
-            user.save
-          end
-          if user.save
+          user = UserCreator.new(data).call
+          if user.valid?
             present user, with: Entities::UserProfile
           else
             status 406
