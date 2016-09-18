@@ -29,7 +29,7 @@ module API
         end
         route_param :id do
           get do
-            car.extend(CarIndexRepresenter)
+            present car, with: Entities::CarIndex
           end
         end
 
@@ -42,7 +42,7 @@ module API
           data = declared(params)
           car = CarCreator.new(data, current_user).call
           if car.valid?
-            car.extend(CarIndexRepresenter)
+            present car, with: Entities::CarIndex
           else
             status 406
             car.errors.messages
@@ -62,7 +62,7 @@ module API
             data = declared(params)
             car = CarUpdater.new(data, current_user, user_car).call
             if car.valid?
-              car.extend(CarIndexRepresenter)
+              present car, with: Entities::CarIndex
             else
               status 406
               car.errors.messages
