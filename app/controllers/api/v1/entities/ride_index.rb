@@ -13,6 +13,7 @@ module API
         expose :currency
         expose :driver, using: Entities::UserSimple
         expose :car, using: Entities::CarSimple
+        expose :car_id
       end
     end
   end
