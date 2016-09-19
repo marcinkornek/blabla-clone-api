@@ -1,18 +1,23 @@
 module API
   module V1
     class Notifications < Grape::API
+      helpers API::ParamsHelper
+
+      helpers do
+        def notification
+          @notification ||= current_user.notifications.find(params[:id])
+        end
+      end
+
       resource :notifications do
         desc "Return user notifications"
         params do
-          optional :page, type: Integer, desc: "page"
-          optional :per, type: Integer, desc: "per"
+          use :pagination_params
         end
         get do
           authenticate!
-          page = params[:page] || 1
-          per  = params[:per] || 25
           notifications = current_user.notifications.order(created_at: :desc)
-          results = paginated_results(notifications, page, per)
+          results = paginated_results(notifications, params[:page], params[:per])
           present results[:collection],
                   with: Entities::Notifications,
                   pagination: results[:meta].merge(unread_count: notifications.unread.count)
@@ -29,12 +34,6 @@ module API
                     with: Entities::NotificationWithUnreadCount,
                     current_user: current_user
           end
-        end
-      end
-
-      helpers do
-        def notification
-          @notification ||= current_user.notifications.find(params[:id])
         end
       end
     end
