@@ -8,7 +8,11 @@ module API
           @ride ||= Ride.find(params[:id])
         end
 
-        def ride_owner?
+        def user_ride
+          @user_ride ||= current_user.rides_as_driver.find(params[:id])
+        end
+
+         def ride_owner?
           ride.driver.id == current_user.id if current_user.present?
         end
 
@@ -67,7 +71,7 @@ module API
 	        get do
             if ride_owner?
               present ride, with: Entities::RideShowOwner
-            else current_user.present?
+            else
               present ride, with: Entities::RideShow, current_user: current_user
             end
 	        end
@@ -98,32 +102,13 @@ module API
           end
           put do
             authenticate!
-            if ride && ride_owner?
-              if params[:start_city_lat].present? && params[:destination_city_lat].present?
-                ride.update(
-                  start_city:           params[:start_city],
-                  start_city_lat:       params[:start_city_lat],
-                  start_city_lng:       params[:start_city_lng],
-                  destination_city:     params[:destination_city],
-                  destination_city_lat: params[:destination_city_lat],
-                  destination_city_lng: params[:destination_city_lng]
-                )
-              end
-              if ride.update(
-                  places:               params[:places],
-                  start_date:           params[:start_date],
-                  price:                params[:price],
-                  car_id:               params[:car_id],
-                  currency:             params[:currency],
-                )
-                status 200
-                ride.extend(RideIndexRepresenter)
-              else
-                status 406
-                ride.errors.messages
-              end
+            data = declared(params, include_missing: false)
+            ride = RideUpdater.new(data, current_user, user_ride).call
+            if ride.valid?
+              ride.extend(RideIndexRepresenter)
             else
-              error!({error: I18n.t('rides.edit.error')}, 406)
+              status 406
+              ride.errors.messages
             end
           end
         end
