@@ -1,22 +1,25 @@
 module API
   module V1
     class RideRequests < Grape::API
-    	resource :ride_requests do
+      helpers API::ParamsHelper
+
+      helpers do
+        def ride_request
+          @ride_request ||= RideRequest.find(params[:id])
+        end
+      end
+
+      resource :ride_requests do
         desc "Create a ride request"
         params do
           requires :ride_id, type: Integer, desc: "requested ride id"
-          requires :places,  type: Integer, desc: "requested places"
+          requires :places, type: Integer, desc: "requested places"
         end
         post do
           authenticate!
-          ride_request = RideRequest.new(
-            ride_id:   params[:ride_id],
-            places:    params[:places],
-            passenger: current_user
-          )
-          if ride_request.save
-            requested = ride_request.ride.user_requested?(current_user)
-            ride_request = ride_request.ride.user_ride_request(current_user) if requested
+          data = declared(params)
+          ride_request = RideRequestCreator.new(data, current_user).call
+          if ride_request.valid?
             ride = ride_request.ride
             present ride, with: Entities::RideShow, current_user: current_user
           else
@@ -25,33 +28,26 @@ module API
           end
         end
 
-        desc "Change ride request status"
         params do
-          requires :id,     type: Integer, desc: "ride request id"
-          requires :status, type: String,  desc: "ride request status"
+          requires :id, type: Integer, desc: "ride request id"
         end
         route_param :id do
+          desc "Change ride request status"
+          params do
+            requires :status, type: String,  desc: "ride request status"
+          end
           put do
             authenticate!
-            if ride_request
-              ride_request.update(status: params[:status])
-              ride = ride_request.ride
+            data = declared(params)
+            rr = RideRequestStatusUpdater.new(data, current_user, ride_request).call
+            if rr.valid?
+              ride = rr.ride
               present ride, with: Entities::RideShowOwner
             else
               status 406
-              ride_request.errors.messages
+              rr.errors.messages
             end
           end
-        end
-      end
-
-      helpers do
-        def ride_request
-          @ride_request ||= RideRequest.find(params[:id])
-        end
-
-        def ride_request_owner?
-          ride_request.ride.driver.id == current_user.id if current_user.present?
         end
       end
     end
