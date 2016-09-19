@@ -21,6 +21,7 @@ module API
         expose :ride_requests, using: Entities::RideRequestsIndex
         expose :driver, using: Entities::UserIndex
         expose :car, using: Entities::CarSimple
+        expose :car_id
 
         def requested_places_count
           object.requested_places
