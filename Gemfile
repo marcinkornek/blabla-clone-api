@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 
 gem 'rails'
-gem 'spring', :group => :development
-gem 'bullet', :group => :development
+gem 'spring', group: :development
+gem 'bullet', group: :development
 
 gem 'redis'           # in-memory data structure store
 gem 'puma'            # Action Cable needs a threaded server
@@ -16,10 +16,10 @@ gem 'devise'          # authentication
 gem 'roar'            # Ruby representer
 gem 'grape-entity'    # Grape representer
 gem 'counter_culture' # turbo-charged counter caches
-gem 'kaminari', :require => 'kaminari/grape' # pagination
+gem 'kaminari', require: 'kaminari/grape' # pagination
 gem 'api-pagination'
 gem 'http_accept_language' # extracts Accept-Language header into an array
-gem 'rack-cors', :require => 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
+gem 'rack-cors', require: 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
 gem 'figaro'      # app configuration using ENV and a single YAML file
 gem 'carrierwave' # file upload library for Ruby
 gem 'fog'         # Ruby cloud services library (used in carrierwave to send images to AWS S3)
