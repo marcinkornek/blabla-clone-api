@@ -5,19 +5,14 @@ module API
 
         desc "Authenticate user with oath and return user access token"
         params do
-          requires :uid,        type: String, desc: "User uid"
-          requires :provider,   type: String, desc: "User provider"
-          requires :email,      type: String, desc: "User email"
+          requires :uid, type: String, desc: "User uid"
+          requires :provider, type: String, desc: "User provider"
+          requires :email, type: String, desc: "User email"
           requires :first_name, type: String, desc: "User first name"
-          requires :last_name,  type: String, desc: "User last name"
+          requires :last_name, type: String, desc: "User last name"
         end
         post :oath_login do
-          auth = {}
-          auth[:uid]        = params[:uid]
-          auth[:provider]   = params[:provider]
-          auth[:email]      = params[:email]
-          auth[:first_name] = params[:first_name]
-          auth[:last_name]  = params[:last_name]
+          auth = params.slice(:uid, :provider, :email, :first_name, :last_name)
           user = User.find_for_oauth(auth)
           if user
             user.tokens.create.extend(TokenRepresenter)
@@ -26,11 +21,11 @@ module API
 
         desc "Authenticate user with email and password and return user access token"
         params do
-          requires :email,    type: String, desc: "User email"
+          requires :email, type: String, desc: "User email"
           requires :password, type: String, desc: "User password"
         end
         post :login do
-          email    = params[:email]
+          email = params[:email]
           password = params[:password]
 
           user = User.where(email: email.downcase).first
