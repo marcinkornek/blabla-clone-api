@@ -6,6 +6,7 @@ module API
         expose :status
         expose :places
         expose :created_at
+        expose :updated_at
       end
     end
   end
