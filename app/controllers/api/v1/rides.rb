@@ -5,7 +5,7 @@ module API
 
       helpers do
         def ride
-          @ride ||= Ride.find(params[:id])
+          @ride ||= Ride.includes(:driver, :car).find(params[:id])
         end
 
         def user_ride
