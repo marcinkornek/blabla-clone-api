@@ -7,6 +7,10 @@ module API
         def user
           @user ||= User.find(params[:id])
         end
+
+        def user_with_includes
+          @user_with_includes ||= User.includes(:cars, { rides_as_driver: :car }).find(params[:id])
+        end
       end
 
       resource :users do
@@ -22,83 +26,7 @@ module API
                   pagination: results[:meta]
         end
 
-        desc "Checks if user email is unique"
-        params do
-          requires :email, type: String, desc: "user email"
-        end
-        get :check_if_unique do
-          data = declared(params)
-          errors = EmailUniquenessChecker.new(data, current_user).call
-          errors
-        end
-
-        desc "Return a user show"
-        params do
-          requires :id, type: Integer, desc: "user id"
-        end
-        route_param :id do
-          get do
-            present user, with: Entities::UserShow
-          end
-        end
-
-        desc "Return a user profile"
-        params do
-          requires :id, type: Integer, desc: "user id"
-        end
-        route_param :id do
-          get :profile do
-            present user, with: Entities::UserProfile
-          end
-        end
-
-        desc "Return user cars"
-        params do
-          requires :id, type: Integer, desc: "user id"
-          use :pagination_params
-        end
-        route_param :id do
-          get :cars do
-            cars = user.cars
-            results = paginated_results(cars, params[:page], params[:per])
-            present results[:collection],
-                    with: Entities::CarsIndex,
-                    pagination: results[:meta]
-          end
-        end
-
-        desc "Return user rides as driver"
-        params do
-          requires :id, type: Integer, desc: "user id"
-          use :pagination_params
-        end
-        route_param :id do
-          get :rides_as_driver do
-            rides = user.rides_as_driver.includes(:car)
-            results = paginated_results(rides, params[:page], params[:per])
-            present results[:collection],
-                    with: Entities::RidesAsDriver,
-                    pagination: results[:meta]
-          end
-        end
-
-        desc "Return user rides as passenger"
-        params do
-          requires :id, type: Integer, desc: "user id"
-          use :pagination_params
-        end
-        route_param :id do
-          get :rides_as_passenger do
-            authenticate!
-            rides = user.ride_requests.includes(ride: [:driver, :car])
-            results = paginated_results(rides, params[:page], params[:per])
-            present results[:collection],
-                    with: Entities::RidesAsPassenger,
-                    pagination: results[:meta]
-          end
-        end
-
-        desc "Create a user"
+        desc "Create user"
         params do
           use :user_params
           requires :password, type: String, desc: "user password"
@@ -115,11 +43,34 @@ module API
           end
         end
 
-        desc "Update a user"
+        desc "Checks if user email is unique"
         params do
-          use :user_params
+          requires :email, type: String, desc: "user email"
+        end
+        get :check_if_unique do
+          data = declared(params)
+          errors = EmailUniquenessChecker.new(data, current_user).call
+          errors
+        end
+
+        params do
+          requires :id, type: Integer, desc: "user id"
         end
         route_param :id do
+          desc "Return user profile"
+          get :profile do
+            present user, with: Entities::UserProfile
+          end
+
+          desc "Return user profile with cars and rides_as_driver"
+          get do
+            present user_with_includes, with: Entities::UserShow
+          end
+
+          desc "Update user"
+          params do
+            use :user_params
+          end
           put do
             authenticate!
             data = declared(params)
@@ -130,6 +81,43 @@ module API
               status 406
               user.errors.messages
             end
+          end
+
+          desc "Return user cars"
+          params do
+            use :pagination_params
+          end
+          get :cars do
+            cars = user.cars
+            results = paginated_results(cars, params[:page], params[:per])
+            present results[:collection],
+                    with: Entities::CarsIndex,
+                    pagination: results[:meta]
+          end
+
+          desc "Return user rides as driver"
+          params do
+            use :pagination_params
+          end
+          get :rides_as_driver do
+            rides = user.rides_as_driver.includes(:car)
+            results = paginated_results(rides, params[:page], params[:per])
+            present results[:collection],
+                    with: Entities::RidesAsDriver,
+                    pagination: results[:meta]
+          end
+
+          desc "Return user rides as passenger"
+          params do
+            use :pagination_params
+          end
+          get :rides_as_passenger do
+            authenticate!
+            rides = user.ride_requests.includes(ride: [:driver, :car])
+            results = paginated_results(rides, params[:page], params[:per])
+            present results[:collection],
+                    with: Entities::RidesAsPassenger,
+                    pagination: results[:meta]
           end
         end
       end

@@ -16,7 +16,9 @@ module API
         end
         get do
           authenticate!
-          notifications = current_user.notifications.order(created_at: :desc)
+          notifications = current_user.notifications
+            .includes(:sender, :receiver, :ride)
+            .order(created_at: :desc)
           results = paginated_results(notifications, params[:page], params[:per])
           present results[:collection],
                   with: Entities::Notifications,
