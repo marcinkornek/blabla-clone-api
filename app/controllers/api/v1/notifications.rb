@@ -10,7 +10,7 @@ module API
       end
 
       resource :notifications do
-        desc "Return user notifications"
+        desc "Return current user notifications"
         params do
           use :pagination_params
         end

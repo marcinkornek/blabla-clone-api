@@ -23,17 +23,7 @@ module API
           }
         end
 
-        desc "Return a car"
-        params do
-          requires :id, type: Integer, desc: "car id"
-        end
-        route_param :id do
-          get do
-            present car, with: Entities::CarIndex
-          end
-        end
-
-        desc "Create a car"
+        desc "Create car"
         params do
           use :car_params
         end
@@ -53,7 +43,12 @@ module API
           requires :id, type: Integer, desc: "car id"
         end
         route_param :id do
-          desc "Update a car"
+          desc "Return car"
+          get do
+            present car, with: Entities::CarIndex
+          end
+
+          desc "Update car"
           params do
             use :car_params
           end

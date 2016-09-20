@@ -63,20 +63,6 @@ module API
                   filters: results[:filters]
 	      end
 
-	      desc "Return a ride"
-	      params do
-	        requires :id, type: Integer, desc: "ride id"
-	      end
-	      route_param :id do
-	        get do
-            if ride_owner?
-              present ride, with: Entities::RideShowOwner
-            else
-              present ride, with: Entities::RideShow, current_user: current_user
-            end
-	        end
-	      end
-
         desc "Create a ride"
         params do
           use :ride_params
@@ -96,6 +82,15 @@ module API
           requires :id, type: Integer, desc: "ride id"
         end
         route_param :id do
+          desc "Return a ride"
+          get do
+            if ride_owner?
+              present ride, with: Entities::RideShowOwner
+            else
+              present ride, with: Entities::RideShow, current_user: current_user
+            end
+          end
+
           desc "Update a ride"
           params do
             use :ride_params
