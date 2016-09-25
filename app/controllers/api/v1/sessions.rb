@@ -15,7 +15,8 @@ module API
           auth = params.slice(:uid, :provider, :email, :first_name, :last_name)
           user = User.find_for_oauth(auth)
           if user
-            user.tokens.create.extend(TokenRepresenter)
+            token = user.tokens.create
+            present token, with: Entities::Token
           end
         end
 
@@ -31,7 +32,8 @@ module API
           user = User.where(email: email.downcase).first
           error!({error: 'Invalid Email and/or Password'}, 401) if user.nil?
           if user.valid_password?(password)
-            user.tokens.create.extend(TokenRepresenter)
+            token = user.tokens.create
+            present token, with: Entities::Token
           else
             error!({error: 'Invalid Email and/or Password.'}, 401)
           end
@@ -41,7 +43,7 @@ module API
         get :get_user do
           authenticate!
           if token
-            token.extend(TokenRepresenter)
+            present token, with: Entities::Token
           else
             error!({error: 'Invalid email and/or access_token'}, 401)
           end
