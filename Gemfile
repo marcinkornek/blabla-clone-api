@@ -13,7 +13,6 @@ gem 'hashie-forbidden_attributes' # disables the security feature of strong_para
                                   # the model layer, allowing you the use of Grape's own params
                                   # validation instead.
 gem 'devise'          # authentication
-gem 'roar'            # Ruby representer
 gem 'grape-entity'    # Grape representer
 gem 'counter_culture' # turbo-charged counter caches
 gem 'kaminari', require: 'kaminari/grape' # pagination
