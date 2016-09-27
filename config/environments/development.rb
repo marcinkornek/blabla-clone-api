@@ -64,4 +64,8 @@ Rails.application.configure do
     # Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware' ]
     # Bullet.slack = { webhook_url: 'http://some.slack.url', channel: '#default', username: 'notifier' }
   end
+
+  # action_cable config
+  config.action_cable.url = "ws://localhost:3000/cable"
+  config.action_cable.allowed_request_origins = ["http://localhost:8080"]
 end
