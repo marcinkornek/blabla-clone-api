@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/rollbar/rollbar-gem.git
-  revision: 5174e39c8e61277abb5e628b342725ca344396ee
+  revision: f8bfd76c2b5ded56d26abfc6979c711f4bc23e32
   specs:
-    rollbar (2.13.1)
+    rollbar (2.13.2)
       multi_json
 
 GIT
@@ -64,7 +64,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     bcrypt (3.1.11)
     builder (3.2.2)
-    bullet (5.4.0)
+    bullet (5.4.2)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     carrierwave (0.11.2)
@@ -268,7 +268,7 @@ GEM
     mimemagic (0.3.2)
     mini_magick (4.5.1)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
     mustermann19 (0.4.4)
