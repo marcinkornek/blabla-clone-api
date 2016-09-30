@@ -9,12 +9,19 @@ module ApplicationCable
     protected
 
     def find_verified_user
-      verified_user = User.find_by(id: cookies.signed['user.id'])
-      if verified_user && cookies.signed['user.expires_at'] > Time.now
-        verified_user
-      else
-        reject_unauthorized_connection
-      end
+      current_user.present? ? current_user : reject_unauthorized_connection
+    end
+
+    def token
+      @token ||= find_user.tokens.find_by(access_token: request.params["token"]) if find_user
+    end
+
+    def find_user
+      @user ||= User.find_by(email: request.params["email"])
+    end
+
+    def current_user
+      @current_user ||= User.find(token.user_id) if token && !token.expired?
     end
   end
 end
