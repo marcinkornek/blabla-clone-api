@@ -18,32 +18,28 @@ class RideRequest < ApplicationRecord
   private
 
   def create_ride_request_notification
-    notification = create_notification_to_driver("ride_request_created")
-    broadcast_notification(notification)
+    Notifier.new(
+      "ride_request_created",
+      passenger,
+      ride.driver,
+      { ride: ride, ride_request: self, broadcast: true }
+    ).call
   end
 
   def change_ride_request_status_notification
     case status
     when "accepted"
-      notification = create_notification_to_passenger("ride_request_accepted")
-      broadcast_notification(notification)
+      Notifier.new(
+        "ride_request_accepted",
+        ride.driver, passenger,
+        { ride: ride, ride_request: self, broadcast: true }
+      ).call
     when "rejected"
-      notification = create_notification_to_passenger("ride_request_rejected")
-      broadcast_notification(notification)
+      Notifier.new(
+        "ride_request_rejected",
+        ride.driver, passenger,
+        { ride: ride, ride_request: self, broadcast: true }
+      ).call
     end
-  end
-
-  def create_notification_to_driver(notification_type)
-    self.notifications.create(ride: ride, sender: passenger, receiver: ride.driver,
-      notification_type: notification_type)
-  end
-
-  def create_notification_to_passenger(notification_type)
-    self.notifications.create(ride: ride, sender: ride.driver, receiver: passenger,
-      notification_type: notification_type)
-  end
-
-  def broadcast_notification(notification)
-    ActionCable.server.broadcast("notifications:#{notification.receiver.id}", notification: notification)
   end
 end
