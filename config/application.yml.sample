@@ -10,3 +10,4 @@ production:
   S3_REGION: "your_s3_region"
   S3_BUCKET: "your_s3_bucket_name"
   ROLLBAR_ACCESS_TOKEN: "your_rollbar_access_token"
+  REDIS_URL: "your_redis_url"
