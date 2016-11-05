@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/rollbar/rollbar-gem.git
-  revision: f8bfd76c2b5ded56d26abfc6979c711f4bc23e32
+  revision: 2dc3eedd06a248db8724cb9b3905ad5f48acac17
   specs:
-    rollbar (2.13.2)
+    rollbar (2.13.3)
       multi_json
 
 GIT
@@ -57,7 +57,7 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
     api-pagination (4.4.0)
-    arel (7.1.2)
+    arel (7.1.4)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -77,7 +77,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.2)
-    counter_culture (0.2.2)
+    counter_culture (0.2.3)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
       after_commit_action (~> 1.0.0)
@@ -91,10 +91,9 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    enumerable-lazy (0.0.1)
     equalizer (0.0.11)
     erubis (2.7.0)
-    excon (0.52.0)
+    excon (0.54.0)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.7.0)
@@ -155,7 +154,7 @@ GEM
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
       ipaddress (~> 0.8)
-    fog-core (1.42.0)
+    fog-core (1.43.0)
       builder
       excon (~> 0.49)
       formatador (~> 0.2)
@@ -173,9 +172,9 @@ GEM
     fog-json (1.0.2)
       fog-core (~> 1.0)
       multi_json (~> 1.10)
-    fog-local (0.3.0)
+    fog-local (0.3.1)
       fog-core (~> 1.27)
-    fog-openstack (0.1.12)
+    fog-openstack (0.1.15)
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
@@ -186,7 +185,7 @@ GEM
     fog-profitbricks (2.0.1)
       fog-core (~> 1.42)
       fog-json (~> 1.0)
-    fog-rackspace (0.1.1)
+    fog-rackspace (0.1.2)
       fog-core (>= 1.35)
       fog-json (>= 1.0)
       fog-xml (>= 0.1)
@@ -220,9 +219,9 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.2.0)
+    fog-vsphere (1.5.0)
       fog-core
-      rbvmomi (~> 1.8.0)
+      rbvmomi (~> 1.9)
     fog-xenserver (0.2.3)
       fog-core
       fog-xml
@@ -232,13 +231,13 @@ GEM
     formatador (0.2.5)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    grape (0.17.0)
+    grape (0.18.0)
       activesupport
       builder
       hashie (>= 2.1.0)
       multi_json (>= 1.3.2)
       multi_xml (>= 0.5.2)
-      mustermann19 (~> 0.4.3)
+      mustermann-grape (~> 0.4.0)
       rack (>= 1.3.0)
       rack-accept
       virtus (>= 1.0.0)
@@ -248,7 +247,7 @@ GEM
     hashie (3.4.6)
     hashie-forbidden_attributes (0.1.1)
       hashie (>= 3.0)
-    http_accept_language (2.0.5)
+    http_accept_language (2.1.0)
     i18n (0.7.0)
     ice_nine (0.11.2)
     inflecto (0.0.2)
@@ -271,16 +270,16 @@ GEM
     minitest (5.9.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
-    mustermann19 (0.4.4)
-      enumerable-lazy
+    mustermann (0.4.0)
+      tool (~> 0.2)
+    mustermann-grape (0.4.0)
+      mustermann (= 0.4.0)
     nio4r (1.2.1)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     oj (2.12.14)
     orm_adapter (0.5.0)
     pg (0.19.0)
-    pkg-config (1.1.7)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -318,14 +317,15 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (11.3.0)
-    rbvmomi (1.8.2)
-      builder
-      nokogiri (>= 1.4.1)
-      trollop
+    rbvmomi (1.9.4)
+      builder (~> 3.2)
+      json (>= 1.8)
+      nokogiri (~> 1.5)
+      trollop (~> 2.1)
     redis (3.3.1)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
-    rspec-core (3.5.3)
+    rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -343,7 +343,8 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     slop (3.6.0)
-    spring (1.7.2)
+    spring (2.0.0)
+      activesupport (>= 4.2)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -353,6 +354,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.1)
     thread_safe (0.3.5)
+    tool (0.2.3)
     trollop (2.1.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
