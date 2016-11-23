@@ -41,7 +41,7 @@ module API
             data = declared(params)
             rr = RideRequestStatusUpdater.new(data, current_user, ride_request).call
             if rr.valid?
-              ride = rr.ride
+              ride = rr.reload.ride
               present ride, with: Entities::RideShowOwner
             else
               status 406
