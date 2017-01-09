@@ -10,9 +10,10 @@ module API
           requires :email, type: String, desc: "User email"
           requires :first_name, type: String, desc: "User first name"
           requires :last_name, type: String, desc: "User last name"
+          optional :avatar, type: String, desc: "User avatar url"
         end
         post :oath_login do
-          auth = params.slice(:uid, :provider, :email, :first_name, :last_name)
+          auth = params.slice(:uid, :provider, :email, :first_name, :last_name, :avatar)
           user = User.find_for_oauth(auth)
           if user
             token = user.tokens.create

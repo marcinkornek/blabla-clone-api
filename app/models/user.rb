@@ -41,7 +41,7 @@ class User < ApplicationRecord
   private
 
   def self.create_user_with_aouth(auth)
-    User.create(
+    user = User.create(
       first_name: auth[:first_name],
       last_name: auth[:last_name],
       uid: auth[:uid],
@@ -49,6 +49,9 @@ class User < ApplicationRecord
       email: auth[:email],
       password: friendly_token
     )
+    user.remote_avatar_url = auth[:avatar]
+    user.save
+    user
   end
 
   def self.user_registered_with_email(auth)
