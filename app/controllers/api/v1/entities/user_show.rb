@@ -34,6 +34,14 @@ module API
         def avatar
           object.avatar.mini.url || 'https://s3-eu-west-1.amazonaws.com/blabla-clone-app/uploads/user/avatar/placeholder/img_placeholder_avatar_thumb.jpg'
         end
+
+        def cars
+          object.cars.limit(5)
+        end
+
+        def rides_as_driver
+          object.rides_as_driver.limit(5)
+        end
       end
     end
   end
