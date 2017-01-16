@@ -19,6 +19,7 @@ module API
         expose :updated_at
         expose :driver, using: Entities::UserIndex
         expose :car, using: Entities::CarSimple
+        expose :car_id
         expose :user_ride_request, using: Entities::RideRequestShow, if: lambda { |object, options| options[:current_user] && object.user_requested?(options[:current_user]) }
         expose :requested, if: lambda { |object, options| options[:current_user] }
 
