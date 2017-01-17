@@ -19,6 +19,6 @@ class RidesFinder
     rides = rides.from_city(params[:start_city]) if params[:start_city].present?
     rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
     rides = rides.in_day(start_date) if params[:start_date].present?
-    rides
+    rides.order(:start_date)
   end
 end
