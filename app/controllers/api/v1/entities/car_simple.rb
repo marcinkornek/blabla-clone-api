@@ -9,6 +9,7 @@ module API
         expose :places_full
         expose :owner_id
         expose :car_photo
+        expose :production_year
 
         def full_name
           object.full_name.upcase
