@@ -27,8 +27,8 @@ module API
           requires :password, type: String, desc: "User password"
         end
         post :login do
-          email = params[:email]
-          password = params[:password]
+          email = params[:email].strip
+          password = params[:password].strip
 
           user = User.where(email: email.downcase).first
           error!({error: 'Invalid Email and/or Password'}, 401) if user.nil?
