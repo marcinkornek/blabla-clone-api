@@ -52,11 +52,12 @@ module API
           optional :destination_city, type: String, desc: "filter by destination_city"
           optional :start_date, type: String, desc: "filter by start date"
           optional :hide_full, type: Boolean, desc: "hide full rides filter"
+          optional :filters
         end
 	      get do
           data = declared(params)
           rides = RidesFinder.new(data, current_user).call
-          results = paginated_results_with_filters(rides, params[:page], params[:per])
+          results = paginated_results_with_filters(rides, data[:page], data[:per])
           present results[:collection],
                   with: Entities::RidesIndex,
                   pagination: results[:meta],
