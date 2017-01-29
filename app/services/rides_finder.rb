@@ -18,15 +18,25 @@ class RidesFinder
     rides = rides.from_city(params[:start_city]) if params[:start_city].present?
     rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
     rides = rides.in_day(start_date) if params[:start_date].present?
+    rides = search_rides(rides) if search.present?
     rides = filter_rides(rides) if filters.present?
-    rides.order(:start_date)
+    rides
   end
 
-  def filter_rides(rides)
+  def search_rides(rides)
     # TODO use geocoder to search near start_city and destination_city
     rides = rides.from_city(start_city) if start_city.present?
     rides = rides.to_city(start_city) if destination_city.present?
     rides
+  end
+
+  def filter_rides(rides)
+    rides = rides.order_by_type(order_by_type) if order_by_type.present?
+    rides
+  end
+
+  def search
+    JSON.parse(params.fetch(:search, nil)).with_indifferent_access if params[:search].present?
   end
 
   def filters
@@ -34,14 +44,18 @@ class RidesFinder
   end
 
   def start_city
-    filters&.fetch(:start_city, nil)&.fetch(:address, nil)
+    search&.fetch(:start_city, nil)&.fetch(:address, nil)
   end
 
   def destination_city
-    filters&.fetch(:destination_city, nil)&.fetch(:address, nil)
+    search&.fetch(:destination_city, nil)&.fetch(:address, nil)
   end
 
   def start_date
     params[:start_date].present? ? params[:start_date].to_datetime : nil
+  end
+
+  def order_by_type
+    filters&.fetch(:order_by_type, nil)
   end
 end

@@ -53,6 +53,7 @@ module API
           optional :start_date, type: String, desc: "filter by start date"
           optional :hide_full, type: Boolean, desc: "hide full rides filter"
           optional :filters
+          optional :search
         end
 	      get do
           data = declared(params)

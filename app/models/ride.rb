@@ -25,6 +25,22 @@ class Ride < ApplicationRecord
   scope :full_rides, -> { where('rides.places = rides.taken_places') }
   scope :future, -> { where('rides.start_date > ?', Time.now) }
   scope :past, -> { where('rides.start_date <= ?', Time.now) }
+  scope :order_by_type, lambda { |type|
+    case type
+    when 'newest'
+      order(start_date: :asc)
+    when 'oldest'
+      order(start_date: :desc)
+    when 'recently_added'
+      order(created_at: :desc)
+    when 'cheapest'
+      order(price: :asc)
+    when 'expensive'
+      order(price: :desc)
+    else
+      order(start_date: :asc)
+    end
+  }
 
   def self.other_users_rides(user)
     user.present? ? where.not(driver_id: user) : all
