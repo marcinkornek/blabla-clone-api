@@ -32,6 +32,7 @@ class RidesFinder
 
   def filter_rides(rides)
     rides = rides.order_by_type(order_by_type) if order_by_type.present?
+    rides = rides.in_currency(currency) if currency.present?
     rides
   end
 
@@ -57,5 +58,9 @@ class RidesFinder
 
   def order_by_type
     filters&.fetch(:order_by_type, nil)
+  end
+
+  def currency
+    filters&.fetch(:currency, nil)
   end
 end
