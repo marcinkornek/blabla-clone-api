@@ -94,4 +94,23 @@ RSpec.describe Ride, type: :model do
       end
     end
   end
+
+  describe "scopes" do
+    describe ".in_currency(currency)" do
+      let!(:ride) { FactoryGirl.create(:ride, currency: 'pln') }
+      subject { described_class.in_currency(currency) }
+
+      context 'when some rides in currency exist' do
+        let(:currency) { 'pln' }
+
+        it { is_expected.to match_array([ride]) }
+      end
+
+      context 'when NO rides in currency exist' do
+        let(:currency) { 'eur' }
+
+        it { is_expected.to be_blank }
+      end
+    end
+  end
 end
