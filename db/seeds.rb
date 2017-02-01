@@ -1,13 +1,17 @@
 car_brands = %w(ford fiat kia honda mercedes bmw)
-car_models = %w(focus 500 ceed civic slr 7)
-cities = [
-  {name: 'Wrocław, Polska', lat: '51.1078852', lng: '17.03853760000004'},
-  {name: 'Kraków, Polska', lat: '50.06465009999999', lng: '19.94497990000002'},
-  {name: 'Opole, Polska', lat: '50.6751067', lng: '17.921297600000003'},
-  {name: 'Zakopane, Polska', lat: '49.299181', lng: '19.94956209999998'},
-  {name: 'Poznań, Polska', lat: '52.406374', lng: '16.925168100000064'},
-  {name: 'Warszawa, Polska', lat: '52.2296756', lng: '21.012228700000037'}
+car_models = %w(focus 500 ceed civic slr)
+locations = [
+  { country: 'Poland', address: 'Wrocław, Poland', latitude: '51.1078852', longitude: '17.03853760000004'},
+  { country: 'Poland', address: 'Kraków, Poland', latitude: '50.06465009999999', longitude: '19.94497990000002'},
+  { country: 'Poland', address: 'Opole, Poland', latitude: '50.6751067', longitude: '17.921297600000003'},
+  { country: 'Poland', address: 'Zakopane, Poland', latitude: '49.299181', longitude: '19.94956209999998'},
+  { country: 'Poland', address: 'Poznań, Poland', latitude: '52.406374', longitude: '16.925168100000064'},
+  { country: 'Poland', address: 'Warszawa, Poland', latitude: '52.2296756', longitude: '21.012228700000037'}
 ]
+
+locations.each do |location|
+  Location.create(location)
+end
 
 5.times.collect do |i|
   u = User.create(
@@ -31,14 +35,9 @@ cities = [
 
     # future rides
     1.times.collect do |i|
-      start, destination = cities.sample(2)
       fr = Ride.create(
-        start_city: start[:name],
-        start_city_lat: start[:lat],
-        start_city_lng: start[:lng],
-        destination_city: destination[:name],
-        destination_city_lat: destination[:lat],
-        destination_city_lng: destination[:lng],
+        start_location: Location.all.sample,
+        destination_location: Location.all.sample,
         driver: u,
         places: rand(1..6),
         start_date: rand(50..100).days.from_now,
@@ -61,14 +60,9 @@ cities = [
 
     # past rides
     1.times.collect do |i|
-      start, destination = cities.sample(2)
       pr = Ride.create(
-        start_city: start[:name],
-        start_city_lat: start[:lat],
-        start_city_lng: start[:lng],
-        destination_city: destination[:name],
-        destination_city_lat: destination[:lat],
-        destination_city_lng: destination[:lng],
+        start_location: Location.all.sample,
+        destination_location: Location.all.sample,
         driver: u,
         places: rand(1..6),
         start_date: rand(1..50).days.ago,

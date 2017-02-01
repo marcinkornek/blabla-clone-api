@@ -1,25 +1,21 @@
 class Ride < ApplicationRecord
   belongs_to :driver, class_name: 'User'
   belongs_to :car
-  has_many :passengers,    dependent: :destroy, class_name: 'User', through: :ride_requests
+  has_many :passengers, dependent: :destroy, class_name: 'User', through: :ride_requests
   has_many :ride_requests, dependent: :destroy
+  belongs_to :start_location, class_name: 'Location'
+  belongs_to :destination_location, class_name: 'Location'
 
   validates :car, presence: true
   validates :currency, presence: true
-  validates :destination_city, presence: true
-  validates :destination_city_lat, presence: true
-  validates :destination_city_lng, presence: true
   validates :driver, presence: true
   validates :places, presence: true, numericality: { greater_than: 0, less_than: 60 }
   validates :price, presence: true, numericality: { greater_than: 0 }
-  validates :start_city, presence: true
-  validates :start_city_lat, presence: true
-  validates :start_city_lng, presence: true
 
   enum currency:  { pln: 0, usd: 1, eur: 2 }
 
-  scope :from_city, ->(city) { where(start_city: city) }
-  scope :to_city, ->(city) { where(destination_city: city) }
+  # scope :from_city, ->(city) { where(start_city: city) }
+  # scope :to_city, ->(city) { where(destination_city: city) }
   scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
   scope :in_currency, ->(currency) { where(currency: currency) }
   scope :without_full, -> { where('rides.places > rides.taken_places') }
