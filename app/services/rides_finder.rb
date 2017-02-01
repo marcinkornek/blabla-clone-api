@@ -13,10 +13,8 @@ class RidesFinder
   private
 
   def find_rides
-    rides = Ride.other_users_rides(user).future.includes(:driver).includes(:car)
+    rides = Ride.other_users_rides(user).future.includes(:driver, :start_location, :destination_location).includes(:car)
     rides = rides.without_full if params[:hide_full] == true
-    rides = rides.from_city(params[:start_city]) if params[:start_city].present?
-    rides = rides.to_city(params[:destination_city]) if params[:destination_city].present?
     rides = rides.in_day(start_date) if params[:start_date].present?
     rides = search_rides(rides) if search.present?
     rides = filter_rides(rides) if filters.present?
@@ -24,9 +22,9 @@ class RidesFinder
   end
 
   def search_rides(rides)
-    # TODO use geocoder to search near start_city and destination_city
-    rides = rides.from_city(start_city) if start_city.present?
-    rides = rides.to_city(start_city) if destination_city.present?
+    # TODO use geocoder to search near start_location and destination_location
+    # rides = rides.from_city(start_location) if start_location.present?
+    # rides = rides.to_city(start_location) if destination_location.present?
     rides
   end
 
@@ -44,12 +42,12 @@ class RidesFinder
     JSON.parse(params.fetch(:filters, nil)).with_indifferent_access if params[:filters].present?
   end
 
-  def start_city
-    search&.fetch(:start_city, nil)&.fetch(:address, nil)
+  def start_location
+    search&.fetch(:start_location, nil)&.fetch(:address, nil)
   end
 
-  def destination_city
-    search&.fetch(:destination_city, nil)&.fetch(:address, nil)
+  def destination_location
+    search&.fetch(:destination_location, nil)&.fetch(:address, nil)
   end
 
   def start_date

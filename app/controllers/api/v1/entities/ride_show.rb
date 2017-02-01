@@ -3,12 +3,12 @@ module API
     module Entities
       class RideShow < Grape::Entity
         expose :id
-        expose :start_city
-        expose :start_city_lat
-        expose :start_city_lng
-        expose :destination_city
-        expose :destination_city_lat
-        expose :destination_city_lng
+        expose :start_location_address
+        expose :start_location_latitude
+        expose :start_location_longitude
+        expose :destination_location_address
+        expose :destination_location_latitude
+        expose :destination_location_longitude
         expose :free_places_count
         expose :places
         expose :places_full
@@ -29,6 +29,30 @@ module API
 
         def requested
           object.user_requested?(options[:current_user])
+        end
+
+        def start_location_address
+          object.start_location.address
+        end
+
+        def start_location_latitude
+          object.start_location.latitude
+        end
+
+        def start_location_longitude
+          object.start_location.longitude
+        end
+
+        def destination_location_address
+          object.destination_location.address
+        end
+
+        def destination_location_latitude
+          object.destination_location.latitude
+        end
+
+        def destination_location_longitude
+          object.destination_location.longitude
         end
       end
     end

@@ -5,7 +5,7 @@ module API
 
       helpers do
         def ride
-          @ride ||= Ride.includes(:driver, :car).find(params[:id])
+          @ride ||= Ride.includes(:driver, :car, :start_location, :destination_location).find(params[:id])
         end
 
         def user_ride
@@ -48,8 +48,8 @@ module API
 	      desc "Return list of rides"
         params do
           use :pagination_params
-          optional :start_city, type: String, desc: "filter by start_city"
-          optional :destination_city, type: String, desc: "filter by destination_city"
+          optional :start_location, type: String, desc: "filter by start_location"
+          optional :destination_location, type: String, desc: "filter by destination_location"
           optional :start_date, type: String, desc: "filter by start date"
           optional :hide_full, type: Boolean, desc: "hide full rides filter"
           optional :filters

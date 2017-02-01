@@ -3,8 +3,8 @@ module API
     module Entities
       class RideAsPassenger < Grape::Entity
         expose :id
-        expose :start_city
-        expose :destination_city
+        expose :start_location
+        expose :destination_location
         expose :free_places_count
         expose :places
         expose :places_full
@@ -19,12 +19,12 @@ module API
           object.ride.id
         end
 
-        def start_city
-          object.ride.start_city
+        def start_location
+          object.ride.start_location.address
         end
 
-        def destination_city
-          object.ride.destination_city
+        def destination_location
+          object.ride.destination_location.address
         end
 
         def free_places_count
