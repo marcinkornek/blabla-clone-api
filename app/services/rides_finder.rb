@@ -23,9 +23,8 @@ class RidesFinder
   end
 
   def search_rides(rides)
-    # TODO use geocoder to search near start_location and destination_location
-    # rides = rides.from_city(start_location) if start_location.present?
-    # rides = rides.to_city(start_location) if destination_location.present?
+    rides = rides.from_city(start_location[:latitude], start_location[:longitude]) if start_location.present?
+    rides = rides.to_city(destination_location[:latitude], destination_location[:longitude]) if destination_location.present?
     rides
   end
 
@@ -43,11 +42,11 @@ class RidesFinder
   end
 
   def start_location
-    search&.fetch(:start_location, nil)&.fetch(:address, nil)
+    search&.fetch(:start_location, nil)
   end
 
   def destination_location
-    search&.fetch(:destination_location, nil)&.fetch(:address, nil)
+    search&.fetch(:destination_location, nil)
   end
 
   def start_date

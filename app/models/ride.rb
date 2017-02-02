@@ -14,8 +14,14 @@ class Ride < ApplicationRecord
 
   enum currency:  { pln: 0, usd: 1, eur: 2 }
 
-  # scope :from_city, ->(city) { where(start_city: city) }
-  # scope :to_city, ->(city) { where(destination_city: city) }
+  scope :from_city, lambda { |latitude, longitude|
+    location = Location.near([latitude, longitude], 1).first
+    joins(:start_location).where(start_location_id: location.id) if location.present?
+  }
+  scope :to_city, lambda { |latitude, longitude|
+    location = Location.near([latitude, longitude], 1).first
+    joins(:destination_location).where(destination_location_id: location.id) if location.present?
+  }
   scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
   scope :in_currency, ->(currency) { where(currency: currency) }
   scope :without_full, -> { where('rides.places > rides.taken_places') }
