@@ -13,7 +13,7 @@ class Ride < ApplicationRecord
   validates :places, presence: true, numericality: { greater_than: 0, less_than: 60 }
   validates :price, presence: true, numericality: { greater_than: 0 }
 
-  enum currency:  { pln: 0, usd: 1, eur: 2 }
+  enum currency: { pln: 0, usd: 1, eur: 2 }
 
   scope :from_city, lambda { |latitude, longitude|
     location = Location.near([latitude, longitude], 1).first

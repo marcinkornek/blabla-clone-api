@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :notifications,      foreign_key: "receiver_id", dependent: :destroy
 
   enum role: { user: 0, admin: 1 }
-  enum gender:  { male: 0, female: 1 }
+  enum gender: { male: 0, female: 1 }
 
   validates :first_name, presence: true
   validates :last_name,  presence: true

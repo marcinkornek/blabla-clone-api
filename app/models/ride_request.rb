@@ -8,7 +8,7 @@ class RideRequest < ApplicationRecord
   validates :ride, presence: true
   validates :places, presence: true, numericality: { greater_than: 0 }
 
-  enum status:  { rejected: -1, pending: 0, accepted: 1 }
+  enum status: { rejected: -1, pending: 0, accepted: 1 }
 
   counter_culture :ride, column_name: Proc.new { |model|
     model.accepted? ? "taken_places" : nil

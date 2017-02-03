@@ -52,9 +52,7 @@ module API
       end
 
       before do
-        if current_user
-          current_user.touch :last_seen_at
-        end
+        current_user&.touch :last_seen_at
       end
 
       mount API::V1::CarsApi
