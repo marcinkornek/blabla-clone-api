@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module API
   module V1
-    class Users < Grape::API
+    class UsersApi < Grape::API
       helpers API::ParamsHelper
 
       helpers do

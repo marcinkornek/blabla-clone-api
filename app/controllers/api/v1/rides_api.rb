@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module API
   module V1
-    class Rides < Grape::API
+    class RidesApi < Grape::API
       helpers API::ParamsHelper
 
       helpers do

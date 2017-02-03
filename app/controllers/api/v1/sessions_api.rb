@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module API
   module V1
-    class Sessions < Grape::API
+    class SessionsApi < Grape::API
       resource :sessions do
         desc "Authenticate user with oath and return user access token"
         params do
