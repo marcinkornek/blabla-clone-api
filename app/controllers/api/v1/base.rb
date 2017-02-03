@@ -13,7 +13,9 @@ module API
 
       helpers do
         def authenticate!
-          error!("Unauthorized. Wrong email and/or invalid or expired token.", 401) unless current_user
+          unless current_user
+            error!("Unauthorized. Wrong email and/or invalid or expired token.", 401)
+          end
         end
 
         def token
@@ -46,7 +48,7 @@ module API
             collection: collection,
             meta: kaminari_params(collection),
           }
-          end
+        end
       end
 
       before do

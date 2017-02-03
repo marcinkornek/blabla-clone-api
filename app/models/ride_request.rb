@@ -10,8 +10,12 @@ class RideRequest < ApplicationRecord
 
   enum status:  { rejected: -1, pending: 0, accepted: 1 }
 
-  counter_culture :ride, column_name: Proc.new { |model| model.accepted? ? "taken_places" : nil }, delta_column: "places"
-  counter_culture :ride, column_name: Proc.new { |model| model.pending? ? "requested_places" : nil }, delta_column: "places"
+  counter_culture :ride, column_name: Proc.new { |model|
+    model.accepted? ? "taken_places" : nil
+  }, delta_column: "places"
+  counter_culture :ride, column_name: Proc.new { |model|
+    model.pending? ? "requested_places" : nil
+  }, delta_column: "places"
 
   after_create :create_ride_request_notification
   after_update :change_ride_request_status_notification

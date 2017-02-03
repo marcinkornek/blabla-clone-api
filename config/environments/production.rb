@@ -36,7 +36,8 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
-  # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
+  # `config.assets.precompile` and `config.assets.version` have moved to
+  # config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -82,5 +83,8 @@ Rails.application.configure do
   config.web_socket_server_url = "wss://blabla-clone-api.herokuapp.com/cable"
 
   # Allowed Request Origins for action_cable
-  config.action_cable.allowed_request_origins = ["https://blabla-clone-react.herokuapp.com", "http://blabla-clone-react.herokuapp.com"]
+  config.action_cable.allowed_request_origins = [
+    "https://blabla-clone-react.herokuapp.com",
+    "http://blabla-clone-react.herokuapp.com",
+  ]
 end

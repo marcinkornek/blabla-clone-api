@@ -17,4 +17,5 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-BlablaCloneApi::Application.config.secret_token = "e2b27e32faa678891a28718c86a2be7c7d9e6559a3a53d7180a9acd3ed64f9cd304d52b522473cb95c5ac8a0e3c011f04aff214d831ed9e9ad7589ee1bdcb472"
+BlablaCloneApi::Application.config.secret_token = "e2b27e32faa678891a28718c86a2be7c7d9e6559a3a" \
+  "53d7180a9acd3ed64f9cd304d52b522473cb95c5ac8a0e3c011f04aff214d831ed9e9ad7589ee1bdcb472"

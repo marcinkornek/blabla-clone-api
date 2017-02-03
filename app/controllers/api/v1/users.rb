@@ -5,6 +5,22 @@ module API
       helpers API::ParamsHelper
 
       helpers do
+        params :user_params do
+          requires :first_name, type: String, desc: "user first_name"
+          requires :last_name, type: String, desc: "user last_name"
+          requires :email, type: String, desc: "user email"
+          optional :gender, type: String, desc: "user gender"
+          optional :tel_num, type: String, desc: "user telephone number"
+          optional :date_of_birth, type: Date, desc: "user birth year"
+          optional :avatar, type: Hash do
+            optional :filename, type: String
+            optional :type, type: String
+            optional :name, type: String
+            optional :tempfile
+            optional :head, type: String
+          end
+        end
+
         def user
           @user ||= User.find(params[:id])
         end

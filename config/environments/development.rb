@@ -63,7 +63,8 @@ Rails.application.configure do
     # Bullet.add_footer = true
     # Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
     # Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware' ]
-    # Bullet.slack = { webhook_url: 'http://some.slack.url', channel: '#default', username: 'notifier' }
+    # Bullet.slack = {
+    # webhook_url: 'http://some.slack.url', channel: '#default', username: 'notifier' }
   end
 
   # action_cable config

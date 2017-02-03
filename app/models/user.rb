@@ -32,27 +32,30 @@ class User < ApplicationRecord
   end
 
   def age
-    date_of_birth ? Time.now.year - date_of_birth.year : nil
+    date_of_birth ? Time.current.year - date_of_birth.year : nil
   end
 
   def full_name
     first_name + " " + last_name[0]
   end
 
-  private
-
   def self.create_user_with_aouth(auth)
-    user = User.create(
+    user_params = user_auth_params(auth)
+    user = User.create(user_params)
+    user.remote_avatar_url = auth[:avatar]
+    user.save
+    user
+  end
+
+  def self.user_auth_params(auth)
+    {
       first_name: auth[:first_name],
       last_name: auth[:last_name],
       uid: auth[:uid],
       provider: auth[:provider],
       email: auth[:email],
       password: friendly_token,
-    )
-    user.remote_avatar_url = auth[:avatar]
-    user.save
-    user
+    }
   end
 
   def self.user_registered_with_email(auth)

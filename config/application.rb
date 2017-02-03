@@ -25,7 +25,13 @@ module BlablaCloneApi
     config.api_only = true
 
     config.middleware.use Rack::Cors do
-      Rails.env.development? ? origins = "http://localhost:8080" : origins = "https://blabla-clone-react.herokuapp.com"
+      origins =
+        if Rails.env.development?
+          "http://localhost:8080"
+        else
+          "https://blabla-clone-react.herokuapp.com"
+        end
+
       allow do
         origins origins
         # location of your API

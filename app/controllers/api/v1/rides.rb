@@ -5,8 +5,29 @@ module API
       helpers API::ParamsHelper
 
       helpers do
+        params :ride_params do
+          optional :start_location_country, type: String, desc: "user start location country"
+          requires :start_location_address, type: String, desc: "user start location address"
+          requires :start_location_latitude, type: String, desc: "user start location latitude"
+          requires :start_location_longitude, type: String, desc: "user start location longitude"
+          optional :destination_location_country, type: String,
+                                                  desc: "user destination location country"
+          requires :destination_location_address, type: String,
+                                                  desc: "user destination location address"
+          requires :destination_location_latitude, type: String,
+                                                   desc: "user destination location latitude"
+          requires :destination_location_longitude, type: String,
+                                                    desc: "user destination location longitude"
+          requires :places, type: Integer, desc: "user places"
+          requires :start_date, type: String, desc: "user start_date"
+          requires :price, type: String, desc: "user price"
+          requires :currency, type: String, desc: "user currency"
+          requires :car_id, type: Integer, desc: "user car_id"
+        end
+
         def ride
-          @ride ||= Ride.includes(:driver, :car, :start_location, :destination_location).find(params[:id])
+          @ride ||= Ride.includes(:driver, :car, :start_location, :destination_location)
+            .find(params[:id])
         end
 
         def user_ride
@@ -15,7 +36,7 @@ module API
 
         def ride_owner?
           ride.driver.id == current_user.id if current_user.present?
-       end
+        end
 
         def paginated_results_with_filters(results, page, per = 25)
           return { collection: results, meta: {} } if page.nil?

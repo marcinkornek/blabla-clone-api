@@ -8,7 +8,10 @@ class Notification < ApplicationRecord
   NOTIFICATION_TYPES = %w(ride_request_created ride_request_accepted ride_request_rejected).freeze
 
   validates :notification_type, presence: true,
-                                inclusion: { in: NOTIFICATION_TYPES, message: "%{value} is not a valid notification_type" }
+                                inclusion: {
+                                  in: NOTIFICATION_TYPES,
+                                  message: "%{value} is not a valid notification_type",
+                                }
   validates :sender_id, presence: true
   validates :receiver_id, presence: true
   validates :ride_id, presence: true
@@ -16,6 +19,6 @@ class Notification < ApplicationRecord
   scope :unread, -> { where(seen_at: nil) }
 
   def mark_as_seen!
-    update(seen_at: Time.now)
+    update(seen_at: Time.current)
   end
 end

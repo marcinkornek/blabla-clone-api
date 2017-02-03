@@ -27,8 +27,8 @@ class Ride < ApplicationRecord
   scope :in_currency, ->(currency) { where(currency: currency) }
   scope :without_full, -> { where("rides.places > rides.taken_places") }
   scope :full_rides, -> { where("rides.places = rides.taken_places") }
-  scope :future, -> { where("rides.start_date > ?", Time.now) }
-  scope :past, -> { where("rides.start_date <= ?", Time.now) }
+  scope :future, -> { where("rides.start_date > ?", Time.current) }
+  scope :past, -> { where("rides.start_date <= ?", Time.current) }
   scope :order_by_type, lambda { |type|
     case type
     when "newest"

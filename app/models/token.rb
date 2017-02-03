@@ -5,7 +5,7 @@ class Token < ApplicationRecord
   belongs_to :user
 
   def expired?
-    DateTime.now >= expires_at
+    Time.current >= expires_at
   end
 
   private
@@ -17,6 +17,6 @@ class Token < ApplicationRecord
   end
 
   def set_expiration
-    self.expires_at = DateTime.now + 30
+    self.expires_at = Time.current + 30
   end
 end

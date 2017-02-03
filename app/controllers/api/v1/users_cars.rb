@@ -5,6 +5,23 @@ module API
       helpers API::ParamsHelper
 
       helpers do
+        params :car_params do
+          requires :brand, type: String, desc: "car brand"
+          requires :model, type: String, desc: "car model"
+          requires :comfort, type: String, desc: "car comfort"
+          requires :places, type: String, desc: "car places"
+          requires :color, type: String, desc: "car color"
+          requires :category, type: String, desc: "car category"
+          requires :production_year, type: String, desc: "car production year"
+          optional :car_photo, type: Hash do
+            optional :filename, type: String
+            optional :type, type: String
+            optional :name, type: String
+            optional :tempfile
+            optional :head, type: String
+          end
+        end
+
         def car
           @car ||= Car.find(params[:id])
         end

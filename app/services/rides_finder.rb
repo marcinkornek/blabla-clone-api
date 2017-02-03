@@ -24,8 +24,12 @@ class RidesFinder
   end
 
   def search_rides(rides)
-    rides = rides.from_city(start_location[:latitude], start_location[:longitude]) if start_location.present?
-    rides = rides.to_city(destination_location[:latitude], destination_location[:longitude]) if destination_location.present?
+    if start_location.present?
+      rides = rides.from_city(start_location[:latitude], start_location[:longitude])
+    end
+    if destination_location.present?
+      rides = rides.to_city(destination_location[:latitude], destination_location[:longitude])
+    end
     rides
   end
 
