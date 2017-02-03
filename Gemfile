@@ -29,6 +29,7 @@ gem 'mini_magick' # handle picture resizing
 
 group :development do
   gem 'pry-rails' # changes rails console to 'pry'
+  gem 'rubocop'
 end
 
 group :development, :test do
