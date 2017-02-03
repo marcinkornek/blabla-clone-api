@@ -15,6 +15,7 @@ gem 'hashie-forbidden_attributes' # disables the security feature of strong_para
 gem 'devise'          # authentication
 gem 'geocoder'
 gem 'grape-entity'    # Grape representer
+gem 'active_model_serializers'
 gem 'counter_culture' # turbo-charged counter caches
 gem 'kaminari', require: 'kaminari/grape' # pagination
 gem 'api-pagination'
