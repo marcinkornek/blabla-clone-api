@@ -35,6 +35,10 @@ group :development do
 end
 
 group :development, :test do
+  gem "guard"
+  gem "guard-bundler"
+  gem "guard-rspec"
+  gem "guard-rubocop"
   gem "rspec-rails"
   gem "database_cleaner"
   gem "factory_girl_rails"
