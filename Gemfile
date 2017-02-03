@@ -17,7 +17,8 @@ gem 'geocoder'
 gem 'grape-entity'    # Grape representer
 gem 'active_model_serializers'
 gem 'counter_culture' # turbo-charged counter caches
-gem 'kaminari', require: 'kaminari/grape' # pagination
+gem 'kaminari' # pagination
+gem 'kaminari-grape'
 gem 'api-pagination'
 gem 'http_accept_language' # extracts Accept-Language header into an array
 gem 'rack-cors', require: 'rack/cors' # support for Cross-Origin Resource Sharing (CORS)
