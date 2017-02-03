@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 module API
   module V1
     class Sessions < Grape::API
       resource :sessions do
-
         desc "Authenticate user with oath and return user access token"
         params do
           requires :uid, type: String, desc: "User uid"
@@ -31,12 +31,12 @@ module API
           password = params[:password].strip
 
           user = User.where(email: email.downcase).first
-          error!({error: 'Invalid Email and/or Password'}, 401) if user.nil?
+          error!({ error: "Invalid Email and/or Password" }, 401) if user.nil?
           if user.valid_password?(password)
             token = user.tokens.create
             present token, with: Entities::Token
           else
-            error!({error: 'Invalid Email and/or Password.'}, 401)
+            error!({ error: "Invalid Email and/or Password." }, 401)
           end
         end
 
@@ -46,7 +46,7 @@ module API
           if token
             present token, with: Entities::Token
           else
-            error!({error: 'Invalid email and/or access_token'}, 401)
+            error!({ error: "Invalid email and/or access_token" }, 401)
           end
         end
 
@@ -55,9 +55,9 @@ module API
           authenticate!
           if token
             token.destroy
-            {ok: 'logged out'}
+            { ok: "logged out" }
           else
-            error!({error: 'Invalid access token.'}, 401)
+            error!({ error: "Invalid access token." }, 401)
           end
         end
       end

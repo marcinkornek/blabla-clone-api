@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module API
   module V1
     module Entities
       class CarsIndex < Grape::Entity
         present_collection true
-        expose :items, as: 'items', using: Entities::CarIndex
+        expose :items, as: "items", using: Entities::CarIndex
 
         expose :meta
 

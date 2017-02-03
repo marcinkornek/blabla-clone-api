@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 class Token < ApplicationRecord
   before_create :generate_access_token
   before_create :set_expiration
   belongs_to :user
 
   def expired?
-    DateTime.now >= self.expires_at
+    DateTime.now >= expires_at
   end
 
   private

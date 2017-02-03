@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CarCreator
   attr_reader :params, :car_photo, :user
 

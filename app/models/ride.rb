@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 class Ride < ApplicationRecord
-  belongs_to :driver, class_name: 'User'
+  belongs_to :driver, class_name: "User"
   belongs_to :car
-  has_many :passengers, dependent: :destroy, class_name: 'User', through: :ride_requests
+  has_many :passengers, dependent: :destroy, class_name: "User", through: :ride_requests
   has_many :ride_requests, dependent: :destroy
-  belongs_to :start_location, class_name: 'Location'
-  belongs_to :destination_location, class_name: 'Location'
+  belongs_to :start_location, class_name: "Location"
+  belongs_to :destination_location, class_name: "Location"
 
   validates :car, presence: true
   validates :currency, presence: true
@@ -24,21 +25,21 @@ class Ride < ApplicationRecord
   }
   scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
   scope :in_currency, ->(currency) { where(currency: currency) }
-  scope :without_full, -> { where('rides.places > rides.taken_places') }
-  scope :full_rides, -> { where('rides.places = rides.taken_places') }
-  scope :future, -> { where('rides.start_date > ?', Time.now) }
-  scope :past, -> { where('rides.start_date <= ?', Time.now) }
+  scope :without_full, -> { where("rides.places > rides.taken_places") }
+  scope :full_rides, -> { where("rides.places = rides.taken_places") }
+  scope :future, -> { where("rides.start_date > ?", Time.now) }
+  scope :past, -> { where("rides.start_date <= ?", Time.now) }
   scope :order_by_type, lambda { |type|
     case type
-    when 'newest'
+    when "newest"
       order(start_date: :asc)
-    when 'oldest'
+    when "oldest"
       order(start_date: :desc)
-    when 'recently_added'
+    when "recently_added"
       order(created_at: :desc)
-    when 'cheapest'
+    when "cheapest"
       order(price: :asc)
-    when 'expensive'
+    when "expensive"
       order(price: :desc)
     else
       order(start_date: :asc)
@@ -54,7 +55,7 @@ class Ride < ApplicationRecord
   end
 
   def places_full
-    free_places_count.to_s + ' ' + ('place').pluralize(free_places_count)
+    free_places_count.to_s + " " + "place".pluralize(free_places_count)
   end
 
   def user_requested?(user)

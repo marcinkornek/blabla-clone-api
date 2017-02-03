@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Notifier
   attr_reader :notification_type, :sender, :receivers, :options
 
@@ -28,7 +29,7 @@ class Notifier
       sender: sender,
       receiver: receiver,
       ride: options[:ride],
-      ride_request: options[:ride_request]
+      ride_request: options[:ride_request],
     )
     broadcast(notification) if options[:broadcast]
   end
@@ -38,8 +39,8 @@ class Notifier
       "notifications:#{notification.receiver.id}",
       notification: API::V1::Entities::NotificationWithUnreadCount.represent(
         notification,
-        current_user: notification.receiver
-      )
+        current_user: notification.receiver,
+      ),
     )
   end
 end

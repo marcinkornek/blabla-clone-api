@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RideCreator
   attr_reader :params, :user
 
@@ -37,7 +38,7 @@ class RideCreator
   def start_location
     Location.find_or_create_by(
       latitude: params[:start_location_latitude],
-      longitude: params[:start_location_longitude]
+      longitude: params[:start_location_longitude],
     ) do |location|
       location.address = params[:start_location_address]
       location.country = params[:start_location_country]
@@ -47,7 +48,7 @@ class RideCreator
   def destination_location
     Location.find_or_create_by(
       latitude: params[:destination_location_latitude],
-      longitude: params[:destination_location_longitude]
+      longitude: params[:destination_location_longitude],
     ) do |location|
       location.address = params[:destination_location_address]
       location.country = params[:destination_location_country]

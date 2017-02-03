@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Car < ApplicationRecord
   belongs_to :user
 
@@ -17,9 +18,8 @@ class Car < ApplicationRecord
   mount_uploader :car_photo, CarPhotoUploader
 
   def full_name
-    self.brand + ' ' + self.model
+    brand + " " + model
   end
-
 
   def comfort_stars
     comfort.to_i + 1 if comfort.present?

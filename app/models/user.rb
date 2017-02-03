@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -6,10 +7,10 @@ class User < ApplicationRecord
 
   has_many :tokens,             dependent: :destroy
   has_many :cars,               dependent: :destroy
-  has_many :rides_as_passenger, class_name: 'Ride', through: :ride_requests, source: 'ride'
-  has_many :rides_as_driver,    class_name: 'Ride', foreign_key: 'driver_id'
-  has_many :ride_requests,      foreign_key: 'passenger_id'
-  has_many :notifications,      foreign_key: 'receiver_id', dependent: :destroy
+  has_many :rides_as_passenger, class_name: "Ride", through: :ride_requests, source: "ride"
+  has_many :rides_as_driver,    class_name: "Ride", foreign_key: "driver_id"
+  has_many :ride_requests,      foreign_key: "passenger_id"
+  has_many :notifications,      foreign_key: "receiver_id", dependent: :destroy
 
   enum role: { user: 0, admin: 1 }
   enum gender:  { male: 0, female: 1 }
@@ -31,11 +32,11 @@ class User < ApplicationRecord
   end
 
   def age
-    self.date_of_birth ? Time.now.year - self.date_of_birth.year : nil
+    date_of_birth ? Time.now.year - date_of_birth.year : nil
   end
 
   def full_name
-    self.first_name + ' ' + self.last_name[0]
+    first_name + " " + last_name[0]
   end
 
   private
@@ -47,7 +48,7 @@ class User < ApplicationRecord
       uid: auth[:uid],
       provider: auth[:provider],
       email: auth[:email],
-      password: friendly_token
+      password: friendly_token,
     )
     user.remote_avatar_url = auth[:avatar]
     user.save
@@ -59,6 +60,6 @@ class User < ApplicationRecord
   end
 
   def self.friendly_token
-    SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
+    SecureRandom.urlsafe_base64(15).tr("lIO0", "sxyz")
   end
 end

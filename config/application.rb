@@ -1,6 +1,7 @@
-require File.expand_path('../boot', __FILE__)
+# frozen_string_literal: true
+require File.expand_path("../boot", __FILE__)
 
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,13 +25,13 @@ module BlablaCloneApi
     config.api_only = true
 
     config.middleware.use Rack::Cors do
-      Rails.env.development? ? origins = 'http://localhost:8080' : origins = 'https://blabla-clone-react.herokuapp.com'
+      Rails.env.development? ? origins = "http://localhost:8080" : origins = "https://blabla-clone-react.herokuapp.com"
       allow do
         origins origins
         # location of your API
-        resource '/api/*',
-          :headers => :any,
-          :methods => [:get, :post, :options, :put, :delete]
+        resource "/api/*",
+                 headers: :any,
+                 methods: [:get, :post, :options, :put, :delete]
       end
     end
   end

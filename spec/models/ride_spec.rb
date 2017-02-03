@@ -1,4 +1,5 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Ride, type: :model do
   let!(:user) { FactoryGirl.create(:user) }
@@ -20,7 +21,6 @@ RSpec.describe Ride, type: :model do
         expect(described_class.other_users_rides(user)).to eq([ride])
       end
     end
-
   end
 
   describe "#free_places_count" do
@@ -46,7 +46,7 @@ RSpec.describe Ride, type: :model do
       let!(:ride) { FactoryGirl.create(:ride, driver: user, places: 1, taken_places: 0) }
 
       it "returns ride free places in sentence" do
-        expect(ride.places_full).to eq('1 place')
+        expect(ride.places_full).to eq("1 place")
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Ride, type: :model do
       let!(:ride) { FactoryGirl.create(:ride, driver: user, places: 5, taken_places: 5) }
 
       it "returns ride free places in sentence" do
-        expect(ride.places_full).to eq('0 places')
+        expect(ride.places_full).to eq("0 places")
       end
     end
   end
@@ -97,17 +97,17 @@ RSpec.describe Ride, type: :model do
 
   describe "scopes" do
     describe ".in_currency(currency)" do
-      let!(:ride) { FactoryGirl.create(:ride, currency: 'pln') }
+      let!(:ride) { FactoryGirl.create(:ride, currency: "pln") }
       subject { described_class.in_currency(currency) }
 
-      context 'when some rides in currency exist' do
-        let(:currency) { 'pln' }
+      context "when some rides in currency exist" do
+        let(:currency) { "pln" }
 
         it { is_expected.to match_array([ride]) }
       end
 
-      context 'when NO rides in currency exist' do
-        let(:currency) { 'eur' }
+      context "when NO rides in currency exist" do
+        let(:currency) { "eur" }
 
         it { is_expected.to be_blank }
       end

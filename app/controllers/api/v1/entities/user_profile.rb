@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module API
   module V1
     module Entities
@@ -30,7 +31,7 @@ module API
         end
 
         def avatar
-          object.avatar.mini.url || 'https://s3-eu-west-1.amazonaws.com/blabla-clone-app/uploads/user/avatar/placeholder/img_placeholder_avatar_thumb.jpg'
+          object.avatar.mini.url || "https://s3-eu-west-1.amazonaws.com/blabla-clone-app/uploads/user/avatar/placeholder/img_placeholder_avatar_thumb.jpg"
         end
       end
     end

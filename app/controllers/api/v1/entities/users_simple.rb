@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module API
   module V1
     module Entities
       class UsersSimple < Grape::Entity
         present_collection true
-        expose :items, as: 'items', using: Entities::UserSimple
+        expose :items, as: "items", using: Entities::UserSimple
 
         expose :meta
 

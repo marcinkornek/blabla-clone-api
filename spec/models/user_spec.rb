@@ -1,24 +1,24 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe User, type: :model do
   let!(:user) do
     FactoryGirl.create(:user,
-      first_name: "James",
-      last_name: "Bond",
-      email: "james.bond@a.com",
-      date_of_birth: 20.years.ago,
-      uid: "11111111",
-      provider: "facebook"
-    )
+                       first_name: "James",
+                       last_name: "Bond",
+                       email: "james.bond@a.com",
+                       date_of_birth: 20.years.ago,
+                       uid: "11111111",
+                       provider: "facebook")
   end
 
   let(:auth) do
     {
-      :uid => "11111111",
-      :provider => "facebook",
-      :email => "james.bond@a.com",
-      :first_name => "James",
-      :last_name => "Bond"
+      uid: "11111111",
+      provider: "facebook",
+      email: "james.bond@a.com",
+      first_name: "James",
+      last_name: "Bond",
     }
   end
 
@@ -31,7 +31,7 @@ RSpec.describe User, type: :model do
       end
 
       it "does not create new user" do
-        expect{ User.find_for_oauth(auth) }.not_to change{ User.count }
+        expect { User.find_for_oauth(auth) }.not_to change { User.count }
       end
     end
 
@@ -41,12 +41,12 @@ RSpec.describe User, type: :model do
       end
 
       it "does not create new user" do
-        expect{ User.find_for_oauth(auth) }.not_to change{ User.count }
+        expect { User.find_for_oauth(auth) }.not_to change { User.count }
       end
     end
 
     context "when user not registered" do
-      before { user.update(uid: nil, provider: nil, email: 'other.email@a.com') }
+      before { user.update(uid: nil, provider: nil, email: "other.email@a.com") }
 
       it "returns new user with valid attributes" do
         expect(User.find_for_oauth(auth).provider).to eq(auth[:provider])
@@ -57,7 +57,7 @@ RSpec.describe User, type: :model do
       end
 
       it "does creates new user" do
-        expect{ User.find_for_oauth(auth) }.to change{ User.count }.by(1)
+        expect { User.find_for_oauth(auth) }.to change { User.count }.by(1)
       end
     end
   end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module API
   module V1
     class Users < Grape::API
@@ -9,7 +10,7 @@ module API
         end
 
         def user_with_includes
-          @user_with_includes ||= User.includes(:cars, { rides_as_driver: :car }).find(params[:id])
+          @user_with_includes ||= User.includes(:cars, rides_as_driver: :car).find(params[:id])
         end
       end
 

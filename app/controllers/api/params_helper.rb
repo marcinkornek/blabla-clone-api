@@ -1,15 +1,16 @@
+# frozen_string_literal: true
 module API
   module ParamsHelper
     extend Grape::API::Helpers
 
     params :pagination_params do |options = {}|
       optional :page, type: Integer, default: options.fetch(:page_default, 1),
-        desc: 'Page number of search results'
+                      desc: "Page number of search results"
       optional :per, type: Integer, default: options.fetch(:per_default, 25),
-        desc: 'Number of records per page for search results'
+                     desc: "Number of records per page for search results"
     end
 
-    params :user_params do |options = {}|
+    params :user_params do
       requires :first_name, type: String, desc: "user first_name"
       requires :last_name, type: String, desc: "user last_name"
       requires :email, type: String, desc: "user email"
@@ -25,7 +26,7 @@ module API
       end
     end
 
-    params :car_params do |options = {}|
+    params :car_params do
       requires :brand, type: String, desc: "car brand"
       requires :model, type: String, desc: "car model"
       requires :comfort, type: String, desc: "car comfort"
@@ -42,7 +43,7 @@ module API
       end
     end
 
-    params :ride_params do |options = {}|
+    params :ride_params do
       optional :start_location_country, type: String, desc: "user start location country"
       requires :start_location_address, type: String, desc: "user start location address"
       requires :start_location_latitude, type: String, desc: "user start location latitude"

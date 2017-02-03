@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module API
   module V1
     module Entities
       class RidesAsDriver < Grape::Entity
         present_collection true
-        expose :items, as: 'items', using: Entities::RideAsDriver
+        expose :items, as: "items", using: Entities::RideAsDriver
 
         expose :meta
 

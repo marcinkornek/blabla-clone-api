@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module API
   module V1
     class RideRequests < Grape::API
@@ -34,7 +35,7 @@ module API
         route_param :id do
           desc "Change ride request status"
           params do
-            requires :status, type: String,  desc: "ride request status"
+            requires :status, type: String, desc: "ride request status"
           end
           put do
             authenticate!

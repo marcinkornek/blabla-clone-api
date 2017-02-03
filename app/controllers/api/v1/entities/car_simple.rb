@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module API
   module V1
     module Entities
@@ -16,7 +17,7 @@ module API
         end
 
         def places_full
-          object.places.to_s + ' ' + 'place'.pluralize(object.places)
+          object.places.to_s + " " + "place".pluralize(object.places)
         end
 
         def owner_id
@@ -24,7 +25,7 @@ module API
         end
 
         def car_photo
-          object.car_photo.mini.url || 'https://s3-eu-west-1.amazonaws.com/blabla-clone-app/uploads/car/car_photo/placeholder/car_placeholder_thumb.jpg'
+          object.car_photo.mini.url || "https://s3-eu-west-1.amazonaws.com/blabla-clone-app/uploads/car/car_photo/placeholder/car_placeholder_thumb.jpg"
         end
       end
     end

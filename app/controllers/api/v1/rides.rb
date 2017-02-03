@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module API
   module V1
     class Rides < Grape::API
@@ -12,9 +13,9 @@ module API
           @user_ride ||= current_user.rides_as_driver.find(params[:id])
         end
 
-         def ride_owner?
+        def ride_owner?
           ride.driver.id == current_user.id if current_user.present?
-        end
+       end
 
         def paginated_results_with_filters(results, page, per = 25)
           return { collection: results, meta: {} } if page.nil?
@@ -24,13 +25,13 @@ module API
           {
             collection: collection,
             meta: kaminari_params(collection),
-            filters: filters
+            filters: filters,
           }
         end
 
         def rides_filters(results)
           {
-            full_rides: results.full_rides.count
+            full_rides: results.full_rides.count,
           }
         end
       end
@@ -38,14 +39,14 @@ module API
       resource :rides do
         desc "Return a ride options"
         get :options do
-          cars = current_user.cars.collect{|car| {id: car.id, name: car.full_name}}
+          cars = current_user.cars.map { |car| { id: car.id, name: car.full_name } }
           {
             currencies: Ride.currencies.keys,
-            cars: cars
+            cars: cars,
           }
         end
 
-	      desc "Return list of rides"
+        desc "Return list of rides"
         params do
           use :pagination_params
           optional :start_location, type: String, desc: "filter by start_location"
@@ -55,7 +56,7 @@ module API
           optional :filters
           optional :search
         end
-	      get do
+        get do
           data = declared(params)
           rides = RidesFinder.new(data, current_user).call
           results = paginated_results_with_filters(rides, data[:page], data[:per])
@@ -63,7 +64,7 @@ module API
                   with: Entities::RidesIndex,
                   pagination: results[:meta],
                   filters: results[:filters]
-	      end
+        end
 
         desc "Create a ride"
         params do

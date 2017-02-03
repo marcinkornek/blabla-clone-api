@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RideRequestStatusUpdater
   attr_reader :params, :user, :ride_request
 

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module API
   module V1
     module Entities
       class Notifications < Grape::Entity
         present_collection true
-        expose :items, as: 'items', using: Entities::Notification
+        expose :items, as: "items", using: Entities::Notification
 
         expose :meta
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RideRequest < ApplicationRecord
   belongs_to :passenger, class_name: "User"
   belongs_to :ride
@@ -9,8 +10,8 @@ class RideRequest < ApplicationRecord
 
   enum status:  { rejected: -1, pending: 0, accepted: 1 }
 
-  counter_culture :ride, column_name: Proc.new {|model| model.accepted? ? "taken_places" : nil }, delta_column: "places"
-  counter_culture :ride, column_name: Proc.new {|model| model.pending? ? "requested_places" : nil }, delta_column: "places"
+  counter_culture :ride, column_name: Proc.new { |model| model.accepted? ? "taken_places" : nil }, delta_column: "places"
+  counter_culture :ride, column_name: Proc.new { |model| model.pending? ? "requested_places" : nil }, delta_column: "places"
 
   after_create :create_ride_request_notification
   after_update :change_ride_request_status_notification
@@ -22,7 +23,7 @@ class RideRequest < ApplicationRecord
       "ride_request_created",
       passenger,
       ride.driver,
-      { ride: ride, ride_request: self, broadcast: true }
+      ride: ride, ride_request: self, broadcast: true,
     ).call
   end
 
@@ -32,13 +33,13 @@ class RideRequest < ApplicationRecord
       Notifier.new(
         "ride_request_accepted",
         ride.driver, passenger,
-        { ride: ride, ride_request: self, broadcast: true }
+        ride: ride, ride_request: self, broadcast: true
       ).call
     when "rejected"
       Notifier.new(
         "ride_request_rejected",
         ride.driver, passenger,
-        { ride: ride, ride_request: self, broadcast: true }
+        ride: ride, ride_request: self, broadcast: true
       ).call
     end
   end

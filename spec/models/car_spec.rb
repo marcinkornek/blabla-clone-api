@@ -1,7 +1,8 @@
-require 'rails_helper'
+# frozen_string_literal: true
+require "rails_helper"
 
 RSpec.describe Car, type: :model do
-  let(:car) { FactoryGirl.create(:car, brand: 'Ford', model: 'Focus', comfort: 1) }
+  let(:car) { FactoryGirl.create(:car, brand: "Ford", model: "Focus", comfort: 1) }
 
   describe "#full_name" do
     it "returns car brand and model" do
