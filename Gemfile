@@ -27,6 +27,7 @@ gem "figaro"      # app configuration using ENV and a single YAML file
 gem "carrierwave" # file upload library for Ruby
 gem "fog"         # Ruby cloud services library (used in carrierwave to send images to AWS S3)
 gem "mini_magick" # handle picture resizing
+gem "pundit"
 
 group :development do
   gem "pry-rails" # changes rails console to 'pry'
