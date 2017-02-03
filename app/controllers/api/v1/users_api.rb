@@ -99,31 +99,6 @@ module API
               user.errors.messages
             end
           end
-
-          desc "Return user rides as driver"
-          params do
-            use :pagination_params
-          end
-          get :rides_as_driver do
-            rides = user.rides_as_driver.includes(:car)
-            results = paginated_results(rides, params[:page], params[:per])
-            present results[:collection],
-                    with: Entities::RidesAsDriver,
-                    pagination: results[:meta]
-          end
-
-          desc "Return user rides as passenger"
-          params do
-            use :pagination_params
-          end
-          get :rides_as_passenger do
-            authenticate!
-            rides = user.ride_requests.includes(ride: [:driver, :car])
-            results = paginated_results(rides, params[:page], params[:per])
-            present results[:collection],
-                    with: Entities::RidesAsPassenger,
-                    pagination: results[:meta]
-          end
         end
       end
     end

@@ -10,14 +10,10 @@ module API
           requires :start_location_address, type: String, desc: "user start location address"
           requires :start_location_latitude, type: String, desc: "user start location latitude"
           requires :start_location_longitude, type: String, desc: "user start location longitude"
-          optional :destination_location_country, type: String,
-                                                  desc: "user destination location country"
-          requires :destination_location_address, type: String,
-                                                  desc: "user destination location address"
-          requires :destination_location_latitude, type: String,
-                                                   desc: "user destination location latitude"
-          requires :destination_location_longitude, type: String,
-                                                    desc: "user destination location longitude"
+          optional :destination_location_country, type: String, desc: "user destination location country"
+          requires :destination_location_address, type: String, desc: "user destination location address"
+          requires :destination_location_latitude, type: String, desc: "user destination location latitude"
+          requires :destination_location_longitude, type: String, desc: "user destination location longitude"
           requires :places, type: Integer, desc: "user places"
           requires :start_date, type: String, desc: "user start_date"
           requires :price, type: String, desc: "user price"
@@ -38,22 +34,8 @@ module API
           ride.driver.id == current_user.id if current_user.present?
         end
 
-        def paginated_results_with_filters(results, page, per = 25)
-          return { collection: results, meta: {} } if page.nil?
-
-          collection = results.page(page).per(per)
-          filters = rides_filters(results)
-          {
-            collection: collection,
-            meta: kaminari_params(collection),
-            filters: filters,
-          }
-        end
-
-        def rides_filters(results)
-          {
-            full_rides: results.full_rides.count,
-          }
+        def user
+          @user ||= User.find_by(id: params[:user_id])
         end
       end
 
@@ -80,11 +62,38 @@ module API
         get do
           data = declared(params)
           rides = RidesFinder.new(data, current_user).call
-          results = paginated_results_with_filters(rides, data[:page], data[:per])
+          results = paginated_results(rides, data[:page], data[:per])
           present results[:collection],
                   with: Entities::RidesIndex,
                   pagination: results[:meta],
                   filters: results[:filters]
+        end
+
+        desc "Return user rides as driver"
+        params do
+          use :pagination_params
+          requires :user_id, type: Integer, desc: "user id"
+        end
+        get :as_driver do
+          rides = user.rides_as_driver.includes(:car)
+          results = paginated_results(rides, params[:page], params[:per])
+          present results[:collection],
+                  with: Entities::RidesAsDriver,
+                  pagination: results[:meta]
+        end
+
+        desc "Return user rides as passenger"
+        params do
+          use :pagination_params
+          requires :user_id, type: Integer, desc: "user id"
+        end
+        get :as_passenger do
+          authenticate!
+          rides = user.ride_requests.includes(ride: [:driver, :car])
+          results = paginated_results(rides, params[:page], params[:per])
+          present results[:collection],
+                  with: Entities::RidesAsPassenger,
+                  pagination: results[:meta]
         end
 
         desc "Create a ride"
