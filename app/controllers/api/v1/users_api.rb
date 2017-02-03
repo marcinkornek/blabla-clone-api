@@ -100,18 +100,6 @@ module API
             end
           end
 
-          desc "Return user cars"
-          params do
-            use :pagination_params
-          end
-          get :cars do
-            cars = user.cars
-            results = paginated_results(cars, params[:page], params[:per])
-            present results[:collection],
-                    with: Entities::CarsIndex,
-                    pagination: results[:meta]
-          end
-
           desc "Return user rides as driver"
           params do
             use :pagination_params
