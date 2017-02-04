@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170129101722) do
+ActiveRecord::Schema.define(version: 20170204153713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20170129101722) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "places"
+    t.index ["passenger_id", "ride_id"], name: "index_ride_requests_on_passenger_id_and_ride_id", unique: true, using: :btree
   end
 
   create_table "rides", force: :cascade do |t|
