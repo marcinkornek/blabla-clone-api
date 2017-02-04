@@ -8,6 +8,7 @@ gem "spring", group: :development
 
 gem "grape" # REST-like API micro-framework for Ruby
 gem "grape-swagger"
+gem "grape-swagger-rails"
 gem "hashie-forbidden_attributes" # disables the security feature of strong_params at
 gem "pg" # database for Active Record
 gem "puma" # Action Cable needs a threaded server
