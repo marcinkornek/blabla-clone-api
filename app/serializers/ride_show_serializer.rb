@@ -10,11 +10,12 @@ class RideShowSerializer < ActiveModel::Serializer
   has_one :car, serializer: CarSimpleSerializer
 
   def user_ride_request
-    object.ride_requests.find_by(passenger_id: scope.current_user.id)
+    return unless scope&.current_user
+    object.ride_requests.find_by(passenger_id: scope&.current_user&.id)
   end
 
   def ride_requests
-    return [] unless scope.current_user.id == object.driver_id
+    return [] unless scope&.current_user&.id == object.driver_id
     ActiveModel::Serializer::CollectionSerializer.new(
       object.ride_requests.order(:created_at),
       serializer: RideRequestSerializer,

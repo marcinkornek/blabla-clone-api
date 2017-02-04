@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-# rubocop:disable Style/AlignParameters
 class CarSimpleSerializer < ActiveModel::Serializer
-  attributes :id, :full_name, :comfort, :comfort_stars, :places_full, :owner_id,
-             :car_photo, :production_year,
+  attributes :id, :brand, :model, :full_name, :production_year, :comfort,
+             :comfort_stars, :places, :places_full, :color, :comfort,
+             :category, :created_at, :owner_id, :car_photo
 
   def car_photo
     object.photo_mini_url

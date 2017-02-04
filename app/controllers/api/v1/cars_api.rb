@@ -36,19 +36,6 @@ module API
       end
 
       resource :cars do
-        desc "Return user cars"
-        params do
-          use :pagination_params
-          requires :user_id, type: Integer, desc: "user id"
-        end
-        get do
-          cars = user.cars
-          results = paginated_results(cars, params[:page], params[:per])
-          present results[:collection],
-                  with: Entities::CarsIndex,
-                  pagination: results[:meta]
-        end
-
         desc "Return a car options"
         get :options do
           {
@@ -56,6 +43,18 @@ module API
             comforts: Car.comforts.keys,
             categories: Car.categories.keys,
           }
+        end
+
+        desc "Return user cars"
+        params do
+          use :pagination_params
+          requires :user_id, type: Integer, desc: "user id"
+        end
+        get do
+          data = declared(params)
+          cars = user.cars
+          options = { page: data[:age], per: data[:per] }
+          serialized_paginated_results(cars, CarSimpleSerializer, options)
         end
 
         desc "Create car"
