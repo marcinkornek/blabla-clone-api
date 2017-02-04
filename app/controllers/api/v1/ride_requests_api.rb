@@ -16,13 +16,12 @@ module API
           requires :ride_id, type: Integer, desc: "requested ride id"
           requires :places, type: Integer, desc: "requested places"
         end
-        post do
+        post serializer: RideShowSerializer do
           authenticate!
           data = declared(params)
           ride_request = RideRequestCreator.new(data, current_user).call
           if ride_request.valid?
-            ride = ride_request.ride
-            present ride, with: Entities::RideShow, current_user: current_user
+            ride_request.ride
           else
             status 406
             ride_request.errors.messages
@@ -37,13 +36,12 @@ module API
           params do
             requires :status, type: String, desc: "ride request status"
           end
-          put do
+          put serializer: RideShowSerializer do
             authenticate!
             data = declared(params)
             rr = RideRequestStatusUpdater.new(data, current_user, ride_request).call
             if rr.valid?
-              ride = rr.reload.ride
-              present ride, with: Entities::RideShowOwner
+              rr.reload.ride
             else
               status 406
               rr.errors.messages
