@@ -16,7 +16,6 @@ gem "redis" # in-memory data structure store
 # the model layer, allowing you the use of Grape's own params
 # validation instead.
 gem "active_model_serializers"
-gem "grape-active_model_serializers"
 gem "api-pagination"
 gem "carrierwave" # file upload library for Ruby
 gem "counter_culture" # turbo-charged counter caches
@@ -24,6 +23,7 @@ gem "devise" # authentication
 gem "figaro" # app configuration using ENV and a single YAML file
 gem "fog" # Ruby cloud services library (used in carrierwave to send images to AWS S3)
 gem "geocoder"
+gem "grape-active_model_serializers"
 gem "grape-entity" # Grape representer
 gem "http_accept_language" # extracts Accept-Language header into an array
 gem "kaminari" # pagination
