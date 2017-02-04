@@ -113,12 +113,8 @@ module API
         end
         route_param :id do
           desc "Return a ride"
-          get do
-            if ride_owner?
-              present ride, with: Entities::RideShowOwner
-            else
-              present ride, with: Entities::RideShow, current_user: current_user
-            end
+          get serializer: RideShowSerializer do
+            ride
           end
 
           desc "Update a ride"
