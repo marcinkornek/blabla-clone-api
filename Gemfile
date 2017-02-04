@@ -24,7 +24,6 @@ gem "figaro" # app configuration using ENV and a single YAML file
 gem "fog" # Ruby cloud services library (used in carrierwave to send images to AWS S3)
 gem "geocoder"
 gem "grape-active_model_serializers"
-gem "grape-entity" # Grape representer
 gem "http_accept_language" # extracts Accept-Language header into an array
 gem "kaminari" # pagination
 gem "kaminari-grape"
