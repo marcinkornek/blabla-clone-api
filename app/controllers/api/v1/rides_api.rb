@@ -62,11 +62,8 @@ module API
         get do
           data = declared(params)
           rides = RidesFinder.new(data, current_user).call
-          results = paginated_results(rides, data[:page], data[:per])
-          present results[:collection],
-                  with: Entities::RidesIndex,
-                  pagination: results[:meta],
-                  filters: results[:filters]
+          options = { page: data[:age], per: data[:per] }
+          serialized_paginated_results(rides, RideSerializer, options)
         end
 
         desc "Return user rides as driver"
