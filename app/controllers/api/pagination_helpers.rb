@@ -13,16 +13,6 @@ module API
       }.merge(extra_meta)
     end
 
-    def paginated_results(results, page, per = 25)
-      return { collection: results, meta: {} } if page.nil?
-
-      collection = results.page(page).per(per)
-      {
-        collection: collection,
-        meta: kaminari_params(collection),
-      }
-    end
-
     def serialized_paginated_results(results, serializer, options = {})
       collection = results.page(options[:page]).per(options[:per])
       serialized = ActiveModel::Serializer::CollectionSerializer.new(
