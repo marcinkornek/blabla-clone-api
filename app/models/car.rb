@@ -24,4 +24,8 @@ class Car < ApplicationRecord
   def comfort_stars
     comfort.to_i + 1 if comfort.present?
   end
+
+  def photo_mini_url
+    car_photo.mini.url || ENV["DEFAULT_CAR_PHOTO_URL"].presence
+  end
 end

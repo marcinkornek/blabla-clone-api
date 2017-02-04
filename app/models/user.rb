@@ -35,8 +35,12 @@ class User < ApplicationRecord
     date_of_birth ? Time.current.year - date_of_birth.year : nil
   end
 
+  def avatar_mini_url
+    avatar.mini.url || ENV["DEFAULT_AVATAR_URL"].presence
+  end
+
   def full_name
-    first_name + " " + last_name[0]
+    first_name.capitalize + " " + last_name[0].capitalize
   end
 
   def self.create_user_with_aouth(auth)
