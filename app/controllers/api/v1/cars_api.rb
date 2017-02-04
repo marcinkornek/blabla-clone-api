@@ -61,12 +61,12 @@ module API
         params do
           use :car_params
         end
-        post do
+        post serializer: CarSimpleSerializer do
           authenticate!
           data = declared(params)
           car = CarCreator.new(data, current_user).call
           if car.valid?
-            present car, with: Entities::CarIndex
+            car
           else
             status 406
             car.errors.messages
@@ -78,20 +78,20 @@ module API
         end
         route_param :id do
           desc "Return car"
-          get do
-            present car, with: Entities::CarIndex
+          get serializer: CarSimpleSerializer do
+            car
           end
 
           desc "Update car"
           params do
             use :car_params
           end
-          put do
+          put serializer: CarSimpleSerializer do
             authenticate!
             data = declared(params)
             car = CarUpdater.new(data, current_user, user_car).call
             if car.valid?
-              present car, with: Entities::CarIndex
+              car
             else
               status 406
               car.errors.messages
