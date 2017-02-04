@@ -7,6 +7,7 @@ class RideRequest < ApplicationRecord
   validates :passenger, presence: true
   validates :ride, presence: true
   validates :places, presence: true, numericality: { greater_than: 0 }
+  validates :ride_id, uniqueness: { scope: :passenger_id }
 
   enum status: { rejected: -1, pending: 0, accepted: 1 }
 
