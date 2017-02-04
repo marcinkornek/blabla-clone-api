@@ -7,6 +7,7 @@ gem "rails"
 gem "spring", group: :development
 
 gem "grape" # REST-like API micro-framework for Ruby
+gem "grape-swagger"
 gem "hashie-forbidden_attributes" # disables the security feature of strong_params at
 gem "pg" # database for Active Record
 gem "puma" # Action Cable needs a threaded server
@@ -14,6 +15,7 @@ gem "redis" # in-memory data structure store
 # the model layer, allowing you the use of Grape's own params
 # validation instead.
 gem "active_model_serializers"
+gem "grape-active_model_serializers"
 gem "api-pagination"
 gem "carrierwave" # file upload library for Ruby
 gem "counter_culture" # turbo-charged counter caches
