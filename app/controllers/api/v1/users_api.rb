@@ -80,8 +80,8 @@ module API
           end
 
           desc "Return user profile with cars and rides_as_driver"
-          get do
-            present user_with_includes, with: Entities::UserShow
+          get serializer: UserShowSerializer do
+            present user_with_includes
           end
 
           desc "Update user"
