@@ -97,11 +97,11 @@ module API
         params do
           use :ride_params
         end
-        post do
+        post serializer: RideShowSerializer do
           authenticate!
           ride = RideCreator.new(params, current_user).call
           if ride.valid?
-            present ride, with: Entities::RideIndex
+            ride
           else
             status 406
             ride.errors.messages
@@ -121,12 +121,12 @@ module API
           params do
             use :ride_params
           end
-          put do
+          put serializer: RideShowSerializer do
             authenticate!
             data = declared(params, include_missing: false)
             ride = RideUpdater.new(data, current_user, user_ride).call
             if ride.valid?
-              present ride, with: Entities::RideIndex
+              ride
             else
               status 406
               ride.errors.messages
