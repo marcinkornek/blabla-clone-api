@@ -4,7 +4,7 @@ class RideShowSerializer < ActiveModel::Serializer
              :price, :currency, :car_id, :created_at, :updated_at,
              :user_ride_request, :ride_requests, :requested_places_count
 
-  has_one :driver, serializer: UserSimpleSerializer
+  has_one :driver, serializer: UserSerializer
   has_one :start_location, serializer: LocationSimpleSerializer
   has_one :destination_location, serializer: LocationSimpleSerializer
   has_one :car, serializer: CarSerializer
