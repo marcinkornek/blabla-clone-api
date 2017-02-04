@@ -30,7 +30,8 @@ end
       places: rand(1..5),
       color: Car.colors.keys.sample,
       category: Car.categories.keys.sample,
-      user: u
+      user: u,
+      production_year: rand(1950..2016)
     )
 
     # future rides

@@ -23,7 +23,7 @@ class RideUpdater
     {
       start_location: start_location,
       destination_location: destination_location,
-      driver_id: params[:driver_id],
+      driver_id: user.id,
       car_id: params[:car_id],
       currency: params[:currency],
       places: params[:places],

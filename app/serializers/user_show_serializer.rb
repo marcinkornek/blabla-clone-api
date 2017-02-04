@@ -18,7 +18,7 @@ class UserShowSerializer < ActiveModel::Serializer
   def rides_as_driver
     ActiveModel::Serializer::CollectionSerializer.new(
       object.rides_as_driver.limit(5),
-      serializer: RideAsDriverSerializer,
+      serializer: RideSerializer,
     )
   end
 end

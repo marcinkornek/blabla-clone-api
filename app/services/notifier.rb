@@ -37,10 +37,7 @@ class Notifier
   def broadcast(notification)
     ActionCable.server.broadcast(
       "notifications:#{notification.receiver.id}",
-      notification: API::V1::Entities::NotificationWithUnreadCount.represent(
-        notification,
-        current_user: notification.receiver,
-      ),
+      notification: NotificationSerializer.new(notification, current_user: notification.receiver),
     )
   end
 end
