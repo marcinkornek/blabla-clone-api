@@ -36,11 +36,10 @@ module API
           use :pagination_params
         end
         get do
+          data = declared(params)
           users = User.all.order(:created_at)
-          results = paginated_results(users, params[:page], params[:per])
-          present results[:collection],
-                  with: Entities::UsersIndex,
-                  pagination: results[:meta]
+          options = { page: data[:age], per: data[:per] }
+          serialized_paginated_results(users, UserSimpleSerializer, options)
         end
 
         desc "Create user"
