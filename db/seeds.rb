@@ -49,7 +49,7 @@ end
       # future ride requests
       1.times.collect do |i|
         rr = RideRequest.create(
-          passenger: User.all.sample,
+          passenger: User.where.not(id: u.id).sample,
           ride: fr,
           status: rand(-1..1),
           places: rand(1..fr.places)
@@ -74,7 +74,7 @@ end
       # past ride requests
       1.times.collect do |i|
         rr = RideRequest.create(
-          passenger: User.all.sample,
+          passenger: User.where.not(id: u.id).sample,
           ride: pr,
           status: rand(-1..1),
           places: rand(1..pr.places)
