@@ -48,14 +48,13 @@ module API
           requires :password, type: String, desc: "user password"
           requires :password_confirmation, type: String, desc: "user password confirmation"
         end
-        post do
+        post serializer: UserSerializer do
           data = declared(params)
           user = UserCreator.new(data).call
           if user.valid?
-            present user, with: Entities::UserProfile
+            user
           else
-            status 406
-            user.errors.messages
+            unprocessable_entity(user.errors.messages)
           end
         end
 
@@ -65,8 +64,7 @@ module API
         end
         get :check_if_unique do
           data = declared(params)
-          errors = EmailUniquenessChecker.new(data, current_user).call
-          errors
+          EmailUniquenessChecker.new(data, current_user).call
         end
 
         params do
@@ -74,28 +72,27 @@ module API
         end
         route_param :id do
           desc "Return user profile"
-          get :profile do
-            present user, with: Entities::UserProfile
+          get :profile, serializer: UserSerializer do
+            user
           end
 
           desc "Return user profile with cars and rides_as_driver"
           get serializer: UserShowSerializer do
-            present user_with_includes
+            user_with_includes
           end
 
           desc "Update user"
           params do
             use :user_params
           end
-          put do
+          put serializer: UserSerializer do
             authenticate!
             data = declared(params)
             user = UserUpdater.new(data, current_user).call
             if user.valid?
-              present user, with: Entities::UserProfile
+              user
             else
-              status 406
-              user.errors.messages
+              unprocessable_entity(user.errors.messages)
             end
           end
         end
