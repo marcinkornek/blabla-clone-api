@@ -7,7 +7,7 @@ class RideShowSerializer < ActiveModel::Serializer
   has_one :driver, serializer: UserSimpleSerializer
   has_one :start_location, serializer: LocationSimpleSerializer
   has_one :destination_location, serializer: LocationSimpleSerializer
-  has_one :car, serializer: CarSimpleSerializer
+  has_one :car, serializer: CarSerializer
 
   def user_ride_request
     return unless scope&.current_user

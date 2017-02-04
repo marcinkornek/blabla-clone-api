@@ -54,14 +54,14 @@ module API
           data = declared(params)
           cars = user.cars
           options = { page: data[:age], per: data[:per] }
-          serialized_paginated_results(cars, CarSimpleSerializer, options)
+          serialized_paginated_results(cars, CarSerializer, options)
         end
 
         desc "Create car"
         params do
           use :car_params
         end
-        post serializer: CarSimpleSerializer do
+        post serializer: CarSerializer do
           authenticate!
           data = declared(params)
           car = CarCreator.new(data, current_user).call
@@ -78,7 +78,7 @@ module API
         end
         route_param :id do
           desc "Return car"
-          get serializer: CarSimpleSerializer do
+          get serializer: CarSerializer do
             car
           end
 
@@ -86,7 +86,7 @@ module API
           params do
             use :car_params
           end
-          put serializer: CarSimpleSerializer do
+          put serializer: CarSerializer do
             authenticate!
             data = declared(params)
             car = CarUpdater.new(data, current_user, user_car).call

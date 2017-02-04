@@ -11,7 +11,7 @@ class UserShowSerializer < ActiveModel::Serializer
   def cars
     ActiveModel::Serializer::CollectionSerializer.new(
       object.cars.limit(5),
-      serializer: CarSimpleSerializer,
+      serializer: CarSerializer,
     )
   end
 
