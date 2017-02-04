@@ -17,13 +17,16 @@ module API
         end
         get do
           authenticate!
+          data = declared(params)
           notifications = current_user.notifications
             .includes(:sender, :receiver, :ride)
             .order(created_at: :desc)
-          results = paginated_results(notifications, params[:page], params[:per])
-          present results[:collection],
-                  with: Entities::Notifications,
-                  pagination: results[:meta].merge(unread_count: notifications.unread.count)
+          options = {
+            page: data[:age],
+            per: data[:per],
+            unread_count: current_user.notifications.unread.count,
+          }
+          serialized_paginated_results(notifications, NotificationSerializer, options)
         end
 
         params do
@@ -31,11 +34,9 @@ module API
         end
         route_param :id do
           desc "Mark notification as seen"
-          put :mark_as_seen do
+          put :mark_as_seen, serializer: NotificationWithUnreadSerializer do
             notification.mark_as_seen!
-            present notification,
-                    with: Entities::NotificationWithUnreadCount,
-                    current_user: current_user
+            notification
           end
         end
       end

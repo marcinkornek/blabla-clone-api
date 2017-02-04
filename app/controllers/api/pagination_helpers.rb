@@ -29,7 +29,8 @@ module API
         collection,
         serializer: serializer,
       )
-      render items: serialized, meta: kaminari_params(collection)
+      extra_meta = options.except(:page, :per)
+      render items: serialized, meta: kaminari_params(collection, extra_meta)
     end
   end
 end
