@@ -72,11 +72,11 @@ module API
           requires :user_id, type: Integer, desc: "user id"
         end
         get :as_driver do
-          rides = user.rides_as_driver.includes(:car)
-          results = paginated_results(rides, params[:page], params[:per])
-          present results[:collection],
-                  with: Entities::RidesAsDriver,
-                  pagination: results[:meta]
+          data = declared(params)
+          rides = user.rides_as_driver
+            .includes(:driver, :start_location, :destination_location, :car)
+          options = { page: data[:age], per: data[:per] }
+          serialized_paginated_results(rides, RideSerializer, options)
         end
 
         desc "Return user rides as passenger"
@@ -86,11 +86,11 @@ module API
         end
         get :as_passenger do
           authenticate!
-          rides = user.ride_requests.includes(ride: [:driver, :car])
-          results = paginated_results(rides, params[:page], params[:per])
-          present results[:collection],
-                  with: Entities::RidesAsPassenger,
-                  pagination: results[:meta]
+          data = declared(params)
+          rides = current_user.rides_as_passenger
+            .includes(:driver, :start_location, :destination_location, :car)
+          options = { page: data[:age], per: data[:per] }
+          serialized_paginated_results(rides, RideSerializer, options)
         end
 
         desc "Create a ride"
