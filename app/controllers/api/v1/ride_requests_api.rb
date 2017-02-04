@@ -23,8 +23,7 @@ module API
           if ride_request.valid?
             ride_request.ride
           else
-            status 406
-            ride_request.errors.messages
+            unprocessable_entity(ride_request.errors.messages)
           end
         end
 
@@ -43,8 +42,7 @@ module API
             if rr.valid?
               rr.reload.ride
             else
-              status 406
-              rr.errors.messages
+              unprocessable_entity(rr.errors.messages)
             end
           end
         end

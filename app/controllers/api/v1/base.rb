@@ -8,6 +8,7 @@ module API
       prefix :api
       helpers AuthHelpers
       helpers PaginationHelpers
+      helpers ErrorsHelpers
 
       # global handler not found case
       rescue_from ActiveRecord::RecordNotFound do |e|

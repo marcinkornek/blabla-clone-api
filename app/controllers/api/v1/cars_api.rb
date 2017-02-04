@@ -68,8 +68,7 @@ module API
           if car.valid?
             car
           else
-            status 406
-            car.errors.messages
+            unprocessable_entity(car.errors.messages)
           end
         end
 
@@ -93,8 +92,7 @@ module API
             if car.valid?
               car
             else
-              status 406
-              car.errors.messages
+              unprocessable_entity(car.errors.messages)
             end
           end
         end
