@@ -12,12 +12,12 @@ module API
           requires :last_name, type: String, desc: "User last name"
           optional :avatar, type: String, desc: "User avatar url"
         end
-        post :oath_login do
+        post :oath_login, serializer: TokenSerializer do
           auth = params.slice(:uid, :provider, :email, :first_name, :last_name, :avatar)
           user = User.find_for_oauth(auth)
           if user
             token = user.tokens.create
-            present token, with: Entities::Token
+            token
           end
         end
 
@@ -26,27 +26,27 @@ module API
           requires :email, type: String, desc: "User email"
           requires :password, type: String, desc: "User password"
         end
-        post :login do
+        post :login, serializer: TokenSerializer do
           email = params[:email].strip
           password = params[:password].strip
 
           user = User.where(email: email.downcase).first
-          error!({ error: "Invalid Email and/or Password" }, 401) if user.nil?
+          unauthorized("Invalid Email and/or Password") if user.nil?
           if user.valid_password?(password)
             token = user.tokens.create
-            present token, with: Entities::Token
+            token
           else
-            error!({ error: "Invalid Email and/or Password." }, 401)
+            unauthorized("Invalid Email and/or Password")
           end
         end
 
         desc "Return a user from access_token and email"
-        get :get_user do
+        get :get_user, serializer: TokenSerializer do
           authenticate!
           if token
-            present token, with: Entities::Token
+            token
           else
-            error!({ error: "Invalid email and/or access_token" }, 401)
+            unauthorized("Invalid email and/or access_token")
           end
         end
 
@@ -57,7 +57,7 @@ module API
             token.destroy
             { ok: "logged out" }
           else
-            error!({ error: "Invalid access token." }, 401)
+            unauthorized("Invalid email and/or access_token")
           end
         end
       end

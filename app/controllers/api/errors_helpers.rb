@@ -6,5 +6,9 @@ module API
     def unprocessable_entity(message = "Unprocessable entity")
       error!({ errors: message }, 422)
     end
+
+    def unauthorized(message = "Unauthorized")
+      error!({ errors: message }, 401)
+    end
   end
 end
