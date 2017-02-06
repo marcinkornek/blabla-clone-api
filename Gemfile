@@ -30,6 +30,7 @@ gem "kaminari-grape"
 gem "mini_magick" # handle picture resizing
 gem "pundit"
 gem "rack-cors", require: "rack/cors" # support for Cross-Origin Resource Sharing (CORS)
+gem "uglifier"
 
 group :development do
   gem "pry-rails" # changes rails console to 'pry'
