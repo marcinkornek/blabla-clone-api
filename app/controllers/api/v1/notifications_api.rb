@@ -22,7 +22,7 @@ module API
             .includes(:sender, :receiver, :ride)
             .order(created_at: :desc)
           options = {
-            page: data[:age],
+            page: data[:page],
             per: data[:per],
             unread_count: current_user.notifications.unread.count,
           }

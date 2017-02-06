@@ -53,7 +53,7 @@ module API
         get do
           data = declared(params)
           cars = user.cars
-          options = { page: data[:age], per: data[:per] }
+          options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(cars, CarSerializer, options)
         end
 

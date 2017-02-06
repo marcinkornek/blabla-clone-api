@@ -38,7 +38,7 @@ module API
         get do
           data = declared(params)
           users = User.all.order(:created_at)
-          options = { page: data[:age], per: data[:per] }
+          options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(users, UserSerializer, options)
         end
 

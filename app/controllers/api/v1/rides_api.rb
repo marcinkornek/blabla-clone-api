@@ -62,7 +62,7 @@ module API
         get do
           data = declared(params)
           rides = RidesFinder.new(data, current_user).call
-          options = { page: data[:age], per: data[:per] }
+          options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(rides, RideSerializer, options)
         end
 
@@ -75,7 +75,7 @@ module API
           data = declared(params)
           rides = user.rides_as_driver
             .includes(:driver, :start_location, :destination_location, :car)
-          options = { page: data[:age], per: data[:per] }
+          options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(rides, RideSerializer, options)
         end
 
@@ -89,7 +89,7 @@ module API
           data = declared(params)
           rides = current_user.rides_as_passenger
             .includes(:driver, :start_location, :destination_location, :car)
-          options = { page: data[:age], per: data[:per] }
+          options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(rides, RideSerializer, options)
         end
 
