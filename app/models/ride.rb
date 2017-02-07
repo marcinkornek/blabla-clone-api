@@ -65,4 +65,16 @@ class Ride < ApplicationRecord
   def user_ride_request(user)
     ride_requests.find_by(passenger_id: user.id)
   end
+
+  def user_ride_request_status(user)
+    ride_requests.find_by(passenger_id: user.id)&.status
+  end
+
+  def user_role(user)
+    if user.id == driver_id
+      'driver'
+    elsif user_requested?(user)
+      'passenger'
+    end
+  end
 end
