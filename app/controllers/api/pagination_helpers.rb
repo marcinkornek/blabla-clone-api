@@ -15,9 +15,12 @@ module API
 
     def serialized_paginated_results(results, serializer, options = {})
       collection = results.page(options[:page]).per(options[:per])
+      struct = Struct.new(:current_user)
+      scope = struct.new(current_user)
       serialized = ActiveModel::Serializer::CollectionSerializer.new(
         collection,
         serializer: serializer,
+        scope: scope,
       )
       extra_meta = options.except(:page, :per)
       render items: serialized, meta: kaminari_params(collection, extra_meta)
