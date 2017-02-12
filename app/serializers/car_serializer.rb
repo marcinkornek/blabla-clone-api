@@ -4,6 +4,8 @@ class CarSerializer < ActiveModel::Serializer
              :comfort_stars, :places, :places_full, :color, :comfort,
              :category, :created_at, :owner_id, :car_photo
 
+  has_one :user, serializer: UserSerializer
+
   def car_photo
     object.photo_mini_url
   end
