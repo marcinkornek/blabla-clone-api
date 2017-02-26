@@ -46,6 +46,10 @@ class Ride < ApplicationRecord
     end
   }
 
+  def locations_formatted
+    "#{start_location.address} - #{destination_location.address}"
+  end
+
   def self.other_users_rides(user)
     user.present? ? where.not(driver_id: user) : all
   end
