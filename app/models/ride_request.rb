@@ -24,28 +24,30 @@ class RideRequest < ApplicationRecord
   private
 
   def create_ride_request_notification
-    Notifier.new(
-      "ride_request_created",
-      passenger,
-      ride.driver,
-      ride: ride, ride_request: self, broadcast: true,
+    options = {
+      ride: ride,
+      ride_request: self,
+      broadcast: true,
+    }
+    NotificationCreator.new(
+      notification_type: "ride_request_created",
+      sender_id: passenger_id,
+      receiver_id: ride.driver_id,
+      options: options,
     ).call
   end
 
   def change_ride_request_status_notification
-    case status
-    when "accepted"
-      Notifier.new(
-        "ride_request_accepted",
-        ride.driver, passenger,
-        ride: ride, ride_request: self, broadcast: true
-      ).call
-    when "rejected"
-      Notifier.new(
-        "ride_request_rejected",
-        ride.driver, passenger,
-        ride: ride, ride_request: self, broadcast: true
-      ).call
-    end
+    options = {
+      ride: ride,
+      ride_request: self,
+      broadcast: true,
+    }
+    NotificationCreator.new(
+      notification_type: status == "accepted" ? "ride_request_created" : "ride_request_rejected",
+      sender_id: ride.driver_id,
+      receiver_id: passenger_id,
+      options: options,
+    ).call
   end
 end

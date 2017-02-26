@@ -16,9 +16,15 @@ class Notification < ApplicationRecord
   validates :receiver_id, presence: true
   validates :ride_id, presence: true
 
+  after_create :notify_users
+
   scope :unread, -> { where(seen_at: nil) }
 
   def mark_as_seen!
     update(seen_at: Time.current)
+  end
+
+  def notify_users
+    Notifier.new(self).call
   end
 end
