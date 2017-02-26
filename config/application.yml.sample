@@ -11,3 +11,6 @@ production:
   S3_BUCKET: "your_s3_bucket_name"
   ROLLBAR_ACCESS_TOKEN: "your_rollbar_access_token"
   REDIS_URL: "your_redis_url"
+  ONESIGNAL_USER_AUTH_KEY: "your_onesignal_user_auth_key"
+  ONESIGNAL_API_KEY: "your_onesignal_api_key"
+  APP_ID: "your_app_id"
