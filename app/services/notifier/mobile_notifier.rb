@@ -21,7 +21,7 @@ class Notifier
         app_id: ENV["APP_ID"],
         include_player_ids: [player_id],
         contents: {
-          en: "Hello!",
+          en: notification.mobile_body,
         },
       }
       send_mobile_notification(params)
