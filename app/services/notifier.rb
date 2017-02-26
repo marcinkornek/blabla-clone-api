@@ -31,10 +31,31 @@ class Notifier
       ride: options[:ride],
       ride_request: options[:ride_request],
     )
-    broadcast(notification) if options[:broadcast]
+    notify_web(notification) if options[:broadcast]
+    notify_mobile(notification)
   end
 
-  def broadcast(notification)
+  def notify_mobile(notification)
+    player_id = notification.receiver.player_id
+    return if player_id.nil?
+    params = {
+      app_id: ENV["APP_ID"],
+      include_player_ids: [player_id],
+      contents: {
+        en: "Hello!",
+      },
+    }
+    send_mobile_notification(params)
+  end
+
+  def send_mobile_notification(params)
+    response = OneSignal::Notification.create(params: params)
+    response["status"]
+  rescue OneSignal::OneSignalError => e
+    e.http_status
+  end
+
+  def notify_web(notification)
     ActionCable.server.broadcast(
       "notifications:#{notification.receiver.id}",
       notification: NotificationSerializer.new(notification, current_user: notification.receiver),
