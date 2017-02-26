@@ -338,6 +338,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     oj (2.12.14)
+    one_signal (1.2.0)
     orm_adapter (0.5.0)
     parser (2.3.3.1)
       ast (~> 2.2)
@@ -486,6 +487,7 @@ DEPENDENCIES
   kaminari-grape
   mini_magick
   oj (~> 2.12.14)
+  one_signal
   pg
   pry-rails
   puma
