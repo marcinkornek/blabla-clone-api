@@ -11,11 +11,15 @@ module API
           requires :first_name, type: String, desc: "User first name"
           requires :last_name, type: String, desc: "User last name"
           optional :avatar, type: String, desc: "User avatar url"
+          optional :player_id, type: String, desc: "User onesignal player_id"
         end
         post :oath_login, serializer: TokenSerializer do
-          auth = params.slice(:uid, :provider, :email, :first_name, :last_name, :avatar)
+          data = declared(params, include_missing: false)
+
+          auth = data.slice(:uid, :provider, :email, :first_name, :last_name, :avatar)
           user = User.find_for_oauth(auth)
           if user
+            user.update(player_id: data[:player_id]) if data[:player_id].present?
             token = user.tokens.create
             token
           end
@@ -25,14 +29,17 @@ module API
         params do
           requires :email, type: String, desc: "User email"
           requires :password, type: String, desc: "User password"
+          optional :player_id, type: String, desc: "User onesignal player_id"
         end
         post :login, serializer: TokenSerializer do
-          email = params[:email].strip
-          password = params[:password].strip
+          data = declared(params, include_missing: false)
+          email = data[:email].strip
+          password = data[:password].strip
 
-          user = User.where(email: email.downcase).first
+          user = User.find_by(email: email.downcase)
           unauthorized("Invalid Email and/or Password") if user.nil?
           if user.valid_password?(password)
+            user.update(player_id: data[:player_id]) if data[:player_id].present?
             token = user.tokens.create
             token
           else
@@ -44,6 +51,8 @@ module API
         get :get_user, serializer: TokenSerializer do
           authenticate!
           if token
+            # user = User.find_by(email: email.downcase)
+            # user.update(player_id: data[:player_id]) if data[:player_id].present?
             token
           else
             unauthorized("Invalid email and/or access_token")
