@@ -20,6 +20,9 @@ class Notifier
       params = {
         app_id: ENV["APP_ID"],
         include_player_ids: [player_id],
+        headings: {
+          en: notification.mobile_heading,
+        },
         contents: {
           en: notification.mobile_body,
         },

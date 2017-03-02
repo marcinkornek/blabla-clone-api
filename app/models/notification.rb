@@ -29,6 +29,17 @@ class Notification < ApplicationRecord
     Notifier.new(self).call
   end
 
+  def mobile_heading
+    case notification_type
+    when 'ride_request_created'
+      "New ride request"
+    when 'ride_request_accepted'
+      "Ride request accepted"
+    when 'ride_request_rejected'
+      "Ride request rejected"
+    end
+  end
+
   def mobile_body
     case notification_type
     when 'ride_request_created'
