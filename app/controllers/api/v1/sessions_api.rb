@@ -48,11 +48,13 @@ module API
         end
 
         desc "Return a user from access_token and email"
+        params do
+          optional :player_id, type: String, desc: "User onesignal player_id"
+        end
         get :get_user, serializer: TokenSerializer do
           authenticate!
           if token
-            # user = User.find_by(email: email.downcase)
-            # user.update(player_id: data[:player_id]) if data[:player_id].present?
+            token.user.update(player_id: data[:player_id]) if data[:player_id].present?
             token
           else
             unauthorized("Invalid email and/or access_token")
