@@ -66,6 +66,7 @@ module API
         delete do
           authenticate!
           if token
+            token.user.update!(player_id: nil)
             token.destroy
             { ok: "logged out" }
           else
