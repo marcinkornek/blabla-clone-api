@@ -53,6 +53,7 @@ module API
         end
         get :get_user, serializer: TokenSerializer do
           authenticate!
+          data = declared(params, include_missing: false)
           if token
             token.user.update(player_id: data[:player_id]) if data[:player_id].present?
             token
