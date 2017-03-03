@@ -11,7 +11,7 @@ module API
           requires :first_name, type: String, desc: "User first name"
           requires :last_name, type: String, desc: "User last name"
           optional :avatar, type: String, desc: "User avatar url"
-          optional :player_id, type: String, desc: "User onesignal player_id"
+          optional :player_id, type: String, desc: "User OneSignal player_id"
         end
         post :oath_login, serializer: TokenSerializer do
           data = declared(params, include_missing: false)
@@ -29,7 +29,7 @@ module API
         params do
           requires :email, type: String, desc: "User email"
           requires :password, type: String, desc: "User password"
-          optional :player_id, type: String, desc: "User onesignal player_id"
+          optional :player_id, type: String, desc: "User OneSignal player_id"
         end
         post :login, serializer: TokenSerializer do
           data = declared(params, include_missing: false)
@@ -49,7 +49,7 @@ module API
 
         desc "Return a user from access_token and email"
         params do
-          optional :player_id, type: String, desc: "User onesignal player_id"
+          optional :player_id, type: String, desc: "User OneSignal player_id"
         end
         get :get_user, serializer: TokenSerializer do
           authenticate!
