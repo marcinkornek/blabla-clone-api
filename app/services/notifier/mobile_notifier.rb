@@ -26,6 +26,7 @@ class Notifier
         contents: {
           en: notification.mobile_body,
         },
+        data: NotificationSerializer.new(notification).as_json,
       }
       send_mobile_notification(params)
     end
