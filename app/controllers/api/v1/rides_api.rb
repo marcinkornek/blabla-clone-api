@@ -75,6 +75,7 @@ module API
           data = declared(params)
           rides = user.rides_as_driver
             .includes(:driver, :start_location, :destination_location, :car)
+            .order(created_at: :desc) # temporary - it will be order(start_date: :desc) with only future rides
           options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(rides, RideSerializer, options)
         end
@@ -89,6 +90,7 @@ module API
           data = declared(params)
           rides = current_user.rides_as_passenger
             .includes(:driver, :start_location, :destination_location, :car)
+            .order(created_at: :desc) # temporary - it will be order(start_date: :desc) with only future rides
           options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(rides, RideSerializer, options)
         end

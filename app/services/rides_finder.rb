@@ -59,7 +59,7 @@ class RidesFinder
   end
 
   def order_by_type
-    filters&.fetch(:order_by_type, nil)
+    filters&.fetch(:order_by_type, "newest")
   end
 
   def currency
