@@ -21,6 +21,10 @@ class RideRequest < ApplicationRecord
   after_create :create_ride_request_notification
   after_update :change_ride_request_status_notification
 
+  scope :pending, -> { where(status: 'pending') }
+  scope :accepted, -> { where(status: 'accepted') }
+  scope :rejected, -> { where(status: 'rejected') }
+
   private
 
   def create_ride_request_notification
