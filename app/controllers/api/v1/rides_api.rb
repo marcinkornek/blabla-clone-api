@@ -42,10 +42,12 @@ module API
       resource :rides do
         desc "Return a ride options"
         get :options do
-          cars = current_user.cars.map { |car| { id: car.id, name: car.full_name } }
+          cars = current_user.cars
           {
             currencies: Ride.currencies.keys,
-            cars: cars,
+            cars: ActiveModel::Serializer::CollectionSerializer.new(
+              cars, serializer: CarSimpleSerializer
+            )
           }
         end
 

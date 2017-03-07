@@ -61,7 +61,7 @@ module API
         params do
           use :car_params
         end
-        post serializer: CarSerializer do
+        post serializer: CarSimpleSerializer do
           authenticate!
           data = declared(params)
           car = CarCreator.new(data, current_user).call
