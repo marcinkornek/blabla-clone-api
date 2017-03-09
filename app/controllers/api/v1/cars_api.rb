@@ -52,7 +52,7 @@ module API
         end
         get do
           data = declared(params)
-          cars = user.cars
+          cars = user.cars.order(:brand)
           options = { page: data[:page], per: data[:per] }
           serialized_paginated_results(cars, CarSerializer, options)
         end

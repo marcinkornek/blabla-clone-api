@@ -74,6 +74,7 @@ module API
           requires :user_id, type: Integer, desc: "user id"
         end
         get :as_driver do
+          authenticate!
           data = declared(params)
           rides = RidesAsDriverFinder.new(data, current_user).call
           options = { page: data[:page], per: data[:per] }
