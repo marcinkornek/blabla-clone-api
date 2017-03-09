@@ -2,8 +2,8 @@
 class RideShowSerializer < ActiveModel::Serializer
   attributes :id, :free_places_count, :places, :places_full, :start_date,
              :price, :currency, :car_id, :created_at, :updated_at,
-             :user_ride_request, :ride_requests, :requested_places_count, :user_role,
-             :user_ride_request_status
+             :user_ride_request, :ride_requests, :ride_requests_pending_count,
+             :requested_places_count, :user_role, :user_ride_request_status
 
   has_one :driver, serializer: UserSerializer
   has_one :start_location, serializer: LocationSimpleSerializer
@@ -36,5 +36,10 @@ class RideShowSerializer < ActiveModel::Serializer
       object.ride_requests.order(:created_at),
       serializer: RideRequestSerializer,
     )
+  end
+
+  def ride_requests_pending_count
+    return nil unless scope&.current_user&.id == object.driver_id
+    object.ride_requests.pending.count
   end
 end
