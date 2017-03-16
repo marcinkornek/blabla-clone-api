@@ -28,6 +28,7 @@ gem "http_accept_language" # extracts Accept-Language header into an array
 gem "kaminari" # pagination
 gem "kaminari-grape"
 gem "mini_magick" # handle picture resizing
+gem "newrelic_rpm"
 gem "one_signal"
 gem "pundit"
 gem "rack-cors", require: "rack/cors" # support for Cross-Origin Resource Sharing (CORS)

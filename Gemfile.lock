@@ -331,6 +331,7 @@ GEM
     mustermann-grape (0.4.0)
       mustermann (= 0.4.0)
     nenv (0.3.0)
+    newrelic_rpm (3.16.0.318)
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
@@ -486,6 +487,7 @@ DEPENDENCIES
   kaminari
   kaminari-grape
   mini_magick
+  newrelic_rpm
   oj (~> 2.12.14)
   one_signal
   pg
