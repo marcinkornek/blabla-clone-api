@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 source "https://rubygems.org"
-ruby "2.3.1"
+ruby "2.4.0"
 
 gem "bullet", group: :development
 gem "rails"
@@ -51,6 +51,6 @@ group :development, :test do
 end
 
 group :production do
-  gem "oj", "~> 2.12.14"
+  gem "oj"
   gem "rollbar", git: "git://github.com/rollbar/rollbar-gem.git"
 end
