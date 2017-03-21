@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 class RideShowSerializer < ActiveModel::Serializer
-  attributes :id, :free_places_count, :places, :places_full, :start_date,
-             :price, :currency, :car_id, :created_at, :updated_at,
+  attributes :id, :car_id, :driver_id, :start_location_id, :destination_location_id,
+             :start_location_address, :destination_location_address,
+             :free_places_count, :places, :places_full, :start_date,
+             :price, :currency, :created_at, :updated_at,
              :user_ride_request, :ride_requests, :ride_requests_pending_count,
              :requested_places_count, :user_role, :user_ride_request_status
 
@@ -41,5 +43,13 @@ class RideShowSerializer < ActiveModel::Serializer
   def ride_requests_pending_count
     return nil unless scope&.current_user&.id == object.driver_id
     object.ride_requests.pending.count
+  end
+
+  def start_location_address
+    object.start_location&.address
+  end
+
+  def destination_location_address
+    object.destination_location&.address
   end
 end
