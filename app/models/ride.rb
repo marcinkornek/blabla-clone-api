@@ -23,7 +23,7 @@ class Ride < ApplicationRecord
     location = Location.near([latitude, longitude], 1).first
     where(destination_location_id: location.id) if location.present?
   }
-  scope :in_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
+  scope :on_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
   scope :in_currency, ->(currency) { where(currency: currency) }
   scope :without_full, -> { where("rides.places > rides.taken_places") }
   scope :full_rides, -> { where("rides.places = rides.taken_places") }

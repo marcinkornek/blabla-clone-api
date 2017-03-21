@@ -96,6 +96,23 @@ RSpec.describe Ride, type: :model do
   end
 
   describe "scopes" do
+    describe ".on_day(date)" do
+      let!(:ride) { FactoryGirl.create(:ride, start_date: DateTime.parse("2016-05-19 10:30:14")) }
+      subject { described_class.on_day(date) }
+
+      context "when some rides on day exist" do
+        let(:date) { DateTime.parse("2016-05-19") }
+
+        it { is_expected.to match_array([ride]) }
+      end
+
+      context "when NO rides on day exist" do
+        let(:date) { DateTime.parse("2016-05-22") }
+
+        it { is_expected.to be_blank }
+      end
+    end
+
     describe ".in_currency(currency)" do
       let!(:ride) { FactoryGirl.create(:ride, currency: "pln") }
       subject { described_class.in_currency(currency) }

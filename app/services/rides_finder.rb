@@ -16,7 +16,7 @@ class RidesFinder
   def find_rides
     rides = Ride.future.includes(:driver, :start_location, :destination_location, :car)
     rides = rides.without_full if params[:hide_full] == true
-    rides = rides.in_day(start_date) if params[:start_date].present?
+    rides = rides.on_day(start_date) if params[:start_date].present?
     rides = search_rides(rides) if search.present?
     rides = filter_rides(rides) if filters.present?
     rides = rides.order_by_type(order_by_type)
