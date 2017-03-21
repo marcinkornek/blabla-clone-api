@@ -36,7 +36,6 @@ class RidesAsPassengerFinder
     rides = rides.in_currency(currency) if currency.present?
     rides = rides.without_full if filters&.fetch(:hide_full, false)
     rides = rides.future unless filters&.fetch(:show_past, false)
-    rides = rides.other_users_rides(user) if filters&.fetch(:hide_as_driver, false)
     rides
   end
 
