@@ -77,7 +77,7 @@ RSpec.describe Ride, type: :model do
     end
   end
 
-  describe "scopes", focus: true do
+  describe "scopes" do
     describe ".from_city(latitude, longitude)" do
       let(:location) { FactoryGirl.create(:location) }
       let!(:ride) { FactoryGirl.create(:ride, start_location_id: location.id) }
@@ -230,6 +230,21 @@ RSpec.describe Ride, type: :model do
 
       context "when NO other user rides" do
         let(:driver) { user }
+
+        it { is_expected.to be_blank }
+      end
+    end
+
+    describe ".not_requested_rides(user)" do
+      let!(:ride) { FactoryGirl.create(:ride, driver: other_user) }
+      subject { described_class.not_requested_rides(user) }
+
+      context "when some rides user not requested" do
+        it { is_expected.to match_array([ride]) }
+      end
+
+      context "when NO rides user not requested" do
+        let!(:ride_request) { user.ride_requests.create(ride: ride, places: 2) }
 
         it { is_expected.to be_blank }
       end
