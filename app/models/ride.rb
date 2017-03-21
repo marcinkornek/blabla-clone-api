@@ -17,18 +17,19 @@ class Ride < ApplicationRecord
 
   scope :from_city, lambda { |latitude, longitude|
     location = Location.near([latitude, longitude], 1).first
-    where(start_location_id: location.id) if location.present?
+    where(start_location_id: location&.id)
   }
   scope :to_city, lambda { |latitude, longitude|
     location = Location.near([latitude, longitude], 1).first
-    where(destination_location_id: location.id) if location.present?
+    where(destination_location_id: location&.id)
   }
   scope :on_day, ->(date) { where(start_date: date.beginning_of_day..date.end_of_day) }
   scope :in_currency, ->(currency) { where(currency: currency) }
   scope :without_full, -> { where("rides.places > rides.taken_places") }
-  scope :full_rides, -> { where("rides.places = rides.taken_places") }
+  scope :full, -> { where("rides.places = rides.taken_places") }
   scope :future, -> { where("rides.start_date > ?", Time.current) }
   scope :past, -> { where("rides.start_date <= ?", Time.current) }
+  scope :other_users_rides, ->(user) { user.present? ? where.not(driver_id: user) : all }
   scope :order_by_type, lambda { |type|
     case type
     when "newest"
@@ -48,10 +49,6 @@ class Ride < ApplicationRecord
 
   def locations_formatted
     "#{start_location.address} - #{destination_location.address}"
-  end
-
-  def self.other_users_rides(user)
-    user.present? ? where.not(driver_id: user) : all
   end
 
   def free_places_count
@@ -76,9 +73,9 @@ class Ride < ApplicationRecord
 
   def user_role(user)
     if user.id == driver_id
-      'driver'
+      "driver"
     elsif user_requested?(user)
-      'passenger'
+      "passenger"
     end
   end
 end
