@@ -35,6 +35,7 @@ class RidesFinder
 
   def filter_rides(rides)
     rides = rides.in_currency(currency) if currency.present?
+    rides = rides.without_full if filters&.fetch(:hide_full, false)
     rides
   end
 

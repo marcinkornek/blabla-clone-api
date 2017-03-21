@@ -34,8 +34,8 @@ class RidesAsDriverFinder
 
   def filter_rides(rides)
     rides = rides.in_currency(currency) if currency.present?
-    rides = rides.without_full if hide_full?
-    rides = rides.future unless show_past?
+    rides = rides.without_full if filters&.fetch(:hide_full, false)
+    rides = rides.future unless filters&.fetch(:show_past, false)
     rides
   end
 
@@ -45,14 +45,6 @@ class RidesAsDriverFinder
 
   def filters
     JSON.parse(params.fetch(:filters, nil)).with_indifferent_access if params[:filters].present?
-  end
-
-  def show_past?
-    filters&.fetch(:show_past, false)
-  end
-
-  def hide_full?
-    filters&.fetch(:hide_full, false)
   end
 
   def start_location
