@@ -87,6 +87,8 @@ module API
         params do
           use :pagination_params
           requires :user_id, type: Integer, desc: "user id"
+          optional :filters
+          optional :search
         end
         get :as_passenger do
           authenticate!
