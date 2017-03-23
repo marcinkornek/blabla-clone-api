@@ -55,6 +55,10 @@ class Ride < ApplicationRecord
     "#{start_location.address} - #{destination_location.address}"
   end
 
+  def locations_formatted_shortened
+    "#{start_location.address[0..10]} - #{destination_location.address[0..10]}"
+  end
+
   def free_places_count
     places - taken_places
   end
