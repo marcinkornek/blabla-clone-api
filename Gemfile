@@ -16,6 +16,7 @@ gem "redis" # in-memory data structure store
 # the model layer, allowing you the use of Grape's own params
 # validation instead.
 gem "active_model_serializers"
+gem "activeadmin", "~> 1.0.0.pre5" # it's the newest, pre-release version
 gem "api-pagination"
 gem "carrierwave" # file upload library for Ruby
 gem "counter_culture" # turbo-charged counter caches
@@ -25,6 +26,7 @@ gem "fog" # Ruby cloud services library (used in carrierwave to send images to A
 gem "geocoder"
 gem "grape-active_model_serializers"
 gem "http_accept_language" # extracts Accept-Language header into an array
+gem "inherited_resources", "~> 1.7" # required for activeadmin gem
 gem "kaminari" # pagination
 gem "kaminari-grape"
 gem "mini_magick" # handle picture resizing
