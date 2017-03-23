@@ -22,7 +22,7 @@ module BlablaCloneApi
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.api_only = true
+    # config.api_only = true
 
     config.middleware.use Rack::Cors do
       origins =
