@@ -3,6 +3,7 @@ ActiveAdmin.register RideRequest do
 
   filter :id
   filter :passenger_id
+  filter :ride_driver_id_equals, as: :string, label: "ride driver_id"
   filter :ride_id
   filter :places
   filter :status, as: :select, collection: proc { RideRequest.statuses }
