@@ -98,6 +98,8 @@ GEM
       mime-types (>= 1.16)
     case_transform (0.2)
       activesupport
+    codeclimate-test-reporter (1.0.8)
+      simplecov (<= 0.13)
     coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -123,6 +125,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
+    docile (1.1.5)
     equalizer (0.0.11)
     erubis (2.7.0)
     excon (0.55.0)
@@ -490,6 +493,11 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
     shellany (0.0.1)
+    simplecov (0.13.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     slop (3.6.0)
     spring (2.0.1)
       activesupport (>= 4.2)
@@ -532,6 +540,7 @@ DEPENDENCIES
   api-pagination
   bullet
   carrierwave
+  codeclimate-test-reporter (~> 1.0.0)
   counter_culture
   database_cleaner
   devise
@@ -567,6 +576,7 @@ DEPENDENCIES
   rollbar!
   rspec-rails
   rubocop
+  simplecov
   spring
   uglifier
 

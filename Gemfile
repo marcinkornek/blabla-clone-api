@@ -56,3 +56,8 @@ group :production do
   gem "oj"
   gem "rollbar", git: "git://github.com/rollbar/rollbar-gem.git"
 end
+
+group :test do
+  gem "codeclimate-test-reporter", "~> 1.0.0"
+  gem "simplecov"
+end

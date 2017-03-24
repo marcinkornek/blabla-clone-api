@@ -1,0 +1,9 @@
+language: ruby
+services:
+  - postgresql
+addons:
+  code_climate:
+    repo_token: '<%= ENV["CODECLIMATE_REPO_TOKEN"] %>'
+script: bundle exec rspec spec
+after_success:
+  - bundle exec codeclimate-test-reporter
