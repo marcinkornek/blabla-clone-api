@@ -8,7 +8,7 @@ FactoryGirl.define do
     currency 0
     association :car
     association :start_location, factory: :location
-    association :destination_city, factory: :location
+    association :destination_location, factory: :location
     association :driver, factory: :user
   end
 end
