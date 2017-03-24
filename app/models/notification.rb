@@ -31,22 +31,22 @@ class Notification < ApplicationRecord
 
   def mobile_heading
     case notification_type
-    when 'ride_request_created'
+    when "ride_request_created"
       "New ride request"
-    when 'ride_request_accepted'
+    when "ride_request_accepted"
       "Ride request accepted"
-    when 'ride_request_rejected'
+    when "ride_request_rejected"
       "Ride request rejected"
     end
   end
 
   def mobile_body
     case notification_type
-    when 'ride_request_created'
+    when "ride_request_created"
       "#{sender.full_name} added ride request for your ride #{ride.locations_formatted}"
-    when 'ride_request_accepted'
+    when "ride_request_accepted"
       "#{sender.full_name} accepted your ride request in ride #{ride.locations_formatted}"
-    when 'ride_request_rejected'
+    when "ride_request_rejected"
       "#{sender.full_name} rejected your ride request in ride #{ride.locations_formatted}"
     end
   end

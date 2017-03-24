@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ActiveAdmin.register User do
   permit_params :email, :password, :password_confirmation
 
@@ -7,9 +8,7 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :email
-    column :full_name do |user|
-      user.full_name
-    end
+    column :full_name, &:full_name
     column :gender
     column "player_id", :player_id
     column :last_seen_at

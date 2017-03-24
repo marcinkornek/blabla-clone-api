@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ActiveAdmin.register Notification do
   scope :all, default: true
 

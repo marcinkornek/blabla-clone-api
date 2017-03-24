@@ -47,7 +47,7 @@ module API
             currencies: Ride.currencies.keys,
             cars: ActiveModel::Serializer::CollectionSerializer.new(
               cars, serializer: CarSimpleSerializer
-            )
+            ),
           }
         end
 

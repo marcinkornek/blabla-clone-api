@@ -15,8 +15,8 @@ gem "puma" # Action Cable needs a threaded server
 gem "redis" # in-memory data structure store
 # the model layer, allowing you the use of Grape's own params
 # validation instead.
-gem "active_model_serializers"
 gem "activeadmin", "~> 1.0.0.pre5" # it's the newest, pre-release version
+gem "active_model_serializers"
 gem "api-pagination"
 gem "carrierwave" # file upload library for Ruby
 gem "counter_culture" # turbo-charged counter caches
