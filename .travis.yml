@@ -3,7 +3,8 @@ services:
   - postgresql
 addons:
   code_climate:
-    repo_token: '<%= ENV["CODECLIMATE_REPO_TOKEN"] %>'
+    repo_token:
+      secure: "wgD4N+xGKQARPgmZ7WJknEGYos5/tbdLxGvgSgRB1YQPdivVH+bQWFuX5ZdFRna31FYEv2tQlVy6lTS/6K1rVs+yKAaBT8dJF4PG0v9/Oiz24QwvWw8h4nKe2+gWhcdx85G5jcr6wBvaTlJUZpu9IrpT8yvr7Vc8dhW/RZXg7QN6wjWACTJ7Y6+PKjJFElHk9JJD+V9hJ5P2yWQSweNCjZZk3rGwluP5t6Da/BISoTGVqh3elIZyFZa2B6FKMmguF/XovACp7nmXE8YJ5AsWvYjH4G8zPE6mAzfBn6QzysUGFaqGktPAR1J6UlYnN8uJ3Pnfcwq6eRDO2jpjxU0ylZxaj1RSNWU1vqVAunCMPGMN1sOr0CEC7WzLOECrHqBMxPMrw9ZNQLrQo/9S03KNCN0XfU303jaCaiX+NBejbHVih5k8mpScewyTQeBCwkmXEIg/lJA2AMF8WDKUNSfzHPrz7yloeMfyRi/7YyRwrYcbsUC5k4qT0zelW11OIhAT/A5DnSL7BSf/XwJF983v6tlQmL7t0IJ6s/rvKwV1DyBo6CyqVupavqlqpbnX10XnGp8dmK54V1RwKHx6TL5Dcnl8IwiHQdVqLNu66caJLeFmigLDfNgFO9tiR6ZZBCA4h32UOCNANikX4GNJmeNnqlmlSI2sxyrospJgvHTFC0Y="
 script: bundle exec rspec spec
 after_success:
   - bundle exec codeclimate-test-reporter
