@@ -31,8 +31,8 @@ class Ride < ApplicationRecord
   scope :past, -> { where("rides.start_date <= ?", Time.current) }
   scope :other_users_rides, ->(user) { where.not(driver_id: user) }
   scope :not_requested_rides, ->(user) {
-    left_outer_joins(:ride_requests)
-      .where("ride_requests IS NULL OR NOT (ride_requests.passenger_id = ?)", user.id )
+    joins("LEFT JOIN ride_requests ON ride_requests.ride_id = rides.id
+           AND ride_requests.passenger_id = #{user.id}").where("ride_requests IS NULL")
   }
   scope :order_by_type, lambda { |type|
     case type
