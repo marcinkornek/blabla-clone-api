@@ -1,4 +1,15 @@
 ActiveAdmin.register Ride do
+  scope :all, default: true
+
+  filter :id
+  filter :driver_id
+  filter :start_location_id
+  filter :destination_location_id
+  filter :price
+  filter :currency
+  filter :places
+  filter :created_at
+
   index do
     selectable_column
     id_column
@@ -21,13 +32,4 @@ ActiveAdmin.register Ride do
     column :created_at
     actions
   end
-
-  filter :id
-  filter :driver_id
-  filter :start_location_id
-  filter :destination_location_id
-  filter :price
-  filter :currency
-  filter :places
-  filter :created_at
 end

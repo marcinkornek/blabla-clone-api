@@ -1,4 +1,13 @@
 ActiveAdmin.register RideRequest do
+  scope :all, default: true
+
+  filter :id
+  filter :passenger_id
+  filter :ride_id
+  filter :places
+  filter :status, as: :select, collection: proc { RideRequest.statuses }
+  filter :created_at
+
   index do
     selectable_column
     id_column
@@ -18,11 +27,4 @@ ActiveAdmin.register RideRequest do
     column :created_at
     actions
   end
-
-  filter :id
-  filter :passenger_id
-  filter :ride_id
-  filter :places
-  filter :status, as: :select, collection: proc { RideRequest.statuses }
-  filter :created_at
 end
