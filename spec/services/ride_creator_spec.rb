@@ -17,7 +17,7 @@ RSpec.describe RideCreator do
       ride = Ride.last
       expect(ride.car).to eq(car)
       expect(ride.driver).to eq(user)
-      expect(ride.start_date).to be_within(2.seconds).of(params[:start_date])
+      expect(ride.start_date).to be_within(2.seconds).of(params[:start_date].to_datetime)
       expect(ride.price).to eq(params[:price])
       expect(ride.currency).to eq(params[:currency])
       expect(ride.places).to eq(params[:places])
@@ -37,7 +37,7 @@ RSpec.describe RideCreator do
       destination_location_latitude: 50.6751067,
       destination_location_longitude: 17.9212976,
       places: 5,
-      start_date: 10.days.from_now,
+      start_date: 10.days.from_now.to_s,
       price: 12,
       currency: "pln",
       car_id: car.id,
