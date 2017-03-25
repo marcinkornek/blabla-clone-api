@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 class EmailUniquenessChecker
-  attr_reader :params, :user
+  attr_reader :user, :params
 
-  def initialize(params, user)
-    @params = params
+  def initialize(user, params)
     @user = user
+    @params = params
   end
 
   def call
@@ -15,7 +15,7 @@ class EmailUniquenessChecker
 
   def check_if_email_unique
     user_id = user&.id
-    if User.where(email: params["email"].downcase).where.not(id: user_id).exists?
+    if User.where(email: params[:email].downcase).where.not(id: user_id).exists?
       { errors: ["Email already exists"] }
     else
       { errors: [] }

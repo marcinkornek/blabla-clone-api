@@ -64,7 +64,7 @@ module API
         end
         get :check_if_unique do
           data = declared(params)
-          EmailUniquenessChecker.new(data, current_user).call
+          EmailUniquenessChecker.new(current_user, data).call
         end
 
         params do
