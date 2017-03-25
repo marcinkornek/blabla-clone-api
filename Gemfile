@@ -10,11 +10,11 @@ gem "grape" # REST-like API micro-framework for Ruby
 gem "grape-swagger"
 gem "grape-swagger-rails"
 gem "hashie-forbidden_attributes" # disables the security feature of strong_params at
+# the model layer, allowing you the use of Grape's own params
+# validation instead.
 gem "pg" # database for Active Record
 gem "puma" # Action Cable needs a threaded server
 gem "redis" # in-memory data structure store
-# the model layer, allowing you the use of Grape's own params
-# validation instead.
 gem "activeadmin", "~> 1.0.0.pre5" # it's the newest, pre-release version
 gem "active_model_serializers"
 gem "api-pagination"
@@ -44,7 +44,7 @@ end
 group :development, :test do
   gem "database_cleaner"
   gem "factory_girl_rails"
-  gem "faker", github: "stympy/faker"
+  gem "faker"
   gem "guard"
   gem "guard-bundler"
   gem "guard-rspec"
@@ -54,7 +54,7 @@ end
 
 group :production do
   gem "oj"
-  gem "rollbar", git: "git://github.com/rollbar/rollbar-gem.git"
+  gem "rollbar"
 end
 
 group :test do
