@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 class RideCreator
-  attr_reader :params, :user
+  attr_reader :user, :params
 
-  def initialize(params, user)
-    @params = params
+  def initialize(user, params)
     @user = user
+    @params = params
   end
 
   def call
+    return unless user
     create_ride
   end
 

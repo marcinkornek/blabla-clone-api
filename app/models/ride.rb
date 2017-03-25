@@ -12,6 +12,7 @@ class Ride < ApplicationRecord
   validates :driver, presence: true
   validates :places, presence: true, numericality: { greater_than: 0, less_than: 60 }
   validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :start_date, presence: true
 
   enum currency: { pln: 0, usd: 1, eur: 2 }
 

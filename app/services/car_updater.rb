@@ -10,13 +10,13 @@ class CarUpdater
   end
 
   def call
+    return unless car && user
     update_car
   end
 
   private
 
   def update_car
-    return unless car && user
     car.update(params)
     update_car_photo(car) if car_photo.present?
     car

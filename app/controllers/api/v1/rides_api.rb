@@ -104,12 +104,10 @@ module API
         end
         post serializer: RideShowSerializer do
           authenticate!
-          ride = RideCreator.new(params, current_user).call
-          if ride.valid?
-            ride
-          else
-            unprocessable_entity(ride.errors.messages)
-          end
+          ride = RideCreator.new(current_user, params).call
+
+          unprocessable_entity(ride.errors.messages) unless ride.valid?
+          ride
         end
 
         params do
