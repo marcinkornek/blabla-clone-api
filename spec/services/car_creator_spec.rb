@@ -15,13 +15,13 @@ RSpec.describe CarCreator do
     it "creates the valid car", :aggregate_failures do
       subject
       car = Car.last
-      expect(car.brand).to eq(car.brand)
-      expect(car.model).to eq(car.model)
-      expect(car.places).to eq(car.places)
-      expect(car.color).to eq(car.color)
-      expect(car.comfort).to eq(car.comfort)
-      expect(car.category).to eq(car.category)
-      expect(car.production_year).to eq(car.production_year)
+      expect(car.brand).to eq(params[:brand])
+      expect(car.model).to eq(params[:model])
+      expect(car.places).to eq(params[:places])
+      expect(car.color).to eq(params[:color])
+      expect(car.comfort).to eq(params[:comfort])
+      expect(car.category).to eq(params[:category])
+      expect(car.production_year).to eq(params[:production_year])
     end
   end
   shared_examples_for "returns car" do
