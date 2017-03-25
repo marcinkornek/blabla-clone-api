@@ -64,12 +64,10 @@ module API
         post serializer: CarSimpleSerializer do
           authenticate!
           data = declared(params)
-          car = CarCreator.new(data, current_user).call
-          if car.valid?
-            car
-          else
-            unprocessable_entity(car.errors.messages)
-          end
+          car = CarCreator.new(current_user, data).call
+
+          unprocessable_entity(car.errors.messages) unless car.valid?
+          car
         end
 
         params do

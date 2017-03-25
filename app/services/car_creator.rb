@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 class CarCreator
-  attr_reader :params, :car_photo, :user
+  attr_reader :user, :params, :car_photo
 
-  def initialize(params, user)
+  def initialize(user, params)
+    @user = user
     @car_photo = params.delete("car_photo")
     @params = params
-    @user = user
   end
 
   def call
+    return unless user
     create_car
   end
 
@@ -16,7 +17,7 @@ class CarCreator
 
   def create_car
     car = user.cars.create(params)
-    save_car_photo(car) if car_photo.present?
+    save_car_photo(car) if car.valid? && car_photo.present?
     car
   end
 
