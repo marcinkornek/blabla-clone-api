@@ -126,12 +126,10 @@ module API
           put serializer: RideShowSerializer do
             authenticate!
             data = declared(params, include_missing: false)
-            ride = RideUpdater.new(data, current_user, user_ride).call
-            if ride.valid?
-              ride
-            else
-              unprocessable_entity(ride.errors.messages)
-            end
+            ride = RideUpdater.new(current_user, user_ride, data).call
+
+            unprocessable_entity(ride.errors.messages) unless ride.valid?
+            ride
           end
         end
       end

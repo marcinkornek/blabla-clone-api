@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 class RideUpdater
-  attr_reader :params, :user, :ride
+  attr_reader :user, :ride, :params
 
-  def initialize(params, user, ride)
-    @params = params
+  def initialize(user, ride, params)
     @user = user
     @ride = ride
+    @params = params
   end
 
   def call
+    return unless user && ride
     update_ride
   end
 
