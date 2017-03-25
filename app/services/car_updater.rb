@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 class CarUpdater
-  attr_reader :params, :car_photo, :user, :car
+  attr_reader :user, :car, :params, :car_photo
 
-  def initialize(params, user, car)
+  def initialize(user, car, params)
+    @user = user
     @car = car
     @car_photo = params.delete("car_photo")
     @params = params
-    @user = user
   end
 
   def call
@@ -16,6 +16,7 @@ class CarUpdater
   private
 
   def update_car
+    return unless car && user
     car.update(params)
     update_car_photo(car) if car_photo.present?
     car

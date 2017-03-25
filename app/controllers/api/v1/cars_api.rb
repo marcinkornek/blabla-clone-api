@@ -86,7 +86,7 @@ module API
           put serializer: CarSerializer do
             authenticate!
             data = declared(params)
-            car = CarUpdater.new(data, current_user, user_car).call
+            car = CarUpdater.new(current_user, user_car, data).call
             if car.valid?
               car
             else
