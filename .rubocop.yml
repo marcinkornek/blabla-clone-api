@@ -520,6 +520,12 @@ Metrics/LineLength:
   URISchemes:
   - http
   - https
+Metrics/BlockLength:
+  Description: 'Avoid long blocks with many lines.'
+  Enabled: true
+  CountComments: false  # count full line comments?
+  Max: 25
+  ExcludedMethods: [register, describe, resource, helpers, define, context]
 Metrics/MethodLength:
   Description: Avoid methods longer than 10 lines of code. (changed to 15)
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods

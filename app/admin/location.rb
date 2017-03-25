@@ -3,7 +3,9 @@ ActiveAdmin.register Location do
   scope :all, default: true
 
   filter :id
-  filter :country, as: :select, collection: proc { Location.pluck(:country).uniq.compact }
+  filter :country,
+         as: :select,
+         collection: proc { Location.uniq.order(:country).pluck(:country).compact }
   filter :address
   filter :latitude
   filter :longitude

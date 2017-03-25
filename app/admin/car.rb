@@ -4,7 +4,9 @@ ActiveAdmin.register Car do
 
   filter :id
   filter :user_id
-  filter :brand, as: :select, collection: proc { Car.pluck(:brand).uniq.sort.compact }
+  filter :brand,
+         as: :select,
+         collection: proc { Car.uniq.order(:brand).pluck(:brand).compact }
   filter :model
   filter :production_year
   filter :comfort, as: :select, collection: proc { Car.comforts }
