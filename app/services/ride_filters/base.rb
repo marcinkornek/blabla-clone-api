@@ -34,18 +34,20 @@ module RideFilters
     def filter_rides(rides)
       rides = rides.in_currency(currency) if currency.present?
       rides = rides.future unless filters&.fetch(:show_past, false)
-      rides = rides.without_full if filters&.fetch(:hide_full, false)
-      rides = rides.other_users_rides(user) if user && filters&.fetch(:hide_as_driver, false)
-      rides = rides.not_requested_rides(user) if user && filters&.fetch(:hide_requested, false)
+      rides = rides.without_full unless filters&.fetch(:show_full, true)
+      rides = rides.other_users_rides(user) unless user || filters&.fetch(:show_as_driver, true)
+      rides = rides.not_requested_rides(user) unless user || filters&.fetch(:show_requested, true)
       rides
     end
 
     def search
-      JSON.parse(params.fetch(:search, nil)).with_indifferent_access if params[:search].present?
+      search_params = params.fetch(:search, nil)
+      JSON.parse(search_params).with_indifferent_access if search_params
     end
 
     def filters
-      JSON.parse(params.fetch(:filters, nil)).with_indifferent_access if params[:filters].present?
+      filters_params = params.fetch(:filters, nil)
+      JSON.parse(filters_params).with_indifferent_access if filters_params
     end
 
     def start_location
