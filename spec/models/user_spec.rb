@@ -17,6 +17,22 @@ RSpec.describe User, type: :model do
     }
   end
 
+  describe "#admin?" do
+    subject { user.admin? }
+
+    context "when user has role 'admin'" do
+      before { user.update(role: "admin") }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when user has role 'user'" do
+      before { user.update(role: "user") }
+
+      it { is_expected.to be(false) }
+    end
+  end
+
   describe "#age" do
     subject { user.age }
 

@@ -32,6 +32,10 @@ class User < ApplicationRecord
     end
   end
 
+  def admin?
+    role == "admin"
+  end
+
   def age
     date_of_birth ? Time.current.year - date_of_birth.year : nil
   end
