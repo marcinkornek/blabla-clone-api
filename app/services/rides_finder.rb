@@ -36,8 +36,8 @@ class RidesFinder
   def filter_rides(rides)
     rides = rides.in_currency(currency) if currency.present?
     rides = rides.without_full if filters&.fetch(:hide_full, false)
-    rides = rides.other_users_rides(user) if filters&.fetch(:hide_as_driver, false)
-    rides = rides.not_requested_rides(user) if filters&.fetch(:hide_requested, false)
+    rides = rides.other_users_rides(user) if user && filters&.fetch(:hide_as_driver, false)
+    rides = rides.not_requested_rides(user) if user && filters&.fetch(:hide_requested, false)
     rides
   end
 
