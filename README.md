@@ -1,4 +1,9 @@
-## API for Blablacar clone application using [*React + Redux*](https://github.com/marcinkornek/blabla-clone-react) + Rails API
+## Rails API for Blablacar clone application (using Grape, pundit, devise..)
+
+#### Frontend
+API is used for 2 frontent application:
+* React Web application [*React-web*](https://github.com/marcinkornek/blabla-clone-react)
+* React Native (android & iOS) application [*React-native*](https://github.com/marcinkornek/blabla-clone-react-native)
 
 [![Code Climate](https://codeclimate.com/github/marcinkornek/blabla-clone-api/badges/gpa.svg)](https://codeclimate.com/github/marcinkornek/blabla-clone-api)
 [![Test Coverage](https://codeclimate.com/github/marcinkornek/blabla-clone-api/badges/coverage.svg)](https://codeclimate.com/github/marcinkornek/blabla-clone-api/coverage)
