@@ -9,6 +9,7 @@ require "rspec/rails"
 require "support/carrierwave_fog"
 require "support/factory_girl"
 require "support/database_cleaner"
+require "pundit/rspec"
 # Add additional requires below this line. Rails is not loaded until this point!
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

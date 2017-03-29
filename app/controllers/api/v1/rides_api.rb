@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 module API
   module V1
     class RidesApi < Grape::API
       helpers API::ParamsHelper
+      helpers Pundit
 
       helpers do
         params :ride_params do
@@ -76,7 +78,7 @@ module API
           optional :search
         end
         get :as_driver do
-          authenticate!
+          authorize(:ride, :show_rides_as_driver?)
           data = declared(params)
           rides = RideFilters::RidesAsDriverFinder.new(data, current_user).call
           options = { page: data[:page], per: data[:per] }
@@ -91,7 +93,7 @@ module API
           optional :search
         end
         get :as_passenger do
-          authenticate!
+          authorize(:ride, :show_rides_as_passenger?)
           data = declared(params)
           rides = RideFilters::RidesAsPassengerFinder.new(data, current_user).call
           options = { page: data[:page], per: data[:per] }
@@ -103,11 +105,11 @@ module API
           use :ride_params
         end
         post serializer: RideShowSerializer do
-          authenticate!
-          ride = RideCreator.new(current_user, params).call
+          authorize(:ride, :create?)
+          created_ride = RideCreator.new(current_user, params).call
 
-          unprocessable_entity(ride.errors.messages) unless ride.valid?
-          ride
+          unprocessable_entity(created_ride.errors.messages) unless created_ride.valid?
+          created_ride
         end
 
         params do
@@ -124,12 +126,12 @@ module API
             use :ride_params
           end
           put serializer: RideShowSerializer do
-            authenticate!
+            authorize(ride, :update?)
             data = declared(params, include_missing: false)
-            ride = RideUpdater.new(current_user, user_ride, data).call
+            created_ride = RideUpdater.new(current_user, user_ride, data).call
 
-            unprocessable_entity(ride.errors.messages) unless ride.valid?
-            ride
+            unprocessable_entity(created_ride.errors.messages) unless created_ride.valid?
+            created_ride
           end
         end
       end

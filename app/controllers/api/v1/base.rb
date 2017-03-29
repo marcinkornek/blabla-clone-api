@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module API
   module V1
     class Base < Grape::API
@@ -13,6 +14,10 @@ module API
       # global handler not found case
       rescue_from ActiveRecord::RecordNotFound do |e|
         error_response(message: e.message, status: 404)
+      end
+
+      rescue_from Pundit::NotAuthorizedError do |_e|
+        error!("Unauthorized.", 401)
       end
 
       before do

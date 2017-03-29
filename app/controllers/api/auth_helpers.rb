@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module API
   module AuthHelpers
     extend Grape::API::Helpers

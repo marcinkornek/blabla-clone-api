@@ -5,6 +5,10 @@ module API
       helpers API::ParamsHelper
 
       helpers do
+        def ride
+          @ride ||= Ride.find(params[:ride_id])
+        end
+
         def ride_request
           @ride_request ||= RideRequest.find(params[:id])
         end
@@ -17,14 +21,12 @@ module API
           requires :places, type: Integer, desc: "requested places"
         end
         post serializer: RideShowSerializer do
-          authenticate!
+          authorize(ride, :create_ride_request?)
           data = declared(params)
-          ride_request = RideRequestCreator.new(data, current_user).call
-          if ride_request.valid?
-            ride_request.ride
-          else
-            unprocessable_entity(ride_request.errors.messages)
-          end
+          created_ride_req = RideRequestCreator.new(data, current_user).call
+
+          unprocessable_entity(created_ride_req.errors.messages) unless created_ride_req.valid?
+          created_ride_req.ride
         end
 
         params do
@@ -36,14 +38,12 @@ module API
             requires :status, type: String, desc: "ride request status"
           end
           put serializer: RideShowSerializer do
-            authenticate!
+            authorize(ride_request, :update?)
             data = declared(params)
-            rr = RideRequestStatusUpdater.new(data, current_user, ride_request).call
-            if rr.valid?
-              rr.reload.ride
-            else
-              unprocessable_entity(rr.errors.messages)
-            end
+            updated_ride_req = RideRequestStatusUpdater.new(data, current_user, ride_request).call
+
+            unprocessable_entity(updated_ride_req.errors.messages) unless updated_ride_req.valid?
+            updated_ride_req.reload.ride
           end
         end
       end

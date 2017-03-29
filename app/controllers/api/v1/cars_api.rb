@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 module API
   module V1
     class CarsApi < Grape::API
       helpers API::ParamsHelper
+      helpers Pundit
 
       helpers do
         params :car_params do
@@ -62,12 +64,12 @@ module API
           use :car_params
         end
         post serializer: CarSimpleSerializer do
-          authenticate!
+          authorize(:car, :create?)
           data = declared(params)
-          car = CarCreator.new(current_user, data).call
+          created_car = CarCreator.new(current_user, data).call
 
-          unprocessable_entity(car.errors.messages) unless car.valid?
-          car
+          unprocessable_entity(created_car.errors.messages) unless created_car.valid?
+          created_car
         end
 
         params do
@@ -84,14 +86,12 @@ module API
             use :car_params
           end
           put serializer: CarSerializer do
-            authenticate!
+            authorize(car, :update?)
             data = declared(params)
-            car = CarUpdater.new(current_user, user_car, data).call
-            if car.valid?
-              car
-            else
-              unprocessable_entity(car.errors.messages)
-            end
+            updated_car = CarUpdater.new(current_user, user_car, data).call
+
+            unprocessable_entity(updated_car.errors.messages) unless updated_car.valid?
+            updated_car
           end
         end
       end
