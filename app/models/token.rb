@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Token < ApplicationRecord
   before_create :generate_access_token
   before_create :set_expiration

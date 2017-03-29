@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RideFilters
   class Base
     attr_reader :params, :user

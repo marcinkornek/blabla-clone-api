@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Notifier
   class ActioncableNotifier
     attr_reader :notification, :options

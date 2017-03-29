@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source "https://rubygems.org"
 ruby "2.4.0"
 
@@ -12,8 +13,8 @@ gem "grape-swagger-rails"
 gem "hashie-forbidden_attributes" # disables the security feature of strong_params at
 # the model layer, allowing you the use of Grape's own params
 # validation instead.
-gem "activeadmin", "~> 1.0.0.pre5" # it's the newest, pre-release version
 gem "active_model_serializers"
+gem "activeadmin", "~> 1.0.0.pre5" # it's the newest, pre-release version
 gem "api-pagination"
 gem "carrierwave" # file upload library for Ruby
 gem "counter_culture" # turbo-charged counter caches

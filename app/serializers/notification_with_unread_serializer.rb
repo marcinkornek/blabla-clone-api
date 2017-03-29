@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NotificationWithUnreadSerializer < ActiveModel::Serializer
   attributes :id, :ride_request_id, :notification_type, :seen_at, :created_at, :unread_count
 

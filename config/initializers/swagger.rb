@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 GrapeSwaggerRails.options.app_name = "Blabla-clone API"
 GrapeSwaggerRails.options.url = "/api/swagger_doc"
 GrapeSwaggerRails.options.before_filter_proc = proc {

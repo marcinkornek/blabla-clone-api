@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 ActiveAdmin.register Location do
   scope :all, default: true
 

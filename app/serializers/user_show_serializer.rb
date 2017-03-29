@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserShowSerializer < ActiveModel::Serializer
   attributes :id, :first_name, :last_name, :full_name, :email, :tel_num,
              :date_of_birth, :created_at, :updated_at, :age, :avatar, :gender,

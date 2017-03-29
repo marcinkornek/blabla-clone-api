@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RideSerializer < ActiveModel::Serializer
   attributes :id, :car_id, :driver_id, :start_location_id, :destination_location_id,
              :start_location_address, :destination_location_address,

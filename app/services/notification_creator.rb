@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NotificationCreator
   attr_reader :notification_type, :sender_id, :receiver_id, :options
 

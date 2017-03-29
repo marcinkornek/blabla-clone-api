@@ -6,7 +6,6 @@ RSpec.describe CarPolicy do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
 
-
   shared_examples_for "grants access when user is present" do
     it { is_expected.to be(true) }
   end

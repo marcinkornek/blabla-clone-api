@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserUpdater
   attr_reader :params, :avatar, :user
 

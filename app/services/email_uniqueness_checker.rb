@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EmailUniquenessChecker
   attr_reader :user, :params
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TokenSerializer < ActiveModel::Serializer
   attributes :id, :access_token, :email, :role
 

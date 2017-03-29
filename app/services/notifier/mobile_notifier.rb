@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Notifier
   class MobileNotifier
     attr_reader :notification, :options

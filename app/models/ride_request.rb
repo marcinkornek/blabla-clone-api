@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RideRequest < ApplicationRecord
   belongs_to :passenger, class_name: "User"
   belongs_to :ride

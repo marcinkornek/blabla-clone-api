@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RideRequestCreator
   attr_reader :params, :user
 

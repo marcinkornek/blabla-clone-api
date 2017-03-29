@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module API
   module ParamsHelper
     extend Grape::API::Helpers

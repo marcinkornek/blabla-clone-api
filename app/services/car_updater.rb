@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CarUpdater
   attr_reader :user, :car, :params, :car_photo
 

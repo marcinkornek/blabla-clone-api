@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CarSerializer < ActiveModel::Serializer
   attributes :id, :brand, :model, :full_name, :production_year, :comfort,
              :comfort_stars, :places, :places_full, :color, :comfort,

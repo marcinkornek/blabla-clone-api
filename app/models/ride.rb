@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Ride < ApplicationRecord
   belongs_to :driver, class_name: "User"
   belongs_to :car

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Fog.mock!
 connection = Fog::Storage.new(
   provider: "AWS",

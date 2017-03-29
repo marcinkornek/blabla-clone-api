@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module API
   module PaginationHelpers
     extend Grape::API::Helpers

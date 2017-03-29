@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 guard :bundler do
-  require 'guard/bundler'
-  require 'guard/bundler/verify'
+  require "guard/bundler"
+  require "guard/bundler/verify"
   helper = Guard::Bundler::Verify.new
 
-  files = ['Gemfile']
-  files += Dir['*.gemspec'] if files.any? { |f| helper.uses_gemspec?(f) }
+  files = ["Gemfile"]
+  files += Dir["*.gemspec"] if files.any? { |f| helper.uses_gemspec?(f) }
 
   # Assume files are symlinked from somewhere
   files.each { |file| watch(helper.real_path(file)) }
 end
 
-guard :rspec, cmd: 'rspec' do
-  require 'guard/rspec/dsl'
+guard :rspec, cmd: "rspec" do
+  require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
   # Feel free to open issues for suggestions and improvements
@@ -35,7 +37,7 @@ guard :rspec, cmd: 'rspec' do
     [
       rspec.spec.call("routing/#{m[1]}_routing"),
       rspec.spec.call("controllers/#{m[1]}_controller"),
-      rspec.spec.call("acceptance/#{m[1]}")
+      rspec.spec.call("acceptance/#{m[1]}"),
     ]
   end
 
@@ -46,7 +48,7 @@ guard :rspec, cmd: 'rspec' do
 end
 
 guard :rubocop, all_on_start: false, keep_failed: false, notification: false,
-    cli: ['--rails', '--auto-correct'] do
+                cli: ["--rails", "--auto-correct"] do
   watch(/.+\.rb$/)
   watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
 end
