@@ -51,12 +51,10 @@ module API
         end
         post serializer: UserSerializer do
           data = declared(params)
-          user = UserCreator.new(data).call
-          if user.valid?
-            user
-          else
-            unprocessable_entity(user.errors.messages)
-          end
+          created_user = UserCreator.new(data).call
+
+          unprocessable_entity(created_user.errors.messages) unless created_user.valid?
+          created_user
         end
 
         desc "Checks if user email is unique"
@@ -89,12 +87,10 @@ module API
           put serializer: UserSerializer do
             authenticate!
             data = declared(params)
-            user = UserUpdater.new(data, current_user).call
-            if user.valid?
-              user
-            else
-              unprocessable_entity(user.errors.messages)
-            end
+            updated_user = UserUpdater.new(data, current_user).call
+
+            unprocessable_entity(updated_user.errors.messages) unless updated_user.valid?
+            updated_user
           end
         end
       end
