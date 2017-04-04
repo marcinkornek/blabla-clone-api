@@ -36,8 +36,8 @@ module RideFilters
       rides = rides.in_currency(currency) if currency.present?
       rides = rides.future unless filters&.fetch(:show_past, false)
       rides = rides.without_full unless filters&.fetch(:show_full, true)
-      rides = rides.other_users_rides(user) unless user || filters&.fetch(:show_as_driver, true)
-      rides = rides.not_requested_rides(user) unless user || filters&.fetch(:show_requested, true)
+      rides = rides.other_users_rides(user) if user && !filters&.fetch(:show_as_driver, true)
+      rides = rides.not_requested_rides(user) if user && !filters&.fetch(:show_requested, true)
       rides
     end
 
