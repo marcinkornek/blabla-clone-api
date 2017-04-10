@@ -9,13 +9,13 @@ module API
       helpers do
         params :ride_params do
           optional :start_location_country, type: String, desc: "user start location country"
-          requires :start_location_address, type: String, desc: "user start location address"
-          requires :start_location_latitude, type: String, desc: "user start location latitude"
-          requires :start_location_longitude, type: String, desc: "user start location longitude"
+          optional :start_location_address, type: String, desc: "user start location address"
+          optional :start_location_latitude, type: String, desc: "user start location latitude"
+          optional :start_location_longitude, type: String, desc: "user start location longitude"
           optional :destination_location_country, type: String, desc: "user destination location country"
-          requires :destination_location_address, type: String, desc: "user destination location address"
-          requires :destination_location_latitude, type: String, desc: "user destination location latitude"
-          requires :destination_location_longitude, type: String, desc: "user destination location longitude"
+          optional :destination_location_address, type: String, desc: "user destination location address"
+          optional :destination_location_latitude, type: String, desc: "user destination location latitude"
+          optional :destination_location_longitude, type: String, desc: "user destination location longitude"
           requires :places, type: Integer, desc: "user places"
           requires :start_date, type: String, desc: "user start_date"
           requires :price, type: String, desc: "user price"
@@ -106,7 +106,8 @@ module API
         end
         post serializer: RideShowSerializer do
           authorize(:ride, :create?)
-          created_ride = RideCreator.new(current_user, params).call
+          data = declared(params, include_missing: false)
+          created_ride = RideCreator.new(current_user, data).call
 
           unprocessable_entity(created_ride.errors.messages) unless created_ride.valid?
           created_ride

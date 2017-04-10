@@ -39,6 +39,7 @@ class RideUpdater
   end
 
   def start_location
+    return ride.start_location unless update_start_location?
     Location.find_or_create_by(
       latitude: params[:start_location_latitude],
       longitude: params[:start_location_longitude],
@@ -49,6 +50,7 @@ class RideUpdater
   end
 
   def destination_location
+    return ride.destination_location unless update_destination_location?
     Location.find_or_create_by(
       latitude: params[:destination_location_latitude],
       longitude: params[:destination_location_longitude],
@@ -56,5 +58,15 @@ class RideUpdater
       location.address = params[:destination_location_address]
       location.country = params[:destination_location_country]
     end
+  end
+
+  def update_start_location?
+    params[:start_location_latitude].present? && params[:start_location_longitude].present? &&
+      params[:start_location_address].present?
+  end
+
+  def update_destination_location?
+    params[:destination_location_latitude].present? && params[:destination_location_longitude].present? &&
+      params[:destination_location_address].present?
   end
 end

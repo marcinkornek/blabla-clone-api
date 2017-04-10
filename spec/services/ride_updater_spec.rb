@@ -78,6 +78,31 @@ RSpec.describe RideUpdater do
             expect(ride.start_location).to eq(location1)
             expect(ride.destination_location).to eq(location2)
           end
+
+          context "when start or destination location is missing" do
+            let(:valid_params) do
+              {
+                destination_location_country: "Poland",
+                destination_location_address: "Opole, Poland",
+                destination_location_latitude: 50.6751067,
+                destination_location_longitude: 17.9212976,
+                places: 5,
+                start_date: 10.days.from_now,
+                price: 12,
+                currency: "pln",
+                car_id: new_car.id,
+              }
+            end
+
+            it "updates destination location" do
+              subject
+              expect(ride.destination_location).to eq(location2)
+            end
+
+            it "does NOT update start location" do
+              expect { subject }.not_to change { ride.start_location }
+            end
+          end
         end
 
         context "when start location and destination location do NOT exist" do
