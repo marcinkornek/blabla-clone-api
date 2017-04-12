@@ -4,6 +4,7 @@ module API
   module V1
     class RideRequestsApi < Grape::API
       helpers API::ParamsHelper
+      helpers Pundit
 
       helpers do
         def ride
